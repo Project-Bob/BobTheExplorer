@@ -14,15 +14,19 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
+import com.badlogic.gdx.audio.Sound; // Test sound
+
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class Main extends ApplicationAdapter {
     private Stage stage;
     private Skin skin;
+    private Sound test; // Test sound
 
     @Override
     public void create() {
         stage = new Stage(new FitViewport(640, 480));
         skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
+        test = Gdx.audio.newSound(Gdx.files.internal("test.ogg")); // Test sound
 
         Window window = new Window("Example screen", skin, "border");
         window.defaults().pad(4f);
@@ -33,6 +37,7 @@ public class Main extends ApplicationAdapter {
             @Override
             public void changed(final ChangeEvent event, final Actor actor) {
                 button.setText("Clicked.");
+                test.play(); // Test sound
             }
         });
         window.add(button);
