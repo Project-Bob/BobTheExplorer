@@ -15,6 +15,12 @@ public class DB {
             "CREATE TABLE IF NOT EXISTS HighScores ( " +
             "PlayerName VARCHAR(255) PRIMARY KEY NOT NULL," +
             "Score INT NOT NULL )";
+    public static final String SQL_INSERT_INTO_HIGHSCORES =
+            "INSERT INTO HighScores (PlayerName, Score) VALUES (?, ?)";
+    public static final String SQL_UPDATE_HIGHSCORES =
+            "UPDATE HighScores SET Score = ? WHERE PlayerName = ?";
+    public static final String SQL_DELETE_FROM_HIGHSCORES =
+            "DELETE FROM HighScores WHERE PlayerName = ?";
     
     private Connection conn;
     private String checksum;
@@ -39,8 +45,8 @@ public class DB {
         stmt.close();
         
         // Generates MD5 checksum of the database file
-        try (InputStream is = Files.newInputStream(Paths.get("data.db"))) {
-            this.checksum = DigestUtils.md5Hex(is);
+        try {
+            this.checksum = generateChecksum();
         } catch (IOException e) {}
         
         // Checksum verification
@@ -77,8 +83,64 @@ public class DB {
     
     /**
      * Closes database connection.
+     * @throws java.sql.SQLException
      */
     public void closeConnection() throws SQLException {
         this.conn.close();
+    }
+    
+    /**
+     * Adds a score record 
+     * @param playerName Player's name
+     * @param score Score obtained
+     */
+    public void addScoreRecord(String playerName, int score)
+            throws SQLException {
+        PreparedStatement stmt = this.conn.prepareStatement(SQL_INSERT_INTO_HIGHSCORES);
+        stmt.setString(1, playerName);
+        stmt.setInt(2, score);
+        stmt.executeUpdate();
+        stmt.close();
+        
+        // Generates MD5 checksum of the database file
+        try {
+            this.checksum = generateChecksum();
+        } catch (IOException e) {}
+    }
+    
+    /**
+     * Updates a score record 
+     * @param playerName Player's name
+     * @param score Score obtained
+     */
+    public void updateScoreRecord(String playerName, int score)
+            throws SQLException {
+        PreparedStatement stmt = this.conn.prepareStatement(SQL_UPDATE_HIGHSCORES);
+        stmt.setInt(1, score);
+        stmt.setString(2, playerName);
+        stmt.executeUpdate();
+        stmt.close();
+        
+        // Generates MD5 checksum of the database file
+        try {
+            this.checksum = generateChecksum();
+        } catch (IOException e) {}
+    }
+    
+    /**
+     * Removes a score record 
+     * @param playerName Player's name
+     */
+    public void removeScoreRecord(String playerName)
+            throws SQLException {
+        PreparedStatement stmt = this.conn.prepareStatement(SQL_DELETE_FROM_HIGHSCORES);
+        stmt.setString(1, playerName);
+        stmt.executeUpdate();
+        stmt.close();
+        
+        // Generates MD5 checksum of the database file
+        try {
+            this.checksum = generateChecksum();
+        } catch (IOException e) {}
     }
 }

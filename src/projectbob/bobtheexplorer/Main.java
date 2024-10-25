@@ -4,8 +4,6 @@
  */
 package projectbob.bobtheexplorer;
 
-import java.util.prefs.Preferences;
-import java.sql.SQLException;
 import projectbob.bobtheexplorer.util.*;
 
 /**
