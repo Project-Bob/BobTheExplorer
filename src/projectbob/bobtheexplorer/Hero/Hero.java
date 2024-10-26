@@ -1,9 +1,9 @@
-package projectbob.bobtheexplorer.Character;
+package projectbob.bobtheexplorer.Hero;
 
 import java.util.*;
-public class Character {
+public class Hero {
     
-    static void Character_1(){
+    static void Hero_1(){
         
         int SumOfSP = 0;
         Scanner scanner = new Scanner(System.in);
@@ -11,7 +11,7 @@ public class Character {
             while(SumOfSP<10||SumOfSP>10){
                 System.out.println("Enter initial ability of character. The initial total ability point should be 10.");
                 System.out.print("Enter name of the hero : ");
-                String character_1 = scanner.nextLine();
+                String hero_1 = scanner.nextLine();
                 System.out.print("Enter initial Health Point(HP) : ");
                 int HP = scanner.nextInt();
                 System.out.print("Enter initial Attack Power(AP) : ");
@@ -26,9 +26,10 @@ public class Character {
                     System.out.println("Please enter the status of character again.");
                 }
             }
+        scanner.close();
         }
         
-    static void Character_2(){
+    static void Hero_2(){
 
         int SumOfSP = 0;
         Scanner scanner = new Scanner(System.in);
@@ -36,7 +37,7 @@ public class Character {
             while(SumOfSP<10||SumOfSP>10){
                 System.out.println("Enter initial ability of character. The initial total ability point should be 10.");
                 System.out.print("Enter name of the hero : ");
-                String character_2 = scanner.nextLine();
+                String hero_2 = scanner.nextLine();
                 System.out.print("Enter initial Health Point(HP) : ");
                 int HP = scanner.nextInt();
                 System.out.print("Enter initial Attack Power(AP) : ");
@@ -51,9 +52,10 @@ public class Character {
                     System.out.println("Please enter the status of character again.");
                 }
             }
+        scanner.close();
         }
 
-    static void Character_3(){
+    static void Hero_3(){
 
         int SumOfSP = 0;
         Scanner scanner = new Scanner(System.in);
@@ -61,7 +63,7 @@ public class Character {
             while(SumOfSP<10||SumOfSP>10){
                 System.out.println("Enter initial ability of character. The initial total ability point should be 10.");
                 System.out.print("Enter name of the hero : ");
-                String character_3 = scanner.nextLine();
+                String hero_3 = scanner.nextLine();
                 System.out.print("Enter initial Health Point(HP) : ");
                 int HP = scanner.nextInt();
                 System.out.print("Enter initial Attack Power(AP) : ");
@@ -76,6 +78,7 @@ public class Character {
                     System.out.println("Please enter the status of character again.");
                 }
             }
+        scanner.close();
         }
 
     }
