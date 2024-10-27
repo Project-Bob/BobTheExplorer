@@ -5,17 +5,17 @@ import java.util.Scanner;
 public class UserInput {
     public static void main(String[] args) {
 
-        int SumOfSP = 0;
         Scanner scanner = new Scanner(System.in);
         String character = "";
         int HP = 0;
         int AP = 0;
         int S = 0;
+        int SumOfSP = 0;
 
-        while(SumOfSP != 10){
+        while (SumOfSP != 30) {
             System.out.print("Enter name of the hero(Fighter, Marksman, Tank) : ");
             character = scanner.nextLine();
-            while( !character.equalsIgnoreCase("Fighter") && !character.equalsIgnoreCase("Marksman") && !character.equalsIgnoreCase("Tank")){
+            while (!character.equalsIgnoreCase("Fighter") && !character.equalsIgnoreCase("Marksman") && !character.equalsIgnoreCase("Tank")) {
                 System.out.println("Invalid input");
                 System.out.print("Enter name of the hero(Fighter, Marksman, Tank) : ");
                 character = scanner.nextLine();
@@ -30,27 +30,26 @@ public class UserInput {
             scanner.nextLine();
 
             SumOfSP = HP + AP + S;
-            if(SumOfSP != 10){
+            if (SumOfSP != 30) {
                 System.out.println("The initial total status point must be 10 points.");
                 System.out.println("Please enter the status of character again.");
             }
         }
         scanner.close();
 
-        switch (character) {
-            case "Fighter" -> {
-                Fighter fighter = new Fighter(HP, AP, S);
-                System.out.println(fighter.detailHero());
+        switch (character.toLowerCase()) {
+            case "fighter" -> {
+                Fighter fighter = new Fighter(character, HP, AP, S);
+                System.out.println(fighter.displayStatusFighter());
             }
-            case "Marksman" -> {
-                Marksman marksman = new Marksman(HP, AP, S);
-                System.out.println(marksman.detailHero());
+            case "marksman" -> {
+                Marksman marksman = new Marksman(character, HP, AP, S);
+                System.out.println(marksman.displayStatusMarksman());
             }
-            case "Tank" -> {
-                Tank tank = new Tank(HP, AP, S);
-                System.out.println(tank.detailHero());
+            case "tank" -> {
+                Tank tank = new Tank(character, HP, AP, S);
+                System.out.println(tank.displayStatusTank());
             }
         }
-
     }
 }

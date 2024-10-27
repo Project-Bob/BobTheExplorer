@@ -2,11 +2,15 @@ package projectbob.bobtheexplorer.entity;
 
 public class Fighter extends Hero{
 
-    public Fighter(int hp, int attack, int speed) {
-        super(hp, attack, speed);
+    public Fighter(String name, int HP, int attackPower, int speed) {
+        super(name, HP, attackPower, speed);
     }
 
     public Fighter() {
         super();
+    }
+
+    public String displayStatusFighter() {
+        return displayStatus();
     }
 }

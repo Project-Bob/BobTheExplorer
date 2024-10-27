@@ -3,12 +3,12 @@ package projectbob.bobtheexplorer.entity;
 public class Monster {
 
     private final int HP;
-    private final int ATTACK;
+    private final int ATTACKPOWER;
     private final int SPEED;
 
-    public Monster(int HP, int ATTACK, int SPEED){
+    public Monster(int HP, int ATTACKPOWER, int SPEED){
         this.HP = HP;
-        this.ATTACK = ATTACK;
+        this.ATTACKPOWER = ATTACKPOWER;
         this.SPEED = SPEED;
     }
 
@@ -16,8 +16,8 @@ public class Monster {
         return HP;
     }
 
-    public int getAttack() {
-        return ATTACK;
+    public int getAttackPower() {
+        return ATTACKPOWER;
     }
 
     public int getSpeed() {
@@ -25,6 +25,6 @@ public class Monster {
     }
 
     public String detailMonster(){
-        return "Monster{" + ", hp=" + HP + ", attack=" + ATTACK + ", speed=" + SPEED + '}';
+        return "Monster{" + ", hp=" + HP + ", attack=" + ATTACKPOWER + ", speed=" + SPEED + '}';
     }
 }

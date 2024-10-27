@@ -2,31 +2,40 @@
 
     public class Hero {
 
-        private int hp;
-        private int attack;
+        private String name;
+        private int HP;
+        private int attackPower;
         private int speed;
 
         public Hero() {
         }
 
-        public Hero(int hp, int attack, int speed) {
-            setHp(hp);
-            setAttack(attack);
-            setSpeed(speed);
+        public Hero(String name, int HP, int attackPower, int speed) {
+            this.name = name;
+            this.HP = HP;
+            this.attackPower = attackPower;
+            this.speed = speed;
         }
 
-        public void setHp(int hp) {
-            this.hp = hp;
+        public void setName(String name) {
+            this.name = name;
         }
-        public int getHp() {
-            return hp;
+        public String getName() {
+            return name;
         }
 
-        public void setAttack(int attack) {
-            this.attack = attack;
+        public void setHP(int HP) {
+            this.HP = HP;
         }
-        public int getAttack() {
-            return attack;
+        public int getHP() {
+            return HP;
+        }
+
+        public void setAttackPower(int attackPower) {
+            this.attackPower = attackPower;
+        }
+        public int getAttackPower() {
+            return attackPower;
         }
 
         public void setSpeed(int speed) {
@@ -36,8 +45,21 @@
             return speed;
         }
 
-        public String detailHero() {
-            return "Hero{" + "hp=" + hp + ", attack=" + attack + ", speed=" + speed + '}';
+        public int attack(){
+            System.out.println(name + " attacks with power: " + attackPower);
+            return attackPower;
+        }
+
+        public void takeDamage(int damage) {
+            HP -= damage;
+            if (HP < 0) {
+                HP = 0;
+            }
+            System.out.println(name + " takes damage: " + damage + ". Remaining HP: " + HP);
+        }
+
+        public String displayStatus() {
+            return "Hero=" + name + ", HP=" + HP + ", attackPower=" + attackPower + ", speed=" + speed + '}';
         }
 
     }
