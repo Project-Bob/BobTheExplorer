@@ -1,6 +1,8 @@
     package projectbob.bobtheexplorer.entity;
 
-    public class Hero {
+import java.util.Random;
+
+public class Hero {
 
         private String name;
         private int HP;
@@ -50,16 +52,43 @@
             return attackPower;
         }
 
-        public void takeDamage(int damage) {
-            HP -= damage;
+        public int takeDamage(String name,int HP, int damage) {
+            int actualdamage = (int)(damage * 0.35);
+            HP -= actualdamage;
             if (HP < 0) {
                 HP = 0;
             }
-            System.out.println(name + " takes damage: " + damage + ". Remaining HP: " + HP);
+            System.out.println(name + " takes damage: " + actualdamage + ". Remaining HP: " + HP);
+            return HP;
         }
 
         public String displayStatus() {
-            return "Hero=" + name + ", HP=" + HP + ", attackPower=" + attackPower + ", speed=" + speed + '}';
+                StringBuilder status = new StringBuilder();
+                System.out.println("=============== Hero Status ===============");
+                System.out.println(name.toUpperCase() + ": " );
+                System.out.println("\tHP: " + HP +"/1000");
+                System.out.println("\tAttack Power: " + attackPower + "/1000");
+                System.out.println("\tSpeed: " + speed + "/500");
+                System.out.println("===========================================");
+                return status.toString();
         }
 
+        public void GameOver(int HP){
+            if(HP == 0){
+                System.out.println("Your HP becomes zero. Game Over!!!");
+            }
+        }
+
+        public boolean RunAndDodge(int speed) {
+            Random random = new Random();
+            int RunChance = random.nextInt(10); 
+
+            if (RunChance < speed) {
+                System.out.println("Successfully escaped!");
+                return true;
+            } else {
+                System.out.println("Failed to escape. The monster catches up!");
+                return false;
+            }
     }
+}

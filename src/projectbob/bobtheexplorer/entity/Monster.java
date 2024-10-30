@@ -25,6 +25,17 @@ public class Monster {
     }
 
     public String detailMonster(){
-        return "Monster{" + ", hp=" + HP + ", attack=" + ATTACKPOWER + ", speed=" + SPEED + '}';
+        StringBuilder status = new StringBuilder();
+                System.out.println("=============== Monster Status ===============");
+                //System.out.println(Monster.toUpperCase() + ": " ); 
+                /*
+                 Probably monster status will be insert in every monster class since the name is different
+                 unless the name can be variable. 
+                 */
+                System.out.println("\tHP: " + HP +"/1000");
+                System.out.println("\tAttack Power: " + ATTACKPOWER + "/1000");
+                System.out.println("\tSpeed: " + SPEED + "/500");
+                System.out.println("==============================================");
+                return status.toString();
     }
 }
