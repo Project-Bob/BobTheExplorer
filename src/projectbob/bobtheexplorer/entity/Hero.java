@@ -81,14 +81,21 @@ public class Hero {
 
         public boolean RunAndDodge(int speed) {
             Random random = new Random();
-            int RunChance = random.nextInt(10); 
-
-            if (RunChance < speed) {
+            int runChance = random.nextInt(100);  
+            int successThreshold = Math.min(speed / 10, 75);  
+        
+            if (runChance < successThreshold) {
                 System.out.println("Successfully escaped!");
                 return true;
             } else {
                 System.out.println("Failed to escape. The monster catches up!");
                 return false;
             }
-    }
+        }
+
+
+
+
+
 }
+
