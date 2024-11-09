@@ -68,7 +68,7 @@ public class Hero {
                 System.out.println(name.toUpperCase() + ": " );
                 System.out.println("\tHP: " + HP +"/1000");
                 System.out.println("\tAttack Power: " + attackPower + "/1000");
-                System.out.println("\tSpeed: " + speed + "/500");
+                System.out.println("\tSpeed: " + speed + "/1000");
                 System.out.println("===========================================");
                 return status.toString();
         }
@@ -82,7 +82,7 @@ public class Hero {
         public boolean RunAndDodge(int speed) {
             Random random = new Random();
             int runChance = random.nextInt(100);  
-            int successThreshold = Math.min(speed / 10, 75);  
+            int successThreshold = Math.min(speed / 100, 75);  
         
             if (runChance < successThreshold) {
                 System.out.println("Successfully escaped!");
