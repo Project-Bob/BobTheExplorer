@@ -6,10 +6,6 @@ public class Fighter extends Hero{
         super(name, HP, attackPower, speed);
     }
 
-    public Fighter() {
-        super();
-    }
-
     public String displayStatusFighter() {
         return displayStatus();
     }

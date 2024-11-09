@@ -2,7 +2,8 @@ package projectbob.bobtheexplorer.entity;
 
 public class Monster {
 
-    private final int HP;
+    private String Name;
+    private  int HP;
     private final int ATTACKPOWER;
     private final int SPEED;
 
@@ -11,6 +12,8 @@ public class Monster {
         this.ATTACKPOWER = ATTACKPOWER;
         this.SPEED = SPEED;
     }
+
+    public String getName(){ return Name; }
 
     public int getHp() {
         return HP;
@@ -22,6 +25,13 @@ public class Monster {
 
     public int getSpeed() {
         return SPEED;
+    }
+
+    public void takeDamage(int damage) {
+        HP -= damage;
+        if (HP < 0) {
+            HP = 0;
+        }
     }
 
     public String detailMonster(){

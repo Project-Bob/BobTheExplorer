@@ -6,10 +6,6 @@ public class Marksman extends Hero{
         super(name, HP, attackPower, speed);
     }
 
-    public Marksman() {
-        super();
-    }
-
     public String displayStatusMarksman() {
         return displayStatus();
     }

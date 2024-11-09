@@ -53,8 +53,10 @@ public class UserInput {
             }
         }
 
+        Monster monster = new Monster( 50, 3, 5);
+
         BattleStatus battlestatus = new BattleStatus(character, HP, SumOfSP, S);
-        battlestatus.displayBattleStatus(character, HP, SumOfSP, S);
+        battlestatus.displayBattleStatus( monster);
 
          
 

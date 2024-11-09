@@ -6,10 +6,6 @@ public class Tank extends Hero{
         super(name, HP, attackPower, speed);
     }
 
-    public Tank(){
-        super();
-    }
-
     public String displayStatusTank() {
         return displayStatus();
     }

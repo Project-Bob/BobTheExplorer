@@ -9,9 +9,6 @@ public class Hero {
         private int attackPower;
         private int speed;
 
-        public Hero() {
-        }
-
         public Hero(String name, int HP, int attackPower, int speed) {
             this.name = name;
             this.HP = HP;
@@ -19,47 +16,29 @@ public class Hero {
             this.speed = speed;
         }
 
-        public void setName(String name) {
-            this.name = name;
-        }
         public String getName() {
             return name;
         }
 
-        public void setHP(int HP) {
-            this.HP = HP;
-        }
         public int getHP() {
             return HP;
         }
 
-        public void setAttackPower(int attackPower) {
-            this.attackPower = attackPower;
-        }
         public int getAttackPower() {
             return attackPower;
         }
 
-        public void setSpeed(int speed) {
-            this.speed = speed;
-        }
         public int getSpeed() {
             return speed;
         }
 
-        public int attack(){
-            System.out.println(name + " attacks with power: " + attackPower);
-            return attackPower;
-        }
-
-        public int takeDamage(String name,int HP, int damage) {
-            int actualdamage = (int)(damage);
-            HP -= actualdamage;
-            if (HP < 0) {
-                HP = 0;
-            }
-            System.out.println(name + " takes damage: " + actualdamage + ". Remaining HP: " + HP);
-            return HP;
+        public int takeDamage(int damage) {
+                HP -= damage;
+                if (HP < 0) {
+                    HP = 0;
+                }
+                System.out.println(name + " takes damage: " + damage + ". Remaining HP: " + HP);
+                return HP;
         }
 
         public String displayStatus() {
@@ -101,10 +80,6 @@ public class Hero {
                 return false;
             }
         }
-
-
-
-
 
 }
 
