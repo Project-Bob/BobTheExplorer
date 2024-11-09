@@ -7,7 +7,7 @@ public class Monster {
     private final int ATTACKPOWER;
     private final int SPEED;
 
-    public Monster(int HP, int ATTACKPOWER, int SPEED){
+    public Monster( int HP, int ATTACKPOWER, int SPEED){
         this.HP = HP;
         this.ATTACKPOWER = ATTACKPOWER;
         this.SPEED = SPEED;
@@ -15,7 +15,7 @@ public class Monster {
 
     public String getName(){ return Name; }
 
-    public int getHp() {
+    public int getHP() {
         return HP;
     }
 

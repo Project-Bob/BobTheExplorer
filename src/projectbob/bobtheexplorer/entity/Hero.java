@@ -9,6 +9,8 @@ public class Hero {
         private int attackPower;
         private int speed;
 
+        public Hero(){}
+
         public Hero(String name, int HP, int attackPower, int speed) {
             this.name = name;
             this.HP = HP;
