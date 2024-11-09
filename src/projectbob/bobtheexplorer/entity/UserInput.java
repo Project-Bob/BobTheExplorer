@@ -53,6 +53,8 @@ public class UserInput {
             }
         }
 
+        BattleStatus battlestatus = new BattleStatus(character, HP, SumOfSP, S);
+        battlestatus.displayBattleStatus(character, HP, SumOfSP, S);
 
          
 

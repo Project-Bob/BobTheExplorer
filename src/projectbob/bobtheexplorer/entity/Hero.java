@@ -53,7 +53,7 @@ public class Hero {
         }
 
         public int takeDamage(String name,int HP, int damage) {
-            int actualdamage = (int)(damage * 0.35);
+            int actualdamage = (int)(damage);
             HP -= actualdamage;
             if (HP < 0) {
                 HP = 0;
@@ -79,7 +79,7 @@ public class Hero {
             }
         }
 
-        public boolean RunAndDodge(int speed) {
+        public boolean Dodge(int speed) {
             Random random = new Random();
             int runChance = random.nextInt(100);  
             int successThreshold = Math.min(speed / 100, 75);  
@@ -89,6 +89,15 @@ public class Hero {
                 return true;
             } else {
                 System.out.println("Failed to escape. The monster catches up!");
+                return false;
+            }
+        }
+
+        public boolean Run(int HeroSpeed, int MonsterSpeed){
+            if(HeroSpeed>MonsterSpeed){
+                return true;
+            }
+            else{
                 return false;
             }
         }

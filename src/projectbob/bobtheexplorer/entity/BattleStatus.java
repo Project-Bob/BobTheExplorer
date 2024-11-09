@@ -9,7 +9,7 @@ public class BattleStatus extends Hero{
     }
 
     public void displayBattleStatus(String name, int HP, int attackPower, int speed){
-        
+
         Scanner battle = new Scanner(System.in);
         char choice;
         boolean escape = false;
@@ -39,7 +39,7 @@ public class BattleStatus extends Hero{
                 //Item method will be updated
             }
             if(choice == 'C'){
-                escape = RunAndDodge(speed);
+                escape = Run(speed, speed //monster speed);
             }
 
             if(escape == true){
