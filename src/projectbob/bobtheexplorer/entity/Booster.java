@@ -6,8 +6,12 @@ public class Booster extends Item{
     }
 
     public void use(){
-        hero.setSpeed(hero.getSpeed()+10);
-        System.out.println("Booster used. Speed increased.");
+        if (hero != null) {
+            hero.setSpeed(hero.getSpeed() + 10);
+            System.out.println("Sword used. Hero's speed increased.");
+        } else {
+            System.out.println("Hero is not initialized properly.");
+        }
     }
 }
 
