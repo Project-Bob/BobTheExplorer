@@ -7,10 +7,11 @@ public class Inventory {
 
     Hero hero;
 
-    ArrayList<Item> items= new ArrayList<>(){{
-        add(new Sword (hero));
-        add(new Potion(hero));
-    }};
+    private ArrayList<Item> items;
+
+    public Inventory(){
+        items = new ArrayList<>();
+    }
 
 
     Scanner scanner = new Scanner(System.in);

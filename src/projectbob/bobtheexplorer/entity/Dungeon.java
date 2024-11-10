@@ -17,7 +17,7 @@ public class Dungeon {
     final int Dungeon_size = 10;
     int heroX = 4; 
     int heroY = 3;
-    ArrayList<char[][]> room = new ArrayList<char[][]>();
+    ArrayList<char[][]> room = new ArrayList<>();
 
     public Dungeon(){
 
@@ -107,7 +107,7 @@ public class Dungeon {
     }
 
     //controller for hero to move
-    public void HeroMove(int dx, int dy, char currentRoom[][]) {
+    public void HeroMove(int dx, int dy, char[][] currentRoom) {
 
 
         Monster monster = new Monster("Spider",50, 3, 5);

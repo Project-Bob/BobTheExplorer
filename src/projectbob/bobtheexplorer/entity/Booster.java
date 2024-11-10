@@ -2,8 +2,7 @@ package projectbob.bobtheexplorer.entity;
 
 public class Booster extends Item{
 
-    public Booster( Hero hero){
-        super(hero);
+    public Booster(){
     }
 
     public void use(){

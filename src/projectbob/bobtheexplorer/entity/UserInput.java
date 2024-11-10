@@ -70,12 +70,12 @@ public class UserInput {
 
         System.out.println("Welcome to Adventure Quest! Enter play to start the game! ");
         String start = map.nextLine();
-        if(start.toUpperCase().equals("PLAY")){
+        if(start.equalsIgnoreCase("PLAY")){
             Playing = true;
         }
 
         while (Playing) {
-            char currentRoom[][] = dungeon.room.get(RoomNumber);
+            char[][] currentRoom = dungeon.room.get(RoomNumber);
             dungeon.displayDungeon(currentRoom);
             System.out.println("Use W, A, S, D to move.");
             System.out.println("Enter your move (W=up, A=left, S=down, D=right, Q=quit):");

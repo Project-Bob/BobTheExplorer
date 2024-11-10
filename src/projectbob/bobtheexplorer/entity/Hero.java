@@ -44,13 +44,12 @@ public class Hero {
             return speed;
         }
 
-        public int takeDamage(int damage) {
+        public void takeDamage(int damage) {
                 HP -= damage;
                 if (HP < 0) {
                     HP = 0;
                 }
                 System.out.println(name + " takes damage: " + damage + ". Remaining HP: " + HP);
-                return HP;
         }
 
         public String displayStatus() {
@@ -85,13 +84,7 @@ public class Hero {
         }
 
         public boolean Run(int HeroSpeed, int MonsterSpeed){
-            if(HeroSpeed>MonsterSpeed){
-                return true;
-            }
-            else{
-                return false;
-            }
+            return HeroSpeed > MonsterSpeed;
         }
-
 }
 

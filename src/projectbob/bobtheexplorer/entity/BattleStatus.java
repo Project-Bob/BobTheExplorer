@@ -6,7 +6,7 @@ public class BattleStatus{
 
     private final Hero hero;
     private final Monster monster;
-    private Inventory inventory;
+    private final Inventory inventory;
 
     public BattleStatus(Hero hero, Monster monster, Inventory inventory) {
         this.hero = hero;
@@ -19,7 +19,7 @@ public class BattleStatus{
         Scanner battle = new Scanner(System.in);
         char choice;
         char equipment;
-        boolean escape = false;
+        boolean escape ;
 
         while (hero.getHP() > 0 && monster.getHP() > 0) {
             System.out.println("=============== Battle Status ===============");
@@ -71,27 +71,24 @@ public class BattleStatus{
                 System.out.print("Enter your choice(S/P/B): ");
                 equipment = battle.next().toUpperCase().charAt(0);
 
-                Item itemToUse = null;
+                Item itemToUse;
 
                 switch(equipment){
                     case 'S':
                         itemToUse = inventory.findItem("Sword");
-                        if(itemToUse.equals("Sword")){
-                            Sword sword = new Sword(hero);
+                        if(itemToUse instanceof Sword sword){
                             sword.use();
                         }
                         break;
                     case 'P':
                         itemToUse = inventory.findItem("Potion");
-                        if(itemToUse.equals("Potion")){
-                            Potion potion = new Potion(hero);
+                        if(itemToUse instanceof Potion potion){
                             potion.use();
                         }
                         break;
                     case 'B':
                         itemToUse = inventory.findItem("Booster");
-                        if(itemToUse.equals("Booster")){
-                            Booster booster = new Booster(hero);
+                        if(itemToUse instanceof Booster booster){
                             booster.use();
                         }
                         break;
