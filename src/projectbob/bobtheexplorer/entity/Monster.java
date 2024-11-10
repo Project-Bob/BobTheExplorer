@@ -7,7 +7,8 @@ public class Monster {
     private final int ATTACKPOWER;
     private final int SPEED;
 
-    public Monster( int HP, int ATTACKPOWER, int SPEED){
+    public Monster( String Name,int HP, int ATTACKPOWER, int SPEED){
+        this.Name = Name;
         this.HP = HP;
         this.ATTACKPOWER = ATTACKPOWER;
         this.SPEED = SPEED;
