@@ -16,6 +16,9 @@ public class Hero {
             this.speed = speed;
         }
 
+        Hero(){
+        }
+
         public String getName() {
             return name;
         }
