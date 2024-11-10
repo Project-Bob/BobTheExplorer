@@ -1,15 +1,14 @@
 package projectbob.bobtheexplorer.entity;
 
-public class Booster extends Hero {
+public class Booster extends Item{
 
-    public Booster(String name, int HP, int attackPower, int speed){
-        super(name, HP, attackPower, speed);
+    public Booster( Hero hero){
+        super(hero);
     }
 
-    public void pickUpBooster(){}
-
-    public void useBooster(){
-        setSpeed(getSpeed()+10);
+    public void use(){
+        hero.setSpeed(hero.getSpeed()+10);
+        System.out.println("Booster used. Speed increased.");
     }
 }
 

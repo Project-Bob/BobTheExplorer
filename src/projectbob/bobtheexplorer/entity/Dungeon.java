@@ -6,10 +6,12 @@ public class Dungeon {
 
     private Hero hero;
     private Monster monster;
+    private Inventory inventory;
 
-    public Dungeon(Hero hero, Monster monster) {
+    public Dungeon(Hero hero, Monster monster, Inventory inventory) {
         this.hero = hero;
         this.monster = monster;
+        this.inventory = inventory;
     }
 
     final int Dungeon_size = 10;
@@ -109,7 +111,7 @@ public class Dungeon {
 
 
         Monster monster = new Monster("Spider",50, 3, 5);
-        BattleStatus battlestatus = new BattleStatus(hero, monster);
+        BattleStatus battlestatus = new BattleStatus(hero, monster,inventory);
 
         int newX = heroX + dx;
         int newY = heroY + dy;

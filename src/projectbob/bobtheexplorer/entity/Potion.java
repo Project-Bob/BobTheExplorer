@@ -1,15 +1,14 @@
 package projectbob.bobtheexplorer.entity;
 
-public class Potion extends Hero{
+public class Potion extends Item{
 
-    public Potion(String name, int HP, int attackPower, int speed){
-        super(name, HP+20, attackPower, speed);
+    public Potion( Hero hero){
+        super(hero);
     }
 
-    public void pickUpPotion(){}
-
-    public void usePotion(){
-        setHP(getHP()+20);
+    public void use(){
+        hero.setSpeed(hero.getSpeed()+10);
+        System.out.println("Potion used. HP increased.");
     }
 
 }

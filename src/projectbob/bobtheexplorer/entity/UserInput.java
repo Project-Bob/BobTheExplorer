@@ -64,7 +64,8 @@ public class UserInput {
 
         Hero hero = new Hero(character, HP, AP, S);
         Monster monster = new Monster("Spider",50, 3, 5);
-        BattleStatus battlestatus = new BattleStatus(hero,monster);
+        Inventory inventory = new Inventory();
+        BattleStatus battlestatus = new BattleStatus(hero,monster,inventory);
         battlestatus.displayBattleStatus();
 
         System.out.println("Welcome to Adventure Quest! Enter play to start the game! ");
@@ -91,11 +92,6 @@ public class UserInput {
         }
            map.close();
         scanner.close();
-
-
-
-
-        
 
         }
     }

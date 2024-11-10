@@ -4,19 +4,21 @@ import java.util.Scanner;
 
 public class BattleStatus{
 
-    private Hero hero;
-    private Monster monster;
+    private final Hero hero;
+    private final Monster monster;
+    private Inventory inventory;
 
-    public BattleStatus(Hero hero, Monster monster) {
+    public BattleStatus(Hero hero, Monster monster, Inventory inventory) {
         this.hero = hero;
         this.monster = monster;
+        this.inventory = inventory;
     }
 
      void displayBattleStatus(){
 
         Scanner battle = new Scanner(System.in);
         char choice;
-        char item;
+        char equipment;
         boolean escape = false;
 
         while (hero.getHP() > 0 && monster.getHP() > 0) {
@@ -34,9 +36,9 @@ public class BattleStatus{
 
             System.out.println("It's your turn. What would you like to do?");
             System.out.println("1.Attack (A)");
-            System.out.println("2.Use item (P)");
+            System.out.println("2.Use item (U)");
             System.out.println("3.Run (R)");
-            System.out.print("Enter your choice(A/P/R): ");
+            System.out.print("Enter your choice(A/U/R): ");
             choice = battle.next().charAt(0);
 
             if (choice == 'A' || choice == 'a') {
@@ -60,18 +62,48 @@ public class BattleStatus{
                 System.out.println(hero.getName() + " HP: " + hero.getHP());
                 System.out.println(monster.getName() + " HP: " + monster.getHP());
             }
-            else if (choice == 'B') {
+            else if (choice == 'U') {
+
                 System.out.println("Please select item in your inventory");
                 System.out.println("1.Sword (S)");
                 System.out.println("2.Potion (P)");
                 System.out.println("3.Booster (B)");
                 System.out.print("Enter your choice(S/P/B): ");
-                item = battle.next().charAt(0);
+                equipment = battle.next().toUpperCase().charAt(0);
+
+                Item itemToUse = null;
+
+                switch(equipment){
+                    case 'S':
+                        itemToUse = inventory.findItem("Sword");
+                        if(itemToUse.equals("Sword")){
+                            Sword sword = new Sword(hero);
+                            sword.use();
+                        }
+                        break;
+                    case 'P':
+                        itemToUse = inventory.findItem("Potion");
+                        if(itemToUse.equals("Potion")){
+                            Potion potion = new Potion(hero);
+                            potion.use();
+                        }
+                        break;
+                    case 'B':
+                        itemToUse = inventory.findItem("Booster");
+                        if(itemToUse.equals("Booster")){
+                            Booster booster = new Booster(hero);
+                            booster.use();
+                        }
+                        break;
+                    default:
+                        System.out.println("Invalid choice. Please select a valid item.");
+                        return;
+                }
 
             }
             else if (choice == 'R') {
                 escape = hero.Run(hero.getSpeed(), monster.getSpeed());
-                if (escape == true) {
+                if (escape) {
                     break;//monster speed);
                 }
             }

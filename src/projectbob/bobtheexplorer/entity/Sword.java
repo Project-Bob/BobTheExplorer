@@ -1,16 +1,13 @@
 package projectbob.bobtheexplorer.entity;
 
-public class Sword extends Hero {
+public class Sword extends Item{
 
-    public Sword(String name, int HP, int attackPower, int speed){
-        super(name, HP, attackPower, speed);
+    public Sword( Hero hero){
+        super(hero);
     }
 
-    public pickUpSword(){
-
-    }
-
-    public void useSword(){
-        setAttackPower(getAttackPower()+10);
+    public void use(){
+        hero.setSpeed(hero.getSpeed()+10);
+        System.out.println("Sword used. Attack power increased.");
     }
 }
