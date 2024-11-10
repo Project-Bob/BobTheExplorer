@@ -6,5 +6,11 @@ public class Potion extends Hero{
         super(name, HP+20, attackPower, speed);
     }
 
+    public void pickUpPotion(){}
+
+    public void usePotion(){
+        setHP(getHP()+20);
+    }
+
 }
 

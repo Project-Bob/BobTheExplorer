@@ -2,7 +2,15 @@ package projectbob.bobtheexplorer.entity;
 
 import java.util.ArrayList;
 
-public class Dungeon extends Hero{
+public class Dungeon {
+
+    private Hero hero;
+    private Monster monster;
+
+    public Dungeon(Hero hero, Monster monster) {
+        this.hero = hero;
+        this.monster = monster;
+    }
 
     final int Dungeon_size = 10;
     int heroX = 4; 
@@ -99,8 +107,9 @@ public class Dungeon extends Hero{
     //controller for hero to move
     public void HeroMove(int dx, int dy, char currentRoom[][]) {
 
-        Monster monster = new Monster(50, 3, 5);
-        BattleStatus battlestatus = new BattleStatus(this.getName(),this.getHP(),this.getAttackPower(),this.getSpeed());
+
+        Monster monster = new Monster("Spider",50, 3, 5);
+        BattleStatus battlestatus = new BattleStatus(hero, monster);
 
         int newX = heroX + dx;
         int newY = heroY + dy;
@@ -110,7 +119,7 @@ public class Dungeon extends Hero{
             char targetTile = currentRoom[newX][newY];
             if (targetTile == 'M') {
                 System.out.print("You encounter a monster!");
-                battlestatus.displayBattleStatus(monster);
+                battlestatus.displayBattleStatus();
             } 
             else if (targetTile == 'I') {
                 System.out.println("You found an item!");
@@ -118,7 +127,7 @@ public class Dungeon extends Hero{
             } 
             else if (targetTile == 'B') {
                 System.out.println("You encountered the boss!");
-                battlestatus.displayBattleStatus(monster);
+                battlestatus.displayBattleStatus();
             } 
             else if (targetTile == 'E') {
                 System.out.println("You have entered the next room"); 

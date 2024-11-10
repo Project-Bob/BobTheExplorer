@@ -62,8 +62,10 @@ public class UserInput {
         int RoomNumber = random.nextInt(5);
         boolean Playing = false;
 
-        Monster monster = new Monster(50, 3, 5);
-        BattleStatus battlestatus = new BattleStatus(character,HP,AP, S);
+        Hero hero = new Hero(character, HP, AP, S);
+        Monster monster = new Monster("Spider",50, 3, 5);
+        BattleStatus battlestatus = new BattleStatus(hero,monster);
+        battlestatus.displayBattleStatus();
 
         System.out.println("Welcome to Adventure Quest! Enter play to start the game! ");
         String start = map.nextLine();

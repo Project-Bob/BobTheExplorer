@@ -16,12 +16,21 @@ public class Hero {
             this.speed = speed;
         }
 
-        Hero(){
+        public void setHP(int HP) {
+            this.HP = HP;
+        }
+
+        public void setAttackPower(int attackPower) {
+            this.attackPower = attackPower;
+        }
+
+        public void setSpeed(int speed) {
+            this.speed = speed;
         }
 
         public String getName() {
-            return name;
-        }
+                        return name;
+                    }
 
         public int getHP() {
             return HP;
