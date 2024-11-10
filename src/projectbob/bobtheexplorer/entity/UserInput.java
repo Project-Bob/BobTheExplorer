@@ -25,11 +25,12 @@ public class UserInput {
             System.out.println("Enter initial ability of character. The initial total ability point should be 30.");
             System.out.print("Enter initial Health Point(HP) : ");
             HP = scanner.nextInt();
+            
             System.out.print("Enter initial Attack Power(AP) : ");
             AP = scanner.nextInt();
+            
             System.out.print("Enter initial Speed of character(S) : ");
             S = scanner.nextInt();
-            scanner.nextLine();
 
             SumOfSP = HP + AP + S;
             if (SumOfSP != 30) {
@@ -53,15 +54,62 @@ public class UserInput {
                 System.out.println(tank.displayStatusTank());
             }
         }
+        
+        Dungeon dungeon =  new Dungeon();
+        
+        Scanner map = new Scanner (System.in);
+        Random random = new Random();
+        int RoomNumber = random.nextInt(5);
+        boolean Playing = false;
 
         Monster monster = new Monster(50, 3, 5);
+        BattleStatus battlestatus = new BattleStatus(character,HP,AP, S);
 
-        BattleStatus battlestatus = new BattleStatus(character, HP, AP, S);
-        battlestatus.displayBattleStatus( monster);
+        System.out.println("Welcome to Adventure Quest! Enter play to start the game! ");
+        String start = map.nextLine();
+        if(start.toUpperCase().equals("PLAY")){
+            Playing = true;
+        }
 
-         
+        while (Playing) {
+            char currentRoom[][] = dungeon.room.get(RoomNumber);
+            dungeon.displayDungeon(currentRoom);
+            System.out.println("Use W, A, S, D to move.");
+            System.out.println("Enter your move (W=up, A=left, S=down, D=right, Q=quit):");
+            char move = map.next().toUpperCase().charAt(0);
 
-        scanner.close();
+            switch (move) {
+                case 'W' -> dungeon.HeroMove(-1, 0, currentRoom); 
+                case 'S' -> dungeon.HeroMove(1, 0, currentRoom); 
+                case 'A' -> dungeon.HeroMove(0, -1, currentRoom); 
+                case 'D' -> dungeon.HeroMove(0, 1, currentRoom);  
+                case 'Q' -> Playing = false;
+                default -> System.out.println("Invalid input!");
+            }
+
+            char CurrentPosition = currentRoom[dungeon.heroX][dungeon.heroY];
+            if (CurrentPosition == 'M') {
+                System.out.print("You encounter a monster!");
+                battlestatus.displayBattleStatus(monster);
+            } else if (CurrentPosition == 'I') {
+                System.out.println("You found an item!");
+                //Item random logic is required
+                currentRoom[dungeon.heroX][dungeon.heroY] = '.';
+            } else if (CurrentPosition == 'B') {
+                System.out.println("You encountered the boss!");
+                battlestatus.displayBattleStatus(monster);
+            } else if (CurrentPosition == 'E') {
+                System.out.println("You have entered the next room");  
+            }
+        }
+           map.close();
+    
+
+
+
+
+        
+
         }
     }
 

@@ -1,12 +1,8 @@
 package projectbob.bobtheexplorer.entity;
 
 import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.Random;
 
 public class Dungeon extends Hero{
-
-    public Dungeon(){}
 
     final int Dungeon_size = 10;
     int heroX = 4; 
@@ -118,54 +114,9 @@ public class Dungeon extends Hero{
     }
 
 
-    public void Map(){
 
-        Scanner map = new Scanner (System.in);
-        Random random = new Random();
-        int RoomNumber = random.nextInt(5);
-
-        boolean Playing = false;
-
-        System.out.println("Welcome to Adventure Quest! Enter play to start the game! ");
-        String start = map.nextLine();
-        if(start.toUpperCase().equals("START")){
-            Playing = true;
-        }
-
-        while (Playing) {
-            char currentRoom[][] = room.get(RoomNumber);
-            displayDungeon(currentRoom);
-            System.out.println("Use W, A, S, D to move.");
-            System.out.println("Enter your move (W=up, A=left, S=down, D=right, Q=quit):");
-            char move = map.next().toUpperCase().charAt(0);
-
-            switch (move) {
-                case 'W' -> HeroMove(-1, 0, currentRoom); 
-                case 'S' -> HeroMove(1, 0, currentRoom); 
-                case 'A' -> HeroMove(0, -1, currentRoom); 
-                case 'D' -> HeroMove(0, 1, currentRoom);  
-                case 'Q' -> Playing = false;
-                default -> System.out.println("Invalid input!");
-            }
-
-
-            char CurrentPosition = currentroom[heroX][heroY];
-            if (CurrentPosition == 'M') {
-                System.out.print("You encounter a monster!");
-                displayBattleStatus();
-            } else if (CurrentPosition == 'I') {
-                System.out.println("You found an item!");
-                //Item random logic is required
-                dungeon[heroX][heroY] = '.';
-            } else if (CurrentPosition == 'B') {
-                System.out.println("You encountered the boss!");
-                displayBattleStatus();
-            } else if (CurrentPosition == 'E') {
-                System.out.println("You have entered the next room");  
-            }
-        }
-    }
-    */
+        
+ 
 
 
 
