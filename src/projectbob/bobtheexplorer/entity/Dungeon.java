@@ -98,11 +98,33 @@ public class Dungeon extends Hero{
 
     //controller for hero to move
     public void HeroMove(int dx, int dy, char currentRoom[][]) {
+
+        Monster monster = new Monster(50, 3, 5);
+        BattleStatus battlestatus = new BattleStatus(this.getName(),this.getHP(),this.getAttackPower(),this.getSpeed());
+
         int newX = heroX + dx;
         int newY = heroY + dy;
 
         //change the position of hero and if encounter the wall,display can't move message
         if (newX >= 0 && newX < Dungeon_size && newY >= 0 && newY < Dungeon_size && currentRoom[newX][newY] != '#') {
+            char targetTile = currentRoom[newX][newY];
+            if (targetTile == 'M') {
+                System.out.print("You encounter a monster!");
+                battlestatus.displayBattleStatus(monster);
+            } 
+            else if (targetTile == 'I') {
+                System.out.println("You found an item!");
+                //Item random logic is required
+            } 
+            else if (targetTile == 'B') {
+                System.out.println("You encountered the boss!");
+                battlestatus.displayBattleStatus(monster);
+            } 
+            else if (targetTile == 'E') {
+                System.out.println("You have entered the next room"); 
+                //logic on nextroom 
+            }
+
             currentRoom[heroX][heroY] = '.'; // Clear old position
             heroX = newX;
             heroY = newY;

@@ -62,9 +62,6 @@ public class UserInput {
         int RoomNumber = random.nextInt(5);
         boolean Playing = false;
 
-        Monster monster = new Monster(50, 3, 5);
-        BattleStatus battlestatus = new BattleStatus(character,HP,AP, S);
-
         System.out.println("Welcome to Adventure Quest! Enter play to start the game! ");
         String start = map.nextLine();
         if(start.toUpperCase().equals("PLAY")){
@@ -86,24 +83,9 @@ public class UserInput {
                 case 'Q' -> Playing = false;
                 default -> System.out.println("Invalid input!");
             }
-
-            char CurrentPosition = currentRoom[dungeon.heroX][dungeon.heroY];
-            if (CurrentPosition == 'M') {
-                System.out.print("You encounter a monster!");
-                battlestatus.displayBattleStatus(monster);
-            } else if (CurrentPosition == 'I') {
-                System.out.println("You found an item!");
-                //Item random logic is required
-                currentRoom[dungeon.heroX][dungeon.heroY] = '.';
-            } else if (CurrentPosition == 'B') {
-                System.out.println("You encountered the boss!");
-                battlestatus.displayBattleStatus(monster);
-            } else if (CurrentPosition == 'E') {
-                System.out.println("You have entered the next room");  
-            }
         }
            map.close();
-    
+        scanner.close();
 
 
 
