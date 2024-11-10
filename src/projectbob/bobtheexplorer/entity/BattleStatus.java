@@ -14,14 +14,14 @@ public class BattleStatus extends Hero{
         char choice;
         boolean escape = false;
 
-        while (this.getHP() > 0 && monster.getHp() > 0) {
+        while (this.getHP() > 0 && monster.getHP() > 0) {
             System.out.println("=============== Battle Status ===============");
             System.out.println(this.getName().toUpperCase() + ": ");
             System.out.println("\tHP: " + this.getHP() + "/1000");
             System.out.println("\tAttack Power: " + this.getAttackPower() + "/1000");
             System.out.println("\tSpeed: " + this.getSpeed() + "/1000");
             System.out.println("Monster: " + monster.getName());
-            System.out.println("\tHP: " + monster.getHp() + "/1000");
+            System.out.println("\tHP: " + monster.getHP() + "/1000");
             System.out.println("\tAttack Power: " + monster.getAttackPower() + "/1000");
             System.out.println("\tSpeed: " + monster.getSpeed() + "/1000");
             System.out.println("=============================================");
@@ -35,12 +35,22 @@ public class BattleStatus extends Hero{
             choice = battle.next().charAt(0);
 
             if (choice == 'A' || choice == 'a') {
-                System.out.println(this.getName() + " attacks " + monster.getName() + " for " + this.getAttackPower() + " damage!");
-                monster.takeDamage(this.getAttackPower());
-                if (monster.getHp() > 0) {
-                    // Monster attacks back
+                if( this.getSpeed() >= monster.getSpeed()) {
+                    System.out.println(this.getName() + " attacks " + monster.getName() + " for " + this.getAttackPower() + " damage!");
+                    monster.takeDamage(this.getAttackPower());
+                    if (monster.getHP() > 0) {
+                        // Monster attacks back
+                        System.out.println(monster.getName() + " attacks " + this.getName() + " for " + monster.getAttackPower() + " damage!");
+                        this.takeDamage(monster.getAttackPower());
+                    }
+                }
+                else{
                     System.out.println(monster.getName() + " attacks " + this.getName() + " for " + monster.getAttackPower() + " damage!");
                     this.takeDamage(monster.getAttackPower());
+                    if (this.getHP() > 0) {
+                        System.out.println(this.getName() + " attacks " + monster.getName() + " for " + this.getAttackPower() + " damage!");
+                        monster.takeDamage(this.getAttackPower());
+                    }
                 }
                 if (choice == 'B') {
                     //Item method will be updated
@@ -54,12 +64,12 @@ public class BattleStatus extends Hero{
                 }
                 System.out.println("Updated Battle Status: ");
                 System.out.println(this.getName() + " HP: " + this.getHP());
-                System.out.println(monster.getName() + " HP: " + monster.getHp());
+                System.out.println(monster.getName() + " HP: " + monster.getHP());
             }
         }
         if (this.getHP() <= 0) {
             System.out.println(this.getName()+ " has been defeated.");
-        } else if (monster.getHp() <= 0) {
+        } else if (monster.getHP() <= 0) {
             System.out.println(monster.getName() + " has been defeated.");
         }
         battle.close();

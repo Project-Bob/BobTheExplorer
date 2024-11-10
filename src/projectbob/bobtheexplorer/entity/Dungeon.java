@@ -6,6 +6,8 @@ import java.util.Random;
 
 public class Dungeon extends Hero{
 
+    public Dungeon(){}
+
     final int Dungeon_size = 10;
     int heroX = 4; 
     int heroY = 3;

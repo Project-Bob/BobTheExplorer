@@ -1,5 +1,6 @@
 package projectbob.bobtheexplorer.entity;
 
+import java.util.Random;
 import java.util.Scanner;
 
 public class UserInput {
@@ -53,9 +54,9 @@ public class UserInput {
             }
         }
 
-        Monster monster = new Monster( 50, 3, 5);
+        Monster monster = new Monster(50, 3, 5);
 
-        BattleStatus battlestatus = new BattleStatus(character, HP, SumOfSP, S);
+        BattleStatus battlestatus = new BattleStatus(character, HP, AP, S);
         battlestatus.displayBattleStatus( monster);
 
          
