@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
  */
-package projectbob.bobtheexplorer.UI;
+package testing123;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -36,7 +36,7 @@ public class CharacterCreationPageController implements Initializable {
     
     loginController getFile = new loginController();
     String username=getFile.usernameLogin;
-    
+    int status=0;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -47,7 +47,6 @@ public class CharacterCreationPageController implements Initializable {
         imgView.setFitHeight(20);
         imgView.setFitWidth(40);
         logOutButton.setGraphic(imgView);
-        
     }    
     @FXML
     private Button confirmButton;
@@ -56,9 +55,13 @@ public class CharacterCreationPageController implements Initializable {
     @FXML
     private Button previous;
     @FXML
+    private Button rulesButton;
+    @FXML
     private Button next;
     @FXML
     private Button logOutButton;
+    @FXML
+    private Button backToHeroCreationButton;
     @FXML
     private MenuItem warrior;
     @FXML
@@ -72,6 +75,8 @@ public class CharacterCreationPageController implements Initializable {
     @FXML
     private TextField characterAP;
     @FXML
+    private TextField characterSpeed;
+    @FXML
     private Label wrongID;
     @FXML
     private Label difficultyLevel;
@@ -84,6 +89,8 @@ public class CharacterCreationPageController implements Initializable {
     @FXML
     private AnchorPane popOut;
     @FXML
+    private AnchorPane rules;
+    @FXML
     private VBox background;
     @FXML
     private Label nameShow;
@@ -93,6 +100,8 @@ public class CharacterCreationPageController implements Initializable {
     private Label hpShow;
     @FXML
     private Label apShow;
+    @FXML
+    private Label speedShow;
     @FXML
     private Label difficultyShow;
     
@@ -109,6 +118,7 @@ public class CharacterCreationPageController implements Initializable {
         else{
             int characterHPValue=Integer.parseInt(characterHP.getText());
             int characterAPValue=Integer.parseInt(characterAP.getText());
+            int characterSpeedValue=Integer.parseInt(characterAP.getText());
         if(characterHPValue>150 || characterHPValue<50){
             wrongID.setText("The range of HP is between 50 and 150");
         }
@@ -121,7 +131,13 @@ public class CharacterCreationPageController implements Initializable {
         else{
             wrongID.setText("");
         }
-        if (characterHPValue<=150 && characterHPValue>=50 && characterAPValue<=30 && characterAPValue>=10){
+        if(characterSpeedValue>30 || characterSpeedValue<10){
+            wrongID.setText("The range of speed is between 10 and 30");
+        }
+        else{
+            wrongID.setText("");
+        }
+        if (characterHPValue<=150 && characterHPValue>=50 && characterAPValue<=30 && characterAPValue>=10 && characterSpeedValue<=30 && characterSpeedValue>=10){
             create();
         }
         
@@ -134,25 +150,12 @@ public class CharacterCreationPageController implements Initializable {
         Random rd=new Random();
         int health=rd.nextInt(120,151);
         int attack=rd.nextInt(10,16);
+        int speed=rd.nextInt(10,20);
         characterHP.setText(Integer.toString(health));
         characterAP.setText(Integer.toString(attack));
+        characterSpeed.setText(Integer.toString(speed));
         if(characterName.getText().isEmpty()||characterName.getText().toString().equals("Bob The Marksman")||characterName.getText().toString().equals("Bob The Assasin"))
             characterName.setText("Bob The Warrior");
-        double difficulty=(50.00/health)+(20.00/attack);
-        wrongID.setText(String.format("The difficulty level is: %.2f",difficulty));
-        int star=(int)(difficulty/0.5);
-        if (star==6)
-            difficultyLevel.setText("★ ★ ★ ★ ★ ★");
-        else if (star==5)
-            difficultyLevel.setText("★ ★ ★ ★ ★");
-        else if (star==4)
-            difficultyLevel.setText("★ ★ ★ ★");
-        else if (star==3)
-            difficultyLevel.setText("★ ★ ★");
-        else if (star==2)
-            difficultyLevel.setText("★ ★");
-        else
-            difficultyLevel.setText("★");
         toWarrior();
         
     }
@@ -164,25 +167,12 @@ public class CharacterCreationPageController implements Initializable {
         Random rd=new Random();
         int health=rd.nextInt(80,121);
         int attack=rd.nextInt(16,25);
+        int speed=rd.nextInt(23,31);
         characterHP.setText(Integer.toString(health));
         characterAP.setText(Integer.toString(attack));
+        characterSpeed.setText(Integer.toString(speed));
         if(characterName.getText().isEmpty()||characterName.getText().toString().equals("Bob The Warrior")||characterName.getText().toString().equals("Bob The Marksman"))
             characterName.setText("Bob The Assasin");
-        double difficulty=(50.00/health)+(20.00/attack);
-        wrongID.setText(String.format("The difficulty level is: %.2f",difficulty));
-        int star=(int)(difficulty/0.5);
-        if (star==6)
-            difficultyLevel.setText("★ ★ ★ ★ ★ ★");
-        else if (star==5)
-            difficultyLevel.setText("★ ★ ★ ★ ★");
-        else if (star==4)
-            difficultyLevel.setText("★ ★ ★ ★");
-        else if (star==3)
-            difficultyLevel.setText("★ ★ ★");
-        else if (star==2)
-            difficultyLevel.setText("★ ★");
-        else
-            difficultyLevel.setText("★");
         toAssasin();
     }
    
@@ -194,25 +184,12 @@ public class CharacterCreationPageController implements Initializable {
         Random rd=new Random();
         int health=rd.nextInt(50,86);
         int attack=rd.nextInt(24,31);
+        int speed=rd.nextInt(14,23);
         characterHP.setText(Integer.toString(health));
         characterAP.setText(Integer.toString(attack));
+        characterSpeed.setText(Integer.toString(speed));
         if(characterName.getText().isEmpty()||characterName.getText().toString().equals("Bob The Warrior")||characterName.getText().toString().equals("Bob The Assasin"))
             characterName.setText("Bob The Marksman");
-        double difficulty=(50.00/health)+(20.00/attack);
-        wrongID.setText(String.format("The difficulty level is: %.2f",difficulty));
-        int star=(int)(difficulty/0.5);
-        if (star==6)
-            difficultyLevel.setText("★ ★ ★ ★ ★ ★");
-        else if (star==5)
-            difficultyLevel.setText("★ ★ ★ ★ ★");
-        else if (star==4)
-            difficultyLevel.setText("★ ★ ★ ★");
-        else if (star==3)
-            difficultyLevel.setText("★ ★ ★");
-        else if (star==2)
-            difficultyLevel.setText("★ ★");
-        else
-            difficultyLevel.setText("★");
         toMarksman();
     }
     public void create() throws IOException{
@@ -222,6 +199,8 @@ public class CharacterCreationPageController implements Initializable {
         int attack=Integer.parseInt(characterAP.getText());
         String characterAttackShow=characterAP.getText();
         String characterRoleShow=role.getText();
+        int speed=Integer.parseInt(characterSpeed.getText());
+        String characterSpeedShow=characterSpeed.getText();
         double difficulty=(50.00/health)+(20.00/attack);
         difficultyShow.setText(String.format("The difficulty level is: %.2f",difficulty));
         int star=(int)(difficulty/0.5);
@@ -240,15 +219,22 @@ public class CharacterCreationPageController implements Initializable {
         popOut.setVisible(true);
         background.setVisible(false);
         background.managedProperty().bind(background.visibleProperty());
+        next.setVisible(false);
+        previous.setVisible(false);
         nameShow.setText(characterNameShow);
         roleShow.setText(characterRoleShow);
         hpShow.setText(characterHealthShow);
         apShow.setText(characterAttackShow);
+        speedShow.setText(characterSpeedShow);
+        status=1;
     }
     public void cancelCreation(ActionEvent event) throws IOException{
         popOut.setVisible(false);
         background.setVisible(true);
         popOut.managedProperty().bind(popOut.visibleProperty());
+        next.setVisible(true);
+        previous.setVisible(true);
+        status=0;
     }
     Image warriorPic=new Image(getClass().getClassLoader().getResourceAsStream("Mark 9.jpg"));
     Image assasinPic=new Image(getClass().getClassLoader().getResourceAsStream("Laser Boost.jpg"));
@@ -313,6 +299,27 @@ public class CharacterCreationPageController implements Initializable {
     public void logOut() throws IOException{
          Main m=new Main();
          m.changeScene("loginPage.fxml");
-     
      }
+    public void displayRules(ActionEvent event) throws IOException{
+        rules.setVisible(true);
+        background.setVisible(false);
+        background.managedProperty().bind(background.visibleProperty());
+        popOut.setVisible(false);
+        popOut.managedProperty().bind(popOut.visibleProperty());
+        warriorPicture.setVisible(false);
+    }
+    public void cancelRules(ActionEvent event) throws IOException{
+        if (status==0){
+            background.setVisible(true);
+            rules.setVisible(false);
+            rules.managedProperty().bind(rules.visibleProperty());
+            warriorPicture.setVisible(true);
+        }
+        else{
+            popOut.setVisible(true);
+            rules.setVisible(false);
+            rules.managedProperty().bind(rules.visibleProperty());
+            warriorPicture.setVisible(true);
+        }
+    }
 }

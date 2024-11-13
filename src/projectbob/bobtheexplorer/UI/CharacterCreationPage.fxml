@@ -16,9 +16,10 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="450.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="testing123.CharacterCreationPageController">
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="testing123.CharacterCreationPageController">
    <children>
-      <Label layoutX="38.0" layoutY="6.0" text="Welcome to Bob The Explorer! " textFill="#727731">
+      <Button fx:id="rulesButton" layoutX="14.0" layoutY="109.0" mnemonicParsing="false" onAction="#displayRules" text="How to Play?" />
+      <Label layoutX="63.0" layoutY="6.0" text="Welcome to Bob The Explorer! " textFill="#727731">
          <font>
             <Font name="System Bold Italic" size="26.0" />
          </font>
@@ -30,7 +31,7 @@
             </DropShadow>
          </effect>
       </Label>
-      <Label layoutX="105.0" layoutY="44.0" text="Let's Create Your Hero" textFill="#92965b">
+      <Label layoutX="130.0" layoutY="44.0" text="Let's Create Your Hero" textFill="#92965b">
          <font>
             <Font name="System Bold Italic" size="23.0" />
          </font>
@@ -38,7 +39,7 @@
             <Glow level="0.4" />
          </effect>
       </Label>
-      <VBox fx:id="background" alignment="TOP_CENTER" layoutX="66.0" layoutY="231.0" prefHeight="157.0" prefWidth="319.0">
+      <VBox fx:id="background" alignment="TOP_CENTER" layoutX="90.0" layoutY="235.0" prefHeight="209.0" prefWidth="319.0">
          <children>
             <HBox alignment="CENTER" prefHeight="34.0" prefWidth="200.0">
                <children>
@@ -49,21 +50,26 @@
                   </Label>
                </children>
             </HBox>
-            <HBox prefHeight="88.0" prefWidth="324.0" spacing="6.0">
+            <HBox prefHeight="128.0" prefWidth="319.0" spacing="6.0">
                <children>
                   <VBox alignment="TOP_RIGHT" prefHeight="59.0" prefWidth="115.0" spacing="4.0">
                      <children>
-                        <Label alignment="CENTER" prefHeight="23.0" prefWidth="37.0" text="Name:" textFill="#a3853a">
+                        <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="23.0" prefWidth="127.0" text="Name:" textFill="#a3853a">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Label>
-                        <Label alignment="TOP_RIGHT" contentDisplay="RIGHT" prefHeight="23.0" prefWidth="98.0" text="HP (50 - 150):" textAlignment="RIGHT" textFill="#a3853a" wrapText="true">
+                        <Label alignment="TOP_RIGHT" contentDisplay="RIGHT" prefHeight="23.0" prefWidth="125.0" text="HP (50 - 150):" textAlignment="RIGHT" textFill="#a3853a" wrapText="true">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Label>
                         <Label alignment="TOP_LEFT" graphicTextGap="0.0" prefHeight="42.0" prefWidth="114.0" text="Attack Power :       (10 - 30)" textAlignment="RIGHT" textFill="#a3853a" wrapText="true">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="TOP_RIGHT" contentDisplay="RIGHT" prefHeight="23.0" prefWidth="125.0" text="Speed (10 - 30):" textAlignment="RIGHT" textFill="#a3853a" wrapText="true">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
@@ -75,6 +81,7 @@
                         <TextField fx:id="characterName" depthTest="DISABLE" prefHeight="14.0" prefWidth="183.0" />
                         <TextField fx:id="characterHP" />
                         <TextField fx:id="characterAP" prefWidth="80.0" />
+                        <TextField fx:id="characterSpeed" prefWidth="80.0" />
                      </children>
                   </VBox>
                </children>
@@ -100,28 +107,28 @@
             </HBox>
          </children>
       </VBox>
-      <Label fx:id="wrongID" alignment="CENTER" layoutX="82.0" layoutY="216.0" prefHeight="18.0" prefWidth="285.0" textAlignment="CENTER" textFill="#ff3838" />
-      <ImageView fx:id="warriorPicture" fitHeight="122.0" fitWidth="191.0" layoutX="130.0" layoutY="78.0">
+      <Label fx:id="wrongID" alignment="CENTER" layoutX="107.0" layoutY="212.0" prefHeight="18.0" prefWidth="285.0" textAlignment="CENTER" textFill="#ff3838" />
+      <ImageView fx:id="warriorPicture" fitHeight="122.0" fitWidth="191.0" layoutX="155.0" layoutY="78.0">
          <image>
             <Image url="@../Mark%209.jpg" />
          </image>
       </ImageView>
-      <Label fx:id="role" alignment="CENTER" contentDisplay="CENTER" layoutX="158.0" layoutY="200.0" prefHeight="18.0" prefWidth="133.0" text="WARRIOR" textAlignment="CENTER">
+      <Label fx:id="role" alignment="CENTER" contentDisplay="CENTER" layoutX="183.0" layoutY="200.0" prefHeight="18.0" prefWidth="133.0" text="WARRIOR" textAlignment="CENTER">
          <font>
             <Font name="Bodoni MT Bold Italic" size="13.0" />
          </font>
       </Label>
-      <Button fx:id="previous" graphicTextGap="0.0" layoutX="91.0" layoutY="124.0" minWidth="30.0" mnemonicParsing="false" onAction="#previousButton" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: #ffebb0;" text="&lt;">
+      <Button fx:id="previous" graphicTextGap="0.0" layoutX="116.0" layoutY="124.0" minWidth="30.0" mnemonicParsing="false" onAction="#previousButton" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: #ffebb0;" text="&lt;">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Button>
-      <Button fx:id="next" graphicTextGap="0.0" layoutX="330.0" layoutY="124.0" minWidth="30.0" mnemonicParsing="false" onAction="#nextButton" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: #ffebb0;" text="&gt;">
+      <Button fx:id="next" graphicTextGap="0.0" layoutX="355.0" layoutY="124.0" minWidth="30.0" mnemonicParsing="false" onAction="#nextButton" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: #ffebb0;" text="&gt;">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Button>
-      <HBox layoutX="16.0" layoutY="78.0" prefHeight="47.0" prefWidth="133.0">
+      <HBox layoutX="16.0" layoutY="78.0" prefHeight="34.0" prefWidth="141.0">
          <children>
             <Label text="ID: ">
                <font>
@@ -135,22 +142,22 @@
             </Label>
          </children>
       </HBox>
-      <Button fx:id="logOutButton" contentDisplay="CENTER" graphicTextGap="0.0" layoutX="386.0" layoutY="63.0" mnemonicParsing="false" onAction="#logOut">
+      <Button fx:id="logOutButton" contentDisplay="CENTER" graphicTextGap="0.0" layoutX="411.0" layoutY="63.0" mnemonicParsing="false" onAction="#logOut">
          <padding>
             <Insets left="-10.0" right="-10.0" />
          </padding></Button>
-      <AnchorPane fx:id="popOut" layoutX="82.0" layoutY="221.0" prefHeight="186.0" prefWidth="287.0" style="-fx-background-color: #fff9d6;" visible="false">
+      <AnchorPane fx:id="popOut" layoutX="77.0" layoutY="221.0" prefHeight="209.0" prefWidth="347.0" style="-fx-background-color: #fff9d6;" visible="false">
          <children>
-            <VBox layoutX="1.0" layoutY="7.0" prefHeight="176.0" prefWidth="285.0">
+            <VBox layoutX="1.0" layoutY="7.0" prefHeight="209.0" prefWidth="346.0">
                <children>
-                  <Label alignment="CENTER" prefHeight="18.0" prefWidth="287.0" text="You are going to create hero:" textAlignment="CENTER" underline="true">
+                  <Label alignment="CENTER" prefHeight="27.0" prefWidth="358.0" text="You are going to create hero:" textAlignment="CENTER" underline="true">
                      <font>
                         <Font name="System Bold Italic" size="18.0" />
                      </font>
                   </Label>
-                  <HBox prefHeight="80.0" prefWidth="285.0">
+                  <HBox prefHeight="100.0" prefWidth="346.0">
                      <children>
-                        <VBox prefHeight="80.0" prefWidth="113.0">
+                        <VBox prefHeight="100.0" prefWidth="113.0">
                            <children>
                               <HBox prefHeight="20.0" prefWidth="100.0">
                                  <children>
@@ -188,9 +195,14 @@
                                     </Label>
                                  </children>
                               </HBox>
+                              <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="20.0" prefWidth="101.0" text="Speed :" textAlignment="RIGHT">
+                                 <font>
+                                    <Font name="Berlin Sans FB Bold" size="14.0" />
+                                 </font>
+                              </Label>
                            </children>
                         </VBox>
-                        <VBox prefHeight="80.0" prefWidth="180.0">
+                        <VBox prefHeight="100.0" prefWidth="180.0">
                            <children>
                               <HBox prefHeight="20.0" prefWidth="100.0">
                                  <children>
@@ -228,6 +240,11 @@
                                     </Label>
                                  </children>
                               </HBox>
+                              <Label fx:id="speedShow" prefHeight="20.0" prefWidth="183.0">
+                                 <font>
+                                    <Font name="Berlin Sans FB" size="14.0" />
+                                 </font>
+                              </Label>
                            </children>
                         </VBox>
                      </children>
@@ -237,8 +254,8 @@
                         <Font name="Bookman Old Style Bold Italic" size="12.0" />
                      </font>
                   </Label>
-                  <Label fx:id="difficultyLevel" alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="285.0" textAlignment="CENTER" textFill="#fbe632" />
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="25.0">
+                  <Label fx:id="difficultyLevel" alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="357.0" textAlignment="CENTER" textFill="#fbe632" />
+                  <HBox alignment="CENTER" prefHeight="55.0" prefWidth="346.0" spacing="25.0">
                      <children>
                         <Button mnemonicParsing="false" prefWidth="63.0" text="Confirm" />
                         <Button mnemonicParsing="false" onAction="#cancelCreation" text="Return" />
@@ -246,6 +263,11 @@
                   </HBox>
                </children>
             </VBox>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="rules" layoutX="14.0" layoutY="111.0" prefHeight="362.0" prefWidth="471.0" style="-fx-background-color: #ffd68a;" visible="false">
+         <children>
+            <Button fx:id="backToHeroCreationButton" layoutX="210.0" layoutY="331.0" mnemonicParsing="false" onAction="#cancelRules" text="Button" />
          </children>
       </AnchorPane>
    </children>

@@ -11,9 +11,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="450.0" prefWidth="450.0" style="-fx-background-color: LIGHTYELLOW;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="testing123.loginController">
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="500.0" style="-fx-background-color: LIGHTYELLOW;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="testing123.loginController">
    <children>
-      <VBox layoutY="140.0" prefHeight="200.0" prefWidth="450.0" spacing="15.0">
+      <VBox layoutY="140.0" prefHeight="200.0" prefWidth="500.0" spacing="15.0">
          <children>
             <HBox alignment="CENTER" prefHeight="27.0" prefWidth="307.0">
                <children>
@@ -66,7 +66,7 @@
             <Insets top="20.0" />
          </padding>
       </VBox>
-      <Label alignment="CENTER" contentDisplay="CENTER" graphicTextGap="7.0" layoutY="75.0" prefHeight="23.0" prefWidth="450.0" text="WELCOME TO BOB THE EXPLORER" textAlignment="CENTER" underline="true">
+      <Label alignment="CENTER" contentDisplay="CENTER" graphicTextGap="7.0" layoutY="75.0" prefHeight="23.0" prefWidth="500.0" text="WELCOME TO BOB THE EXPLORER" textAlignment="CENTER" underline="true">
          <font>
             <Font name="Elephant Italic" size="17.0" />
          </font>
@@ -78,7 +78,7 @@
             </Glow>
          </effect>
       </Label>
-      <HBox alignment="CENTER" layoutX="144.0" layoutY="108.0" prefHeight="31.0" prefWidth="180.0">
+      <HBox alignment="CENTER" layoutX="160.0" layoutY="108.0" prefHeight="31.0" prefWidth="180.0">
          <children>
             <Label fx:id="wrongID" alignment="CENTER" prefHeight="18.0" prefWidth="176.0" textAlignment="CENTER" />
          </children>

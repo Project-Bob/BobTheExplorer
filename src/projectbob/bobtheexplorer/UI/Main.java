@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package projectbob.bobtheexplorer.UI;
+package testing123;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -44,12 +44,12 @@ public class Main extends Application{
         primaryStage.setTitle("Bob The Explorer");
         ///button=new Button();
         //button.setText("Click me");
-        primaryStage.setWidth(450);
-        primaryStage.setHeight(450);
+        primaryStage.setWidth(500);
+        primaryStage.setHeight(500);
         Image icon=new Image("FB profile pic.jpg");
         primaryStage.getIcons().add(icon);
         primaryStage.setResizable(false);
-        primaryStage.setScene(new Scene(root,450,450));
+        primaryStage.setScene(new Scene(root,500,500));
         primaryStage.show();
     }
     public void changeScene(String fxml) throws IOException{

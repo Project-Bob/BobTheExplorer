@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
  */
-package projectbob.bobtheexplorer.UI;
+package testing123;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -47,14 +47,14 @@ public class RegisterPageController implements Initializable {
         checkRegister();
     }
     public void checkRegister() throws IOException{
-        if(newUsername.getText().toString().equals("baibaibai") && newPassword.getText().toString().equals("123")){
-            registrationStatus.setText("Success!");
-        }
-        else if(newUsername.getText().isEmpty()&& newPassword.getText().isEmpty()){
+        if(newUsername.getText().isEmpty()&& newPassword.getText().isEmpty()){
             registrationStatus.setText("Please fill up all data");
         }
-        else{
-            registrationStatus.setText("Wrong username or password !!!");
+        else if(newPassword.getText().equals(confirmPassword.getText()) && !(newUsername.getText().isEmpty())){
+            registrationStatus.setText("Success!");
+        } 
+        else if (!(newPassword.getText().equals(confirmPassword.getText()))){
+            registrationStatus.setText("Passwords are not tally");
         }
     }
      public void returnBack(ActionEvent event) throws IOException{
