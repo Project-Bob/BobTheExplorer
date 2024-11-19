@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
  */
-package testing123;
+package projectbob.bobtheexplorer.UI;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -36,6 +36,7 @@ public class CharacterCreationPageController implements Initializable {
     
     loginController getFile = new loginController();
     String username=getFile.usernameLogin;
+    public static String characterNameText="";
     int status=0;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -47,6 +48,10 @@ public class CharacterCreationPageController implements Initializable {
         imgView.setFitHeight(20);
         imgView.setFitWidth(40);
         logOutButton.setGraphic(imgView);
+        generator.setFocusTraversable(false);
+        confirmCharacterButton.setDefaultButton(false);
+        rulesButton.setFocusTraversable(false);
+        logOutButton.setFocusTraversable(false);
     }    
     @FXML
     private Button confirmButton;
@@ -60,6 +65,8 @@ public class CharacterCreationPageController implements Initializable {
     private Button next;
     @FXML
     private Button logOutButton;
+    @FXML
+    private Button confirmCharacterButton;
     @FXML
     private Button backToHeroCreationButton;
     @FXML
@@ -107,9 +114,6 @@ public class CharacterCreationPageController implements Initializable {
     
     public void createHero(ActionEvent event) throws IOException{
         createHero();
-    }
-    public void getID(String username) throws IOException{
-        System.out.print(username);
     }
     public void createHero() throws IOException{
         if(characterName.getText().isEmpty()|| characterHP.getText().isEmpty() || characterAP.getText().isEmpty()){
@@ -193,7 +197,7 @@ public class CharacterCreationPageController implements Initializable {
         toMarksman();
     }
     public void create() throws IOException{
-        String characterNameShow=characterName.getText();
+        characterNameText=characterName.getText();
         int health=Integer.parseInt(characterHP.getText());
         String characterHealthShow=characterHP.getText();
         int attack=Integer.parseInt(characterAP.getText());
@@ -221,12 +225,15 @@ public class CharacterCreationPageController implements Initializable {
         background.managedProperty().bind(background.visibleProperty());
         next.setVisible(false);
         previous.setVisible(false);
-        nameShow.setText(characterNameShow);
+        nameShow.setText(characterNameText);
         roleShow.setText(characterRoleShow);
         hpShow.setText(characterHealthShow);
         apShow.setText(characterAttackShow);
         speedShow.setText(characterSpeedShow);
         status=1;
+        confirmButton.setDefaultButton(false);
+        confirmCharacterButton.setDefaultButton(true);
+        
     }
     public void cancelCreation(ActionEvent event) throws IOException{
         popOut.setVisible(false);
@@ -235,6 +242,8 @@ public class CharacterCreationPageController implements Initializable {
         next.setVisible(true);
         previous.setVisible(true);
         status=0;
+        confirmCharacterButton.setDefaultButton(false);
+        confirmButton.setDefaultButton(true);
     }
     Image warriorPic=new Image(getClass().getClassLoader().getResourceAsStream("Mark 9.jpg"));
     Image assasinPic=new Image(getClass().getClassLoader().getResourceAsStream("Laser Boost.jpg"));
@@ -300,6 +309,10 @@ public class CharacterCreationPageController implements Initializable {
          Main m=new Main();
          m.changeScene("loginPage.fxml");
      }
+    public void goToDifficulty() throws IOException{
+         Main m=new Main();
+         m.changeScene("GameDifficultyPage.fxml");
+     }
     public void displayRules(ActionEvent event) throws IOException{
         rules.setVisible(true);
         background.setVisible(false);
@@ -307,16 +320,19 @@ public class CharacterCreationPageController implements Initializable {
         popOut.setVisible(false);
         popOut.managedProperty().bind(popOut.visibleProperty());
         warriorPicture.setVisible(false);
+        rulesButton.setVisible(false);
     }
     public void cancelRules(ActionEvent event) throws IOException{
         if (status==0){
             background.setVisible(true);
+            rulesButton.setVisible(true);
             rules.setVisible(false);
             rules.managedProperty().bind(rules.visibleProperty());
             warriorPicture.setVisible(true);
         }
         else{
             popOut.setVisible(true);
+            rulesButton.setVisible(true);
             rules.setVisible(false);
             rules.managedProperty().bind(rules.visibleProperty());
             warriorPicture.setVisible(true);

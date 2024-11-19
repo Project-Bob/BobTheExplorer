@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package testing123;
+package projectbob.bobtheexplorer.UI;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -16,7 +16,7 @@ import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.Glow;
 import javafx.scene.effect.Light.Distant;
-import javafx.scene.effect.Lightin;
+import javafx.scene.effect.Lighting;
 import javafx.scene.effect.Shadow;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
@@ -40,12 +40,13 @@ public class Main extends Application{
     @Override
     public void start(Stage primaryStage)throws Exception{
         stg=primaryStage;
-        Parent root=FXMLLoader.load(getClass().getResource("loginPage.fxml"));
+        Parent root=FXMLLoader.load(getClass().getResource("GamingDungeon.fxml"));
         primaryStage.setTitle("Bob The Explorer");
         ///button=new Button();
         //button.setText("Click me");
         primaryStage.setWidth(500);
         primaryStage.setHeight(500);
+        primaryStage.sizeToScene();
         Image icon=new Image("FB profile pic.jpg");
         primaryStage.getIcons().add(icon);
         primaryStage.setResizable(false);
