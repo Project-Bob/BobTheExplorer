@@ -47,9 +47,9 @@
      
     <ImageView fx:id="imgTest" fitHeight="320.0" fitWidth="480.0" layoutX="11.0" layoutY="56.0" pickOnBounds="true" preserveRatio="true" />
       <Button fx:id="rightButton" layoutX="438.0" layoutY="444.0" minWidth="53.0" mnemonicParsing="false" onAction="#goToRight" prefHeight="34.0" prefWidth="53.0" />
-      <Button fx:id="downButton" layoutX="385.0" layoutY="444.0" minWidth="53.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="53.0" />
-      <Button fx:id="leftButton" layoutX="331.0" layoutY="444.0" minWidth="53.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="29.0" />
-      <Button fx:id="upButton" layoutX="385.0" layoutY="396.0" minWidth="53.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="53.0" />
+      <Button fx:id="downButton" layoutX="385.0" layoutY="444.0" minWidth="53.0" mnemonicParsing="false" onAction="#goDown" prefHeight="34.0" prefWidth="53.0" />
+      <Button fx:id="leftButton" layoutX="331.0" layoutY="444.0" minWidth="53.0" mnemonicParsing="false" onAction="#goToLeft" prefHeight="34.0" prefWidth="29.0" />
+      <Button fx:id="upButton" layoutX="385.0" layoutY="396.0" minWidth="53.0" mnemonicParsing="false" onAction="#goUp" prefHeight="34.0" prefWidth="53.0" />
  
    </children>
 </AnchorPane>

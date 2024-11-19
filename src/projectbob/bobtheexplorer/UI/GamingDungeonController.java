@@ -26,6 +26,8 @@ import javafx.scene.text.TextAlignment;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import java.util.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 /**
  * FXML Controller class
@@ -43,9 +45,15 @@ public class GamingDungeonController implements Initializable {
     Canvas canvas = new Canvas(480, 320);  // Set the size of the canvas
     GraphicsContext gc = canvas.getGraphicsContext2D();
     Image rock = new Image(getClass().getClassLoader().getResourceAsStream("rock.png"));
-    Image monster= new Image(getClass().getClassLoader().getResourceAsStream("Boost Striker.jpg"));
+    Image goblin= new Image(getClass().getClassLoader().getResourceAsStream("goblin.png"));
+    Image slime= new Image(getClass().getClassLoader().getResourceAsStream("Slime_lvl1_Green.png"));
+    Image spider= new Image(getClass().getClassLoader().getResourceAsStream("Laser Boost.jpg"));
     Image item = new Image(getClass().getClassLoader().getResourceAsStream("Laser Boost.jpg"));
-    Image character = new Image(getClass().getClassLoader().getResourceAsStream("warrior.png"));
+    Image door = new Image(getClass().getClassLoader().getResourceAsStream("megatron.gif"));
+    Image characterToLeft = new Image(getClass().getClassLoader().getResourceAsStream("warriorToLeft.png"));
+    Image characterToRight = new Image(getClass().getClassLoader().getResourceAsStream("warriorToRight.png"));
+    boolean rightLeg=true;
+    boolean directionRight=true;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -78,7 +86,7 @@ public class GamingDungeonController implements Initializable {
         usernameID.setText(username);
         Random rd=new Random();
         int numMonster=rd.nextInt(1,4);
-        String[]monsterArray={"goblin","spider","alien"};
+        String[]monsterArray={"goblin","spider","slime"};
         int numItem=rd.nextInt(1,3);
         int countMonster=0;
         for (int j=0; j<320;j+=40){
@@ -93,13 +101,18 @@ public class GamingDungeonController implements Initializable {
             int positionX=rd.nextInt(0,12);
             int positionY=rd.nextInt(0,8);
             int position=positionY*12+positionX;
-            while(element[position].equals("monster")){
+            while(element[position].equals("goblin")||element[position].equals("spider")||element[position].equals("slime")){
                 positionX=rd.nextInt(0,12);
                 positionY=rd.nextInt(0,8);
                 position=positionY*12+positionX;
             }
             String monsterName=monsterArray[rd.nextInt(0,monsterArray.length)];
-            gc.drawImage(monster, positionX*40, positionY*40, 40,40); 
+            if (monsterName.equals("goblin"))
+                gc.drawImage(goblin, positionX*40, positionY*40, 40,40); 
+            else if (monsterName.equals("slime"))
+                gc.drawImage(slime, positionX*40, positionY*40, 40,40); 
+            else 
+                gc.drawImage(spider, positionX*40, positionY*40, 40,40); 
             element[position]=monsterName;
             countMonster++;
         }
@@ -111,7 +124,19 @@ public class GamingDungeonController implements Initializable {
                 positionCharacter=characterY*12;
         }
         element[positionCharacter]="Bob";
-        gc.drawImage(character, 0, characterY*40, 40,40); 
+        gc.drawImage(characterToRight, 0, characterY*40, 40,40); 
+        for (int i=0; i<element.length;i++){
+            System.out.println(i+" "+element[i]);
+        }
+        // Door Position
+        int doorY=rd.nextInt(0,8);
+        int positionDoor=(doorY+1)*12-1;
+        while(!(element[positionDoor].equals("rock"))){
+                doorY=rd.nextInt(0,8);
+                positionDoor=(doorY+1)*12-1;
+        }
+        element[positionDoor]="door";
+        gc.drawImage(door, 440, doorY*40, 40,40); 
         for (int i=0; i<element.length;i++){
             System.out.println(i+" "+element[i]);
         }
@@ -155,26 +180,128 @@ public class GamingDungeonController implements Initializable {
 
         return writableImage;
     }
-    public void goToRight(ActionEvent event) throws IOException{
+    public void goToRight() throws IOException{
         //get character current position(0-96)
         int characterCurrentBlockPosition=0;
         for (int i=0; i<element.length; i++){
             if (element[i].equals("Bob"))
                 characterCurrentBlockPosition=i;
         }
-        int row=(characterCurrentBlockPosition+1)/12;
-        int column=(characterCurrentBlockPosition+1)%12;
-        if (column>0)
-            row+=1;
-        System.out.println(row);
-        System.out.print(column);
+        int row=((characterCurrentBlockPosition)/12)+1;
+        int column=((characterCurrentBlockPosition)%12)+1;
         element[characterCurrentBlockPosition]="rock";
-        element[characterCurrentBlockPosition+1]="Bob";
+        if (characterCurrentBlockPosition%12!=11){
+            element[characterCurrentBlockPosition+1]="Bob";
+        }
+        else
+            element[characterCurrentBlockPosition]="Bob";
         int characterYPosition=(row-1)*40;
         int characterXPosition=(column-1)*40;
-        gc.drawImage(character, characterXPosition+30, characterYPosition, 40,40); 
+        int characterXPositionNew=characterXPosition+40;
+        int characterYPositionNew=characterYPosition;
+        if (characterXPositionNew>=480){
+            characterYPositionNew=characterYPosition;
+            characterXPositionNew=characterXPosition;
+        }
+        gc.clearRect(characterXPosition, characterYPosition, 40, 40);
+        gc.drawImage(rock,characterXPosition, characterYPosition, 40, 40);
+        gc.drawImage(characterToRight, characterXPositionNew, characterYPositionNew, 40,40); 
+        Image map = createImageFromCanvas(canvas);
+        imgTest.setImage(map);
+        directionRight=true;
+    }
+    public void goToLeft() throws IOException{
+        //get character current position(0-96)
+        int characterCurrentBlockPosition=0;
+        for (int i=0; i<element.length; i++){
+            if (element[i].equals("Bob"))
+                characterCurrentBlockPosition=i;
+        }
+        int row=((characterCurrentBlockPosition)/12)+1;
+        int column=((characterCurrentBlockPosition)%12)+1;
+        element[characterCurrentBlockPosition]="rock";
+        if (characterCurrentBlockPosition%12!=0){
+            element[characterCurrentBlockPosition-1]="Bob";
+        }
+        else
+            element[characterCurrentBlockPosition]="Bob";
+        int characterYPosition=(row-1)*40;
+        int characterXPosition=(column-1)*40;
+        int characterXPositionNew=characterXPosition-40;
+        int characterYPositionNew=characterYPosition;
+        if (characterXPositionNew<0){
+            characterYPositionNew=characterYPosition;
+            characterXPositionNew=characterXPosition;
+        }
+        gc.clearRect(characterXPosition, characterYPosition, 40, 40);
+        gc.drawImage(rock,characterXPosition, characterYPosition, 40, 40);
+        gc.drawImage(characterToLeft, characterXPositionNew, characterYPositionNew, 40,40); 
+        Image map = createImageFromCanvas(canvas);
+        imgTest.setImage(map);
+        directionRight=false;
+    }
+    public void goUp() throws IOException{
+        //get character current position(0-96)
+        int characterCurrentBlockPosition=0;
+        for (int i=0; i<element.length; i++){
+            if (element[i].equals("Bob"))
+                characterCurrentBlockPosition=i;
+        }
+        int row=((characterCurrentBlockPosition)/12)+1;
+        int column=((characterCurrentBlockPosition)%12)+1;
+        element[characterCurrentBlockPosition]="rock";
+        if (characterCurrentBlockPosition/12!=0){
+            element[characterCurrentBlockPosition-12]="Bob";
+        }
+        else
+            element[characterCurrentBlockPosition]="Bob";
+        int characterYPosition=(row-1)*40;
+        int characterXPosition=(column-1)*40;
+        int characterXPositionNew=characterXPosition;
+        int characterYPositionNew=characterYPosition-40;
+        if (characterYPositionNew<0){
+            characterYPositionNew=characterYPosition;
+            characterXPositionNew=characterXPosition;
+        }
+        gc.clearRect(characterXPosition, characterYPosition, 40, 40);
+        gc.drawImage(rock,characterXPosition, characterYPosition, 40, 40);
+        if(directionRight==true)
+            gc.drawImage(characterToRight, characterXPositionNew, characterYPositionNew, 40,40); 
+        else
+            gc.drawImage(characterToLeft, characterXPositionNew, characterYPositionNew, 40,40); 
         Image map = createImageFromCanvas(canvas);
         imgTest.setImage(map);
     }
-    
+    public void goDown() throws IOException{
+        //get character current position(0-96)
+        int characterCurrentBlockPosition=0;
+        for (int i=0; i<element.length; i++){
+            if (element[i].equals("Bob"))
+                characterCurrentBlockPosition=i;
+        }
+        int row=((characterCurrentBlockPosition)/12)+1;
+        int column=((characterCurrentBlockPosition)%12)+1;
+        element[characterCurrentBlockPosition]="rock";
+        if (characterCurrentBlockPosition/12!=7){
+            element[characterCurrentBlockPosition+12]="Bob";
+        }
+        else
+            element[characterCurrentBlockPosition]="Bob";
+        int characterYPosition=(row-1)*40;
+        int characterXPosition=(column-1)*40;
+        int characterXPositionNew=characterXPosition;
+        int characterYPositionNew=characterYPosition+40;
+        if (characterYPositionNew>=320){
+            characterYPositionNew=characterYPosition;
+            characterXPositionNew=characterXPosition;
+        }
+        gc.clearRect(characterXPosition, characterYPosition, 40, 40);
+        gc.drawImage(rock,characterXPosition, characterYPosition, 40, 40);
+        if(directionRight==true)
+            gc.drawImage(characterToRight, characterXPositionNew, characterYPositionNew, 40,40); 
+        else
+            gc.drawImage(characterToLeft, characterXPositionNew, characterYPositionNew, 40,40); 
+        Image map = createImageFromCanvas(canvas);
+        imgTest.setImage(map);
+    }
 }
