@@ -35,8 +35,7 @@ public class Inventory {
             System.out.println("Select item need to remove");
             System.out.println("1.Sword (S)");
             System.out.println("2.Potion (P)");
-            System.out.println("3.Booster (B)");
-            System.out.print("Enter your choice(S/P/B): ");
+            System.out.print("Enter your choice(S/P): ");
             char equipment = scanner.next().toUpperCase().charAt(0);
 
             Item itemToRemove = null;
@@ -47,9 +46,6 @@ public class Inventory {
                     break;
                 case 'P':
                     itemToRemove = findItem("Potion");
-                    break;
-                case 'B':
-                    itemToRemove = findItem("Booster");
                     break;
                 default:
                     System.out.println("Invalid choice. Please select a valid item.");

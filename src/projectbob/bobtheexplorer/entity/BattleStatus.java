@@ -67,8 +67,7 @@ public class BattleStatus{
                 System.out.println("Please select item in your inventory");
                 System.out.println("1.Sword (S)");
                 System.out.println("2.Potion (P)");
-                System.out.println("3.Booster (B)");
-                System.out.print("Enter your choice(S/P/B): ");
+                System.out.print("Enter your choice(S/P): ");
                 equipment = battle.next().toUpperCase().charAt(0);
 
                 Item itemToUse;
@@ -84,12 +83,6 @@ public class BattleStatus{
                         itemToUse = inventory.findItem("Potion");
                         if(itemToUse instanceof Potion potion){
                             potion.use();
-                        }
-                        break;
-                    case 'B':
-                        itemToUse = inventory.findItem("Booster");
-                        if(itemToUse instanceof Booster booster){
-                            booster.use();
                         }
                         break;
                     default:
