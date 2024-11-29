@@ -7,24 +7,43 @@ public class Inventory {
 
     Hero hero;
 
-    private ArrayList<Item> items;
+    private final ArrayList<Item> items;
 
-    public Inventory(){
+    public Inventory(Hero hero){
         items = new ArrayList<>();
+        this.hero = hero;
+        //Before starting the game player already got one potion and one sword
+        items.add(new Sword(hero,this));
+        items.add(new Potion(hero,this));
     }
 
 
     Scanner scanner = new Scanner(System.in);
 
     public void addItem(Item item) {
-        if (items.size() < 5) {
+
+        int choice;
+        if (items.size() < 50) {
             items.add(item);
-            System.out.println("You are successful add the item into inventory");
+            System.out.println("Added " + item.getClass().getSimpleName() + " to inventory.");
         } else {
-            System.out.println("Inventory is full. Cannot add more items.");
+            do {
+                System.out.println("Inventory is full.");
+                System.out.println("1. Replace an existing item");
+                System.out.println("2. Keep current inventory");
+                choice = scanner.nextInt();
+            }while(choice != 1 && choice != 2);
+            if (choice == 1) {
+                removeItem(item);
+                items.add(item);
+                System.out.println("Replaced an item with " + item.getClass().getSimpleName() + ".");
+            } else {
+                System.out.println("Kept current inventory.");
+            }
         }
     }
 
+    //user choose to remove item
     public void removeItem(Item item){
 
         if(items.isEmpty()){
@@ -60,6 +79,11 @@ public class Inventory {
         }
     }
 
+    //to remove the item after hero use
+    public void remove(Item item) {
+        items.remove(item);
+    }
+
     public Item findItem(String itemName) {
         for (Item item : items) {
             if (item.getClass().getSimpleName().equalsIgnoreCase(itemName)) {
@@ -79,7 +103,7 @@ public class Inventory {
         } else {
             System.out.println("Items in inventory:");
             for (Item item : items) {
-                System.out.println("- " + item);
+                System.out.println("- " + item.getClass().getSimpleName());
             }
         }
     }

@@ -1,13 +1,10 @@
 package projectbob.bobtheexplorer.entity;
 
-public class GoblinLevel1 extends MonsterLevel1{
+public class GoblinLevel1 extends Monster{
 
-    private static final String GOBLIN_NAME = "Goblin";
-    private static final int GOBLIN_HP = 40;
-    private static final int GOBLIN_ATTACKPOWER = 20;
-    private static final int GOBLIN_SPEED = 20;
-
-    public GoblinLevel1() {
-        super(GOBLIN_NAME, GOBLIN_HP, GOBLIN_ATTACKPOWER, GOBLIN_SPEED);
+    public GoblinLevel1( String Name,int HP, int ATTACKPOWER, int SPEED){
+        super(Name, HP, ATTACKPOWER, SPEED);
     }
+
+
 }

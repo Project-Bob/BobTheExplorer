@@ -2,9 +2,10 @@ package projectbob.bobtheexplorer.entity;
 
 public class Item {
 
-    Hero hero;
+    protected Hero hero;
 
-    public Item(){
+    public Item( Hero hero){
+        this.hero = hero;
     }
 
     public void use(){}
