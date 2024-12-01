@@ -150,12 +150,13 @@ public class Game {
                 // Display the current inventory
                 inventory.displayItems();
             }
+            /* 
             else if (targetTile == 'B') {
                 System.out.println("You encountered the boss!");
                 Monster monster = new Monster("BOSS",50, 20, 20);
                 BattleStatus battlestatus = new BattleStatus(hero, monster,inventory,this);
-                battlestatus.displayBattleStatus();
-            }
+                battlestatus.displayBattleStatus(); 
+            } */
             else if (targetTile == 'E'){
                 currentRoom[heroX][heroY] = 'E';
                 return;
