@@ -7,11 +7,13 @@ public class BattleStatus {
     private final Hero hero;
     private final Monster monster;
     private final Inventory inventory;
+    private final Game game;
 
-    public BattleStatus(Hero hero, Monster monster, Inventory inventory) {
+    public BattleStatus(Hero hero, Monster monster, Inventory inventory, Game game) {
         this.hero = hero;
         this.monster = monster;
         this.inventory = inventory;
+        this.game = game;
     }
 
     void displayBattleStatus() {
@@ -29,13 +31,16 @@ public class BattleStatus {
 
             switch (choice) {
                 case 'A':
+                    game.incrementNumAction();
                     performAttack();
                     break;
                 case 'U':
+                    game.incrementNumAction();
                     useItem(scanner);
                     inventory.displayItems();
                     break;
                 case 'R':
+                    game.incrementNumAction();
                     if (attemptEscape()) {
                         return; // Exit battle if escape is successful
                     }
@@ -51,6 +56,7 @@ public class BattleStatus {
                 break;
             } else if (monster.getHP() <= 0) {
                 System.out.println(monster.getName() + " has been defeated.");
+                game.incrementMonstersDefeated();
                 break;
             }
         }
@@ -146,4 +152,3 @@ public class BattleStatus {
         return escape;
     }
 }
-

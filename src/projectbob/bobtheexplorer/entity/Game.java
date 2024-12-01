@@ -7,19 +7,43 @@ public class Game {
     private final Hero hero;
     private Monster monster;
     private final Inventory inventory;
-    private final int difficulty;
+    private int difficultyMonster;
+    private int difficultyHero;
     private final Dungeon dungeon;
     private char[][] currentRoom;
     private int roomNumber;
+    private int numMonstersDefeated = 0;
+    private int numMove = 0;
+    private int numAction = 0;
 
-    public Game(Hero hero, Inventory inventory, int difficulty) {
+    public Game(Hero hero, Inventory inventory, int difficultyMonster, int difficultyHero) {
         this.hero = hero;
         this.inventory = inventory;
-        this.difficulty = difficulty;
+        this.difficultyMonster = difficultyMonster;
+        this.difficultyHero = difficultyHero;
         this.dungeon = new Dungeon();
         Random random = new Random();
         this.roomNumber = random.nextInt(dungeon.room.size());
         this.currentRoom = dungeon.room.get(roomNumber);
+    }
+
+    public int getNumMonstersDefeated() {
+        return numMonstersDefeated;
+    }
+
+    public void incrementMonstersDefeated() {
+        numMonstersDefeated++;
+    }
+
+    public int getNumMove(){
+        return numMove;
+    }
+
+    public int getNumAction(){
+        return numAction;
+    }
+    public void incrementNumAction(){
+        numAction++;
     }
 
     final int Dungeon_size = 10;
@@ -48,7 +72,6 @@ public class Game {
                 roomNumber = nextRoom;
 
                 currentRoom = dungeon.room.get(roomNumber);
-                currentRoom[heroX][heroY] = 'B'; // Clear old position
                 heroX = 4;
                 heroY = 3;
                 currentRoom[heroX][heroY] = 'H'; // Set new position
@@ -58,6 +81,7 @@ public class Game {
             System.out.println("\nUse W, A, S, D to move.");
             System.out.print("Enter your move (W=up, A=left, S=down, D=right, Q=quit):");
             char move = scanner.next().toUpperCase().charAt(0);
+            numMove++;
 
             switch (move) {
                 case 'W' -> HeroMove(-1, 0, currentRoom);
@@ -87,7 +111,7 @@ public class Game {
             char targetTile = currentRoom[newX][newY];
             if (targetTile == 'M') {
                 System.out.println("\nYou encounter a monster!");
-                typeMonster = switch (difficulty) {
+                typeMonster = switch (difficultyMonster) {
                     case 1 -> random.nextInt(1, 4);
                     case 2 -> random.nextInt(4, 7);
                     case 3 -> random.nextInt(7, 10);
@@ -105,7 +129,7 @@ public class Game {
                     case 9 : monster = new SpiderLevel3("SpiderLevel3", 30, 15, 25);break;
 
                 }
-                BattleStatus battlestatus = new BattleStatus(hero, monster,inventory);
+                BattleStatus battlestatus = new BattleStatus(hero, monster,inventory,this);
                 battlestatus.displayBattleStatus();
             }
             else if (targetTile == 'I') {
@@ -129,7 +153,7 @@ public class Game {
             else if (targetTile == 'B') {
                 System.out.println("You encountered the boss!");
                 Monster monster = new Monster("BOSS",50, 20, 20);
-                BattleStatus battlestatus = new BattleStatus(hero, monster,inventory);
+                BattleStatus battlestatus = new BattleStatus(hero, monster,inventory,this);
                 battlestatus.displayBattleStatus();
             }
             else if (targetTile == 'E'){
@@ -145,6 +169,16 @@ public class Game {
         else {
             System.out.println("You can't move there!");
         }
+        System.out.println("Number of Monster that defeated is " + getNumMonstersDefeated());
+        System.out.println("Total number of move and number of action is " + (getNumAction()+getNumMove()));
+    }
+
+    public void calculationScore(){
+        getNumMove();
+        getNumAction();
+        getNumMonstersDefeated();
+        int difficulty_Monster = difficultyMonster;
+        int difficulty_Hero = difficultyHero;
     }
 }
 

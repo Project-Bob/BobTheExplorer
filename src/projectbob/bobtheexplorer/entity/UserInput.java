@@ -7,7 +7,7 @@ public class UserInput {
 
         Scanner scanner = new Scanner(System.in);
         String character;
-        int HP=0,AP=0,S=0,difficulty;
+        int HP=0,AP=0,S=0,difficultyMonster;
 
         System.out.print("Enter name of the hero(Fighter, Marksman, Archer) : ");
         character = scanner.nextLine();
@@ -19,7 +19,7 @@ public class UserInput {
             character = scanner.nextLine();
         }
 
-        switch (character.toLowerCase()) {
+        switch (character.trim().toLowerCase()) {
             case "fighter" -> {
                 do {
                     System.out.print("Enter initial Health Point(HP)(100-150) : ");
@@ -78,13 +78,15 @@ public class UserInput {
 
         do{
             System.out.print("Enter difficulty (1,2,3) : ");
-            difficulty = scanner.nextInt();
-        }while(difficulty<1 || difficulty>3);
+            difficultyMonster = scanner.nextInt();
+        }while(difficultyMonster<1 || difficultyMonster>3);
+
+        int difficultyHero = (int)Math.round((HP/150*0.4)+(AP/30*0.4)+(S/30*0.2)*3);
 
         Hero hero = new Hero(character, HP, AP, S);
         Inventory inventory = new Inventory(hero);
 
-        Game game = new Game(hero, inventory, difficulty);
+        Game game = new Game(hero, inventory, difficultyMonster,difficultyHero);
         System.out.println("\nWelcome to Adventure Quest! Enter 'play' to start the game!");
         scanner.nextLine(); // Clear the buffer
         String start = scanner.nextLine();
