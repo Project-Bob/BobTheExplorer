@@ -47,7 +47,8 @@ public class Main extends Application{
         primaryStage.setWidth(500);
         primaryStage.setHeight(500);
         primaryStage.sizeToScene();
-        Image icon=new Image("FB profile pic.jpg");
+        Image icon = new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/FB profile pic.jpg"));
+//        Image icon=new Image(getClass().getResourceAsStream("../src/test/FB profile pic.jpg"));
         primaryStage.getIcons().add(icon);
         primaryStage.setResizable(false);
         primaryStage.setScene(new Scene(root,500,500));

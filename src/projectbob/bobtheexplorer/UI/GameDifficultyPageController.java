@@ -45,12 +45,12 @@ public class GameDifficultyPageController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         usernameID.setText(username);
-        Image imgLogout=new Image(getClass().getClassLoader().getResourceAsStream("logoutButton.png"));
+        Image imgLogout=new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/logoutButton.png"));
         ImageView imgLogoutView = new ImageView(imgLogout);
         imgLogoutView.setFitHeight(20);
         imgLogoutView.setFitWidth(40);
         logOutButton.setGraphic(imgLogoutView);
-        Image infoButton=new Image(getClass().getClassLoader().getResourceAsStream("infoButton.png"));
+        Image infoButton=new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/infoButton.png"));
         ImageView infoButtonViewLv1 = new ImageView(infoButton);
         infoButtonViewLv1.setFitHeight(40);
         infoButtonViewLv1.setFitWidth(40);
@@ -63,12 +63,12 @@ public class GameDifficultyPageController implements Initializable {
         lv1DetailsButton.setGraphic(infoButtonViewLv1);
         lv2DetailsButton.setGraphic(infoButtonViewLv2);
         lv3DetailsButton.setGraphic(infoButtonViewLv3);
-        Image imgLv1=new Image(getClass().getClassLoader().getResourceAsStream("LEVEL 1.png"));
+        Image imgLv1=new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/LEVEL 1.png"));
         ImageView imgLv1View = new ImageView(imgLv1);
         imgLv1View.setFitHeight(107);
         imgLv1View.setFitWidth(429);
         lv1Button.setGraphic(imgLv1View);
-        Image megatron=new Image(getClass().getClassLoader().getResourceAsStream("megatron.gif"));
+        Image megatron=new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/megatron.gif"));
         testGif.setImage(megatron);
         logOutButton.setFocusTraversable(false);
         lv1DetailsButton.setFocusTraversable(false);

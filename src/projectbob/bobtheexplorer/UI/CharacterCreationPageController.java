@@ -47,7 +47,7 @@ public class CharacterCreationPageController implements Initializable {
         // TODO
         usernameID.setText(username);
 
-        Image img=new Image(getClass().getClassLoader().getResourceAsStream("logoutButton.png"));
+        Image img=new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/logoutButton.png"));
         ImageView imgView = new ImageView(img);
         imgView.setFitHeight(20);
         imgView.setFitWidth(40);
@@ -249,9 +249,9 @@ public class CharacterCreationPageController implements Initializable {
         confirmCharacterButton.setDefaultButton(false);
         confirmButton.setDefaultButton(true);
     }
-    Image warriorPic=new Image(getClass().getClassLoader().getResourceAsStream("Mark 9.jpg"));
-    Image assassinPic=new Image(getClass().getClassLoader().getResourceAsStream("Laser Boost.jpg"));
-    Image marksmanPic=new Image(getClass().getClassLoader().getResourceAsStream("Boost Striker.jpg"));
+    Image warriorPic=new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/Mark 9.jpg"));
+    Image assassinPic=new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/Laser Boost.jpg"));
+    Image marksmanPic=new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/Boost Striker.jpg"));
     public void nextButton(ActionEvent event) throws IOException{
         for(int i=0;i<2;i++){
             if (role.getText().toString().equals("WARRIOR")){
