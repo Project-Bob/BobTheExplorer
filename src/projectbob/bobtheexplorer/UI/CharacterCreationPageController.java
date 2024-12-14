@@ -126,24 +126,15 @@ public class CharacterCreationPageController implements Initializable {
         else{
             int characterHPValue=Integer.parseInt(characterHP.getText());
             int characterAPValue=Integer.parseInt(characterAP.getText());
-            int characterSpeedValue=Integer.parseInt(characterAP.getText());
+            int characterSpeedValue=Integer.parseInt(characterSpeed.getText());
             if(characterHPValue>150 || characterHPValue<50){
                 wrongID.setText("The range of HP is between 50 and 150");
-            }
-            else{
-                wrongID.setText("");
             }
             if (characterAPValue>30 || characterAPValue<10){
                 wrongID.setText("The range of AP is between 10 and 30");
             }
-            else{
-                wrongID.setText("");
-            }
             if(characterSpeedValue>30 || characterSpeedValue<10){
                 wrongID.setText("The range of speed is between 10 and 30");
-            }
-            else{
-                wrongID.setText("");
             }
             if (characterHPValue<=150 && characterHPValue>=50 && characterAPValue<=30 && characterAPValue>=10 && characterSpeedValue<=30 && characterSpeedValue>=10){
                 create();
