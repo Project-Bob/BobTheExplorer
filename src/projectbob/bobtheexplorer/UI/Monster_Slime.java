@@ -45,4 +45,12 @@ public class Monster_Slime {
         }
         return new Monster_Slime(HP_Slime, AP_Slime, Speed_Slime);
     }
+
+    public void takeDamage(int damage) {
+        hp -= damage;
+        if (getHp() < 0) {
+            hp = 0;
+        }
+    }
+
 }

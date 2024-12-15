@@ -40,7 +40,7 @@ public class BattleStatusPageController implements Initializable {
 
     loginController getFile = new loginController();
     CharacterCreationPageController getDetails = new CharacterCreationPageController();
-    projectbob.bobtheexplorer.UI.GameDifficultyPageController pass = new projectbob.bobtheexplorer.UI.GameDifficultyPageController();
+    GameDifficultyPageController pass = new GameDifficultyPageController();
     GamingDungeonController getInfo = new GamingDungeonController();
     Monster_Slime monster;
     String characterName = getInfo.characterName;
@@ -48,7 +48,10 @@ public class BattleStatusPageController implements Initializable {
     String characterAttackShow = getInfo.characterAttackShow;
     String characterHealthShow = getInfo.characterHealthShow;
     String characterSpeedShow = getInfo.characterSpeedShow;
-    public int currentHealth = 0;
+    int HeroHP = Integer.parseInt(getInfo.characterHealthShow);
+    int HeroAP = Integer.parseInt(getInfo.characterAttackShow);
+    int HeroSpeed = Integer.parseInt(getInfo.characterSpeedShow);
+    
 
     @FXML
     private Button logOutButton;
@@ -97,17 +100,16 @@ public class BattleStatusPageController implements Initializable {
         Image Picture_Hero = new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/warriorToRight.png"));
         Hero_PIC.setImage(Picture_Hero);
         Name_Hero.setText(characterName);
-        currentHealth = Integer.parseInt(characterHealthShow);
-//        currentHealth--;
-        HP_Hero.setText("HP: " + currentHealth + " / " + characterHealthShow);
+        HeroStatus hero = new HeroStatus(HeroHP, HeroAP, HeroSpeed);
+        HP_Hero.setText("HP: " + hero.getHP_Hero() + " / " + hero.getMaxHP_Hero());
         Role_Hero.setText("Role: " + characterRoleShow);
-        AP_Hero.setText("Attack Power: " + characterAttackShow);
-        Speed_Hero.setText("Speed: " + characterSpeedShow);
+        AP_Hero.setText("Attack Power: " + hero.getAP_Hero());
+        Speed_Hero.setText("Speed: " + hero.getSpeed_Hero());
 
         //Monster Info
         Image Picture_Monster = new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/megatron.gif"));
         Monster_PIC.setImage(Picture_Monster);
-        Name_Monster.setText(getInfo.monster_Detect);
+        Name_Monster.setText(GamingDungeonController.monster_Detect);
         monster = Monster_Slime.createSlime(getInfo.difficultyLevel);
         HP_Monster.setText("HP: " + monster.getHp());
         AP_Monster.setText("Attack Power: " + monster.getAp());
@@ -118,12 +120,35 @@ public class BattleStatusPageController implements Initializable {
         Instruction.setTextFill(Color.DARKBLUE);
         Instruction.setWrapText(true);
         Instruction.setStyle("-fx-border-color: black; -fx-background-color: light yellow; -fx-padding: 15px;");
+
     }
 
-
-
     public void Attack_Hero() throws IOException{
+        HeroStatus hero = new HeroStatus(HeroHP, HeroAP, HeroSpeed);
+        if (HeroSpeed >= monster.getSpeed()) {
+            monster.takeDamage(HeroAP);
+            Instruction.setText(GamingDungeonController.monster_Detect + " take " + HeroAP + " damage. ");
+            if (monster.getHp() > 0) {
+                hero.takeDamage(monster.getAp());
+            }
+        }
+        else {
+            hero.takeDamage(monster.getAp());
+            if (HeroHP > 0) {
+                Instruction.setText(characterName + " take " + monster.getAp() + " damage. ");
+                monster.takeDamage(HeroAP);
+            }
+        }
 
+        //display the status of hero
+        HP_Hero.setText("HP: " + hero.getHP_Hero() + " / " + hero.getMaxHP_Hero());
+        AP_Hero.setText("Attack Power: " + hero.getAP_Hero());
+        Speed_Hero.setText("Speed: " + hero.getSpeed_Hero());
+
+        //display the status of monster
+        HP_Monster.setText("HP: " + monster.getHp());
+        AP_Monster.setText("Attack Power: " + monster.getAp());
+        Speed_Monster.setText("Speed: " + monster.getSpeed());
     }
 
     public void logOut() throws IOException {

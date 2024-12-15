@@ -19,7 +19,7 @@ public class HeroStatus {
     }
 
     public void setHP(int HP) {
-        this.HP_Hero = HP_Hero;
+        this.HP_Hero = HP;
     }
 
     public void setAP(int AP_Hero) {
@@ -27,7 +27,7 @@ public class HeroStatus {
     }
 
     public void setSpeed(int speed) {
-        this.speed_Hero = speed_Hero;
+        this.speed_Hero = speed;
     }
 
 //    public String getName() {
@@ -50,4 +50,10 @@ public class HeroStatus {
         return speed_Hero;
     }
 
+    public void takeDamage(int damage) {
+        HP_Hero -= damage;
+        if (getHP_Hero() < 0) {
+            HP_Hero = 0;
+        }
+    }
 }

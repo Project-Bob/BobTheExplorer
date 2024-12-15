@@ -53,7 +53,6 @@ public class GamingDungeonController implements Initializable {
     loginController getFile = new loginController();
     CharacterCreationPageController getDetails = new CharacterCreationPageController();
     projectbob.bobtheexplorer.UI.GameDifficultyPageController pass = new projectbob.bobtheexplorer.UI.GameDifficultyPageController();
-    public Monster_Slime monster;
     String username=getFile.usernameLogin;
     String characterName=pass.characterName;
     String characterRoleShow=pass.characterRole;
@@ -61,7 +60,7 @@ public class GamingDungeonController implements Initializable {
     String characterHealthShow=getDetails.characterHealthShow;
     String characterSpeedShow=getDetails.characterSpeedShow;
     String difficultyLevel=pass.levelDifficulty;
-    String monster_Detect = "";
+    public static String monster_Detect;
     String[]element=new String[96];
     String[]items=new String[6];
     Canvas canvas = new Canvas(480, 320);  // Set the size of the canvas
@@ -561,9 +560,7 @@ public class GamingDungeonController implements Initializable {
             if (element[i].equals("Bob"))
                 characterCurrentBlockPosition=i;
         }
-//        //detect monster
-//        detectMonsterHorizontally(characterCurrentBlockPosition+1); //error
-
+        //detect the monster
         detectMonster(characterCurrentBlockPosition,"right");
 
         int row=((characterCurrentBlockPosition)/12)+1;
@@ -599,6 +596,7 @@ public class GamingDungeonController implements Initializable {
                 characterCurrentBlockPosition=i;
         }
 
+        //detect monster
         detectMonster(characterCurrentBlockPosition,"left");
 
         int row=((characterCurrentBlockPosition)/12)+1;
@@ -618,9 +616,6 @@ public class GamingDungeonController implements Initializable {
             characterXPositionNew=characterXPosition;
         }
 
-//        //detect monster
-//        detectMonsterHorizontally(characterXPositionNew);
-
         gc.clearRect(characterXPosition, characterYPosition, 40, 40);
         gc.drawImage(rock,characterXPosition, characterYPosition, 40, 40);
         gc.drawImage(characterToLeft, characterXPositionNew, characterYPositionNew, 40,40);
@@ -636,6 +631,7 @@ public class GamingDungeonController implements Initializable {
                 characterCurrentBlockPosition=i;
         }
 
+        //detect monster
         detectMonster(characterCurrentBlockPosition,"up");
 
         int row=((characterCurrentBlockPosition)/12)+1;
@@ -655,9 +651,6 @@ public class GamingDungeonController implements Initializable {
             characterXPositionNew=characterXPosition;
         }
 
-//        //check whether there is monster or not
-//        detectMonsterVertically(characterYPositionNew);
-
         gc.clearRect(characterXPosition, characterYPosition, 40, 40);
         gc.drawImage(rock,characterXPosition, characterYPosition, 40, 40);
         if(directionRight==true)
@@ -675,6 +668,7 @@ public class GamingDungeonController implements Initializable {
                 characterCurrentBlockPosition=i;
         }
 
+        //detect monster
         detectMonster(characterCurrentBlockPosition,"down");
 
         int row=((characterCurrentBlockPosition)/12)+1;
@@ -696,8 +690,6 @@ public class GamingDungeonController implements Initializable {
             characterXPositionNew=characterXPosition;
         }
 
-//        //detect there is monster or not
-//        detectMonsterVertically(characterYPositionNew);
 
         gc.clearRect(characterXPosition, characterYPosition, 40, 40);
         gc.drawImage(rock,characterXPosition, characterYPosition, 40, 40);
@@ -716,6 +708,7 @@ public class GamingDungeonController implements Initializable {
                 if(characterCurrentBlockPosition%12!=11&&(element[characterCurrentBlockPosition+1].equals("slime")||
                         element[characterCurrentBlockPosition+1].equals("goblin")||
                         element[characterCurrentBlockPosition+1].equals("spider"))){
+                    monster_Detect = element[characterCurrentBlockPosition+1].toUpperCase();
                     m.changeScene("BattleStatusPage.fxml");
                 }
                 break;
@@ -723,6 +716,7 @@ public class GamingDungeonController implements Initializable {
                 if(characterCurrentBlockPosition%12!=0&&(element[characterCurrentBlockPosition-1].equals("slime")||
                         element[characterCurrentBlockPosition-1].equals("goblin")||
                         element[characterCurrentBlockPosition-1].equals("spider"))){
+                    monster_Detect = element[characterCurrentBlockPosition-1].toUpperCase();
                     m.changeScene("BattleStatusPage.fxml");
                 }
                 break;
@@ -730,6 +724,7 @@ public class GamingDungeonController implements Initializable {
                 if(characterCurrentBlockPosition/12!=0&&(element[characterCurrentBlockPosition-12].equals("slime")||
                         element[characterCurrentBlockPosition-12].equals("goblin")||
                         element[characterCurrentBlockPosition-12].equals("spider"))){
+                    monster_Detect = element[characterCurrentBlockPosition-12].toUpperCase();
                     m.changeScene("BattleStatusPage.fxml");
                 }
                 break;
@@ -737,30 +732,13 @@ public class GamingDungeonController implements Initializable {
                 if(characterCurrentBlockPosition/12!=7&&(element[characterCurrentBlockPosition+12].equals("slime")||
                         element[characterCurrentBlockPosition+12].equals("goblin")||
                         element[characterCurrentBlockPosition+12].equals("spider"))){
+                    monster_Detect = element[characterCurrentBlockPosition+12].toUpperCase();
                     m.changeScene("BattleStatusPage.fxml");
                 }
                 break;
         }
     }
-/*
-    public void detectMonsterVertically(int characterYPositionNew) throws IOException {
-        if(element[characterYPositionNew].equals("slime") || element[characterYPositionNew].equals("goblin") || element[characterYPositionNew].equals("spider")){
-            monster_Detect = "Slime";
-            monster = Monster_Slime.createSlime(difficultyLevel); //error
-            Main m = new Main();
-            m.changeScene("BattleStatusPage.fxml");
-        }
-    }
 
-    public void detectMonsterHorizontally(int characterXPositionNew) throws IOException{
-        if(element[characterXPositionNew].equals("slime") || element[characterXPositionNew].equals("goblin") || element[characterXPositionNew].equals("spider")){
-            monster_Detect = "Slime";
-            monster = Monster_Slime.createSlime(difficultyLevel);
-            Main m = new Main();
-            m.changeScene("BattleStatusPage.fxml");
-        }
-    }
-*/
     @FXML
     private Button CheckingButton;
     public void checking() throws IOException{
