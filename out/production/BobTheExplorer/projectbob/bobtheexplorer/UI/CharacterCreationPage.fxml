@@ -93,11 +93,11 @@
                      </font>
                   </Button>
                   <MenuButton fx:id="generator" accessibleRole="BUTTON" mnemonicParsing="false" popupSide="TOP" prefHeight="27.0" prefWidth="90.0" style="-fx-background-color: #a3a35b;" text="Generate" textAlignment="CENTER" textFill="WHITE">
-                    <items>
-                      <MenuItem fx:id="warrior" mnemonicParsing="false" onAction="#generateWarrior" text="Warrior" />
-                      <MenuItem fx:id="assasin" mnemonicParsing="false" onAction="#generateAssasin" text="Assasin" />
-                      <MenuItem fx:id="marksman" mnemonicParsing="false" onAction="#generateMarksman" text="Marksman" />
-                    </items>
+                     <items>
+                        <MenuItem fx:id="warrior" mnemonicParsing="false" onAction="#generateWarrior" text="Warrior" />
+                        <MenuItem fx:id="assasin" mnemonicParsing="false" onAction="#generateAssassin" text="Assassin" />
+                        <MenuItem fx:id="marksman" mnemonicParsing="false" onAction="#generateMarksman" text="Marksman" />
+                     </items>
                      <font>
                         <Font name="System Bold Italic" size="12.0" />
                      </font>
@@ -109,7 +109,7 @@
       <Label fx:id="wrongID" alignment="CENTER" layoutX="107.0" layoutY="212.0" prefHeight="18.0" prefWidth="285.0" textAlignment="CENTER" textFill="#ff3838" />
       <ImageView fx:id="warriorPicture" fitHeight="122.0" fitWidth="191.0" layoutX="155.0" layoutY="78.0">
          <image>
-            <Image url="@../Mark 9.jpg" />
+            <Image url="@../Mark%209.jpg" />
          </image>
       </ImageView>
       <Label fx:id="role" alignment="CENTER" contentDisplay="CENTER" layoutX="183.0" layoutY="200.0" prefHeight="18.0" prefWidth="133.0" text="WARRIOR" textAlignment="CENTER">

@@ -564,6 +564,8 @@ public class GamingDungeonController implements Initializable {
 //        //detect monster
 //        detectMonsterHorizontally(characterCurrentBlockPosition+1); //error
 
+        detectMonster(characterCurrentBlockPosition,"right");
+
         int row=((characterCurrentBlockPosition)/12)+1;
         int column=((characterCurrentBlockPosition)%12)+1;
         element[characterCurrentBlockPosition]="rock";
@@ -596,6 +598,9 @@ public class GamingDungeonController implements Initializable {
             if (element[i].equals("Bob"))
                 characterCurrentBlockPosition=i;
         }
+
+        detectMonster(characterCurrentBlockPosition,"left");
+
         int row=((characterCurrentBlockPosition)/12)+1;
         int column=((characterCurrentBlockPosition)%12)+1;
         element[characterCurrentBlockPosition]="rock";
@@ -630,6 +635,9 @@ public class GamingDungeonController implements Initializable {
             if (element[i].equals("Bob"))
                 characterCurrentBlockPosition=i;
         }
+
+        detectMonster(characterCurrentBlockPosition,"up");
+
         int row=((characterCurrentBlockPosition)/12)+1;
         int column=((characterCurrentBlockPosition)%12)+1;
         element[characterCurrentBlockPosition]="rock";
@@ -666,6 +674,9 @@ public class GamingDungeonController implements Initializable {
             if (element[i].equals("Bob"))
                 characterCurrentBlockPosition=i;
         }
+
+        detectMonster(characterCurrentBlockPosition,"down");
+
         int row=((characterCurrentBlockPosition)/12)+1;
         int column=((characterCurrentBlockPosition)%12)+1;
         element[characterCurrentBlockPosition]="rock";
@@ -698,6 +709,40 @@ public class GamingDungeonController implements Initializable {
         imgTest.setImage(map);
     }
 
+    public void detectMonster(int characterCurrentBlockPosition, String direction )throws IOException{
+        Main m = new Main();
+        switch(direction){
+            case "right":
+                if(characterCurrentBlockPosition%12!=11&&(element[characterCurrentBlockPosition+1].equals("slime")||
+                        element[characterCurrentBlockPosition+1].equals("goblin")||
+                        element[characterCurrentBlockPosition+1].equals("spider"))){
+                    m.changeScene("BattleStatusPage.fxml");
+                }
+                break;
+            case "left":
+                if(characterCurrentBlockPosition%12!=0&&(element[characterCurrentBlockPosition-1].equals("slime")||
+                        element[characterCurrentBlockPosition-1].equals("goblin")||
+                        element[characterCurrentBlockPosition-1].equals("spider"))){
+                    m.changeScene("BattleStatusPage.fxml");
+                }
+                break;
+            case "up":
+                if(characterCurrentBlockPosition/12!=0&&(element[characterCurrentBlockPosition-12].equals("slime")||
+                        element[characterCurrentBlockPosition-12].equals("goblin")||
+                        element[characterCurrentBlockPosition-12].equals("spider"))){
+                    m.changeScene("BattleStatusPage.fxml");
+                }
+                break;
+            case "down":
+                if(characterCurrentBlockPosition/12!=7&&(element[characterCurrentBlockPosition+12].equals("slime")||
+                        element[characterCurrentBlockPosition+12].equals("goblin")||
+                        element[characterCurrentBlockPosition+12].equals("spider"))){
+                    m.changeScene("BattleStatusPage.fxml");
+                }
+                break;
+        }
+    }
+/*
     public void detectMonsterVertically(int characterYPositionNew) throws IOException {
         if(element[characterYPositionNew].equals("slime") || element[characterYPositionNew].equals("goblin") || element[characterYPositionNew].equals("spider")){
             monster_Detect = "Slime";
@@ -715,11 +760,13 @@ public class GamingDungeonController implements Initializable {
             m.changeScene("BattleStatusPage.fxml");
         }
     }
-
+*/
     @FXML
     private Button CheckingButton;
     public void checking() throws IOException{
         Main m= new Main();
         m.changeScene("BattleStatusPage.fxml");
     }
+
+
 }

@@ -77,7 +77,7 @@
                   </Label>
                   <HBox alignment="CENTER" prefHeight="45.0" prefWidth="480.0" spacing="20.0">
                      <children>
-                        <Button fx:id="enterGameButton" defaultButton="true" mnemonicParsing="false" text="ENTER" />
+                        <Button fx:id="enterGameButton" defaultButton="true" mnemonicParsing="false" onAction="#enterGame" text="ENTER" />
                         <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#cancelPage" text="Cancel" />
                      </children>
                   </HBox>
