@@ -33,7 +33,6 @@ public class CharacterCreationPageController implements Initializable {
     /**
      * Initializes the controller class.
      */
-
     loginController getFile = new loginController();
     String username=getFile.usernameLogin;
     public static String characterNameText="";
@@ -124,21 +123,36 @@ public class CharacterCreationPageController implements Initializable {
             wrongID.setText("Please fill up all data");
         }
         else{
-            int characterHPValue=Integer.parseInt(characterHP.getText());
-            int characterAPValue=Integer.parseInt(characterAP.getText());
-            int characterSpeedValue=Integer.parseInt(characterSpeed.getText());
+            int characterHPValue = 0;
+            int characterAPValue = 0;
+            int characterSpeedValue = 0;
+
+            try {
+                characterHPValue = Integer.parseInt(characterHP.getText());
+                characterAPValue = Integer.parseInt(characterAP.getText());
+                characterSpeedValue = Integer.parseInt(characterSpeed.getText());
+            }
+            catch(NumberFormatException e){
+                wrongID.setText("Please enter integer value only");
+                return;
+            }
             if(characterHPValue>150 || characterHPValue<50){
                 wrongID.setText("The range of HP is between 50 and 150");
+                return;
             }
             if (characterAPValue>30 || characterAPValue<10){
                 wrongID.setText("The range of AP is between 10 and 30");
+                return;
             }
             if(characterSpeedValue>30 || characterSpeedValue<10){
                 wrongID.setText("The range of speed is between 10 and 30");
+                return;
             }
-            if (characterHPValue<=150 && characterHPValue>=50 && characterAPValue<=30 && characterAPValue>=10 && characterSpeedValue<=30 && characterSpeedValue>=10){
-                create();
-            }
+            //pass the data for other class uses
+//            HeroStatus hero = new HeroStatus(characterHPValue, characterAPValue, characterSpeedValue);
+
+            //hero is created only when all the requirement is meet
+            create();
 
         }
     }
@@ -304,6 +318,7 @@ public class CharacterCreationPageController implements Initializable {
         Main m=new Main();
         m.changeScene("loginPage.fxml");
     }
+
     public void goToDifficulty() throws IOException{
         Main m=new Main();
         m.changeScene("GameDifficultyPage.fxml");

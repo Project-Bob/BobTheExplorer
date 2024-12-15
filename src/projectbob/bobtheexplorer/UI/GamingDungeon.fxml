@@ -74,6 +74,7 @@
          </children>
       </VBox>
       <ImageView fx:id="itemBar" fitHeight="30.0" fitWidth="200.0" layoutX="35.0" layoutY="460.0" pickOnBounds="true" preserveRatio="true" />
+      <Button fx:id="CheckingButton" layoutX="209.0" layoutY="431.0" mnemonicParsing="false" onAction="#checking" text="Button" />
 
    </children>
 </AnchorPane>
