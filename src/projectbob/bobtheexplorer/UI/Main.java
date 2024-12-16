@@ -40,7 +40,7 @@ public class Main extends Application{
     @Override
     public void start(Stage primaryStage)throws Exception{
         stg=primaryStage;
-        Parent root=FXMLLoader.load(getClass().getResource("GamingDungeon.fxml"));
+        Parent root=FXMLLoader.load(getClass().getResource("loginPage.fxml"));
         primaryStage.setTitle("Bob The Explorer");
         ///button=new Button();
         //button.setText("Click me");

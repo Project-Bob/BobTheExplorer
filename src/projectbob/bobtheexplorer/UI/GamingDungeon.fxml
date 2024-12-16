@@ -7,12 +7,13 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="testing123.GamingDungeonController">
    <children>
-      <Label layoutX="192.0" layoutY="10.0" text="Dungeon 1" textFill="#727731">
+      <Label layoutX="194.0" layoutY="3.0" text="Dungeon 1" textFill="#727731">
          <font>
             <Font name="System Bold Italic" size="26.0" />
          </font>
@@ -45,11 +46,68 @@
          </padding>
       </Button>
      
-    <ImageView fx:id="imgTest" fitHeight="320.0" fitWidth="480.0" layoutX="11.0" layoutY="56.0" pickOnBounds="true" preserveRatio="true" />
+    <ImageView fx:id="imgTest" fitHeight="320.0" fitWidth="480.0" layoutX="10.0" layoutY="41.0" pickOnBounds="true" preserveRatio="true" />
       <Button fx:id="rightButton" layoutX="438.0" layoutY="444.0" minWidth="53.0" mnemonicParsing="false" onAction="#goToRight" prefHeight="34.0" prefWidth="53.0" />
+      <Button fx:id="leftButton" layoutX="331.0" layoutY="444.0" minWidth="53.0" mnemonicParsing="false" onAction="#goToLeft" prefHeight="34.0" prefWidth="53.0" />
       <Button fx:id="downButton" layoutX="385.0" layoutY="444.0" minWidth="53.0" mnemonicParsing="false" onAction="#goDown" prefHeight="34.0" prefWidth="53.0" />
-      <Button fx:id="leftButton" layoutX="331.0" layoutY="444.0" minWidth="53.0" mnemonicParsing="false" onAction="#goToLeft" prefHeight="34.0" prefWidth="29.0" />
       <Button fx:id="upButton" layoutX="385.0" layoutY="396.0" minWidth="53.0" mnemonicParsing="false" onAction="#goUp" prefHeight="34.0" prefWidth="53.0" />
- 
+      <VBox layoutX="14.0" layoutY="361.0" prefHeight="88.0" prefWidth="166.0">
+         <children>
+            <Label fx:id="name" prefHeight="16.0" prefWidth="179.0">
+               <font>
+                  <Font name="Franklin Gothic Heavy Italic" size="12.0" />
+               </font>
+            </Label>
+            <HBox prefHeight="58.0" prefWidth="199.0">
+               <children>
+                  <ImageView fx:id="profilePic" fitHeight="68.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true" />
+                  <VBox prefHeight="58.0" prefWidth="148.0">
+                     <children>
+                        <Label fx:id="hpBar" prefHeight="18.0" prefWidth="166.0" text="Label" />
+                        <Label fx:id="characterRole" prefHeight="18.0" prefWidth="133.0" text="Label" />
+                        <Label fx:id="characterAP" prefHeight="18.0" prefWidth="176.0" text="Label" />
+                        <Label fx:id="characterSpeed" prefHeight="18.0" prefWidth="164.0" text="Label" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <ImageView fx:id="itemBar" fitHeight="30.0" fitWidth="200.0" layoutX="35.0" layoutY="460.0" pickOnBounds="true" preserveRatio="true" />
+      <Button fx:id="buttonItem1" layoutX="37.5" layoutY="462.5" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" visible="false" />
+      <Button fx:id="buttonItem2" layoutX="67.5" layoutY="462.5" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" visible="false" />
+      <Button fx:id="buttonItem3" layoutX="97.5" layoutY="462.5" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" visible="false" />
+      <Button fx:id="buttonItem4" layoutX="127.5" layoutY="462.5" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" visible="false" />
+      <Button fx:id="buttonItem5" layoutX="157.5" layoutY="462.5" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" visible="false" />
+      <Button fx:id="buttonItem6" layoutX="187.5" layoutY="462.5" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" visible="false" />
+      <AnchorPane fx:id="itemOverflow" layoutX="45.0" layoutY="121.0" prefHeight="146.0" prefWidth="430.0" style="-fx-background-color: #fff04d;">
+         <children>
+            <ImageView fx:id="itemBarDelete" fitHeight="50.0" fitWidth="300.0" layoutX="65.0" layoutY="61.0" pickOnBounds="true" preserveRatio="true" />
+            <HBox layoutX="148.0" layoutY="117.0" prefHeight="30.0" prefWidth="133.0" spacing="20.0">
+               <children>
+                  <Button fx:id="confirmChangeItem" mnemonicParsing="false" text="Confirm" />
+                  <Button fx:id="ignoreButton" mnemonicParsing="false" onAction="#closeItemReplaceBar" text="Ignore" />
+               </children>
+            </HBox>
+            <Label layoutX="115.0" layoutY="1.0" text="Your inventory is full. ">
+               <font>
+                  <Font name="Comic Sans MS Bold Italic" size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="5.0" layoutY="18.0" text="Kindly select an item to be replaced with">
+               <font>
+                  <Font name="Comic Sans MS Bold Italic" size="17.0" />
+               </font>
+            </Label>
+            <Button fx:id="buttonItemReplace1" layoutX="67.5" layoutY="63.5" mnemonicParsing="false" onAction="#selectButtonReplace1" prefHeight="45.0" prefWidth="45.0" />
+            <Button fx:id="buttonItemReplace2" layoutX="117.5" layoutY="63.5" mnemonicParsing="false" onAction="#selectButtonReplace2" prefHeight="45.0" prefWidth="45.0" />
+            <Button fx:id="buttonItemReplace3" layoutX="167.5" layoutY="63.5" mnemonicParsing="false" onAction="#selectButtonReplace3" prefHeight="45.0" prefWidth="45.0" />
+            <Button fx:id="buttonItemReplace4" layoutX="217.5" layoutY="63.5" mnemonicParsing="false" onAction="#selectButtonReplace4" prefHeight="45.0" prefWidth="45.0" />
+            <Button fx:id="buttonItemReplace5" layoutX="267.5" layoutY="63.5" mnemonicParsing="false" onAction="#selectButtonReplace5" prefHeight="45.0" prefWidth="45.0" />
+            <Button fx:id="buttonItemReplace6" layoutX="317.5" layoutY="63.5" mnemonicParsing="false" onAction="#selectButtonReplace6" prefHeight="45.0" prefWidth="45.0" />
+            <ImageView fx:id="imageItemNew" fitHeight="46.0" fitWidth="46.0" layoutX="360.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true" />
+            
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

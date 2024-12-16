@@ -95,7 +95,7 @@
                   <MenuButton fx:id="generator" accessibleRole="BUTTON" mnemonicParsing="false" popupSide="TOP" prefHeight="27.0" prefWidth="90.0" style="-fx-background-color: #a3a35b;" text="Generate" textAlignment="CENTER" textFill="WHITE">
                     <items>
                       <MenuItem fx:id="warrior" mnemonicParsing="false" onAction="#generateWarrior" text="Warrior" />
-                      <MenuItem fx:id="assasin" mnemonicParsing="false" onAction="#generateAssasin" text="Assasin" />
+                      <MenuItem fx:id="assasin" mnemonicParsing="false" onAction="#generateAssassin" text="Assassin" />
                       <MenuItem fx:id="marksman" mnemonicParsing="false" onAction="#generateMarksman" text="Marksman" />
                     </items>
                      <font>

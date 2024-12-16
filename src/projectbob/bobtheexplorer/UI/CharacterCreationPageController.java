@@ -37,6 +37,10 @@ public class CharacterCreationPageController implements Initializable {
     loginController getFile = new loginController();
     String username=getFile.usernameLogin;
     public static String characterNameText="";
+    public static String characterRole="";
+    public static String characterHealthShow="";
+    public static String characterAttackShow="";
+    public static String characterSpeedShow="";
     int status=0;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -72,7 +76,7 @@ public class CharacterCreationPageController implements Initializable {
     @FXML
     private MenuItem warrior;
     @FXML
-    private MenuItem assasin;
+    private MenuItem assassin;
     @FXML
     private MenuItem marksman;
     @FXML
@@ -158,16 +162,16 @@ public class CharacterCreationPageController implements Initializable {
         characterHP.setText(Integer.toString(health));
         characterAP.setText(Integer.toString(attack));
         characterSpeed.setText(Integer.toString(speed));
-        if(characterName.getText().isEmpty()||characterName.getText().toString().equals("Bob The Marksman")||characterName.getText().toString().equals("Bob The Assasin"))
+        if(characterName.getText().isEmpty()||characterName.getText().toString().equals("Bob The Marksman")||characterName.getText().toString().equals("Bob The Assassin"))
             characterName.setText("Bob The Warrior");
         toWarrior();
         
     }
     
-    public void generateAssasin(ActionEvent event) throws IOException{
-        generateAssasin();
+    public void generateAssassin(ActionEvent event) throws IOException{
+        generateAssassin();
     }
-    public void generateAssasin() throws IOException{
+    public void generateAssassin() throws IOException{
         Random rd=new Random();
         int health=rd.nextInt(80,121);
         int attack=rd.nextInt(16,25);
@@ -176,8 +180,8 @@ public class CharacterCreationPageController implements Initializable {
         characterAP.setText(Integer.toString(attack));
         characterSpeed.setText(Integer.toString(speed));
         if(characterName.getText().isEmpty()||characterName.getText().toString().equals("Bob The Warrior")||characterName.getText().toString().equals("Bob The Marksman"))
-            characterName.setText("Bob The Assasin");
-        toAssasin();
+            characterName.setText("Bob The Assassin");
+        toAssassin();
     }
    
     public void generateMarksman(ActionEvent event) throws IOException{
@@ -192,19 +196,20 @@ public class CharacterCreationPageController implements Initializable {
         characterHP.setText(Integer.toString(health));
         characterAP.setText(Integer.toString(attack));
         characterSpeed.setText(Integer.toString(speed));
-        if(characterName.getText().isEmpty()||characterName.getText().toString().equals("Bob The Warrior")||characterName.getText().toString().equals("Bob The Assasin"))
+        if(characterName.getText().isEmpty()||characterName.getText().toString().equals("Bob The Warrior")||characterName.getText().toString().equals("Bob The Assassin"))
             characterName.setText("Bob The Marksman");
         toMarksman();
     }
     public void create() throws IOException{
         characterNameText=characterName.getText();
         int health=Integer.parseInt(characterHP.getText());
-        String characterHealthShow=characterHP.getText();
+        characterHealthShow=characterHP.getText();
         int attack=Integer.parseInt(characterAP.getText());
-        String characterAttackShow=characterAP.getText();
+        characterAttackShow=characterAP.getText();
         String characterRoleShow=role.getText();
+        characterRole=characterRoleShow;
         int speed=Integer.parseInt(characterSpeed.getText());
-        String characterSpeedShow=characterSpeed.getText();
+        characterSpeedShow=characterSpeed.getText();
         double difficulty=(50.00/health)+(20.00/attack);
         difficultyShow.setText(String.format("The difficulty level is: %.2f",difficulty));
         int star=(int)(difficulty/0.5);
@@ -233,7 +238,6 @@ public class CharacterCreationPageController implements Initializable {
         status=1;
         confirmButton.setDefaultButton(false);
         confirmCharacterButton.setDefaultButton(true);
-        
     }
     public void cancelCreation(ActionEvent event) throws IOException{
         popOut.setVisible(false);
@@ -246,16 +250,16 @@ public class CharacterCreationPageController implements Initializable {
         confirmButton.setDefaultButton(true);
     }
     Image warriorPic=new Image(getClass().getClassLoader().getResourceAsStream("Mark 9.jpg"));
-    Image assasinPic=new Image(getClass().getClassLoader().getResourceAsStream("Laser Boost.jpg"));
+    Image assassinPic=new Image(getClass().getClassLoader().getResourceAsStream("Laser Boost.jpg"));
     Image marksmanPic=new Image(getClass().getClassLoader().getResourceAsStream("Boost Striker.jpg"));
     public void nextButton(ActionEvent event) throws IOException{
         for(int i=0;i<2;i++){
          if (role.getText().toString().equals("WARRIOR")){
-            toAssasin();
+            toAssassin();
             i++;
             break;
          }
-         if (role.getText().toString().equals("ASSASIN")){
+         if (role.getText().toString().equals("ASSASSIN")){
             toMarksman();
             i++;
             break;
@@ -276,11 +280,11 @@ public class CharacterCreationPageController implements Initializable {
             break;
          }
          if (role.getText().toString().equals("MARKSMAN")){
-            toAssasin();
+            toAssassin();
             i++;
             break;
          }
-         if (role.getText().toString().equals("ASSASIN")){
+         if (role.getText().toString().equals("ASSASSIN")){
             toWarrior();
             i++;
             break;
@@ -290,19 +294,19 @@ public class CharacterCreationPageController implements Initializable {
     public void toWarrior() throws IOException{
         role.setText("WARRIOR");
         warriorPicture.setImage(warriorPic);
-        if(characterName.getText().isEmpty()||characterName.getText().toString().equals("Bob The Marksman")||characterName.getText().toString().equals("Bob The Assasin"))
+        if(characterName.getText().isEmpty()||characterName.getText().toString().equals("Bob The Marksman")||characterName.getText().toString().equals("Bob The Assassin"))
             characterName.setText("Bob The Warrior");
     }
-     public void toAssasin() throws IOException{
-        role.setText("ASSASIN");
-        warriorPicture.setImage(assasinPic);
+     public void toAssassin() throws IOException{
+        role.setText("ASSASSIN");
+        warriorPicture.setImage(assassinPic);
         if(characterName.getText().isEmpty()||characterName.getText().toString().equals("Bob The Warrior")||characterName.getText().toString().equals("Bob The Marksman"))
-            characterName.setText("Bob The Assasin");
+            characterName.setText("Bob The Assassin");
     }
     public void toMarksman() throws IOException{
         role.setText("MARKSMAN");
          warriorPicture.setImage(marksmanPic);
-          if(characterName.getText().isEmpty()||characterName.getText().toString().equals("Bob The Warrior")||characterName.getText().toString().equals("Bob The Assasin"))
+          if(characterName.getText().isEmpty()||characterName.getText().toString().equals("Bob The Warrior")||characterName.getText().toString().equals("Bob The Assassin"))
             characterName.setText("Bob The Marksman");
     }
     public void logOut() throws IOException{

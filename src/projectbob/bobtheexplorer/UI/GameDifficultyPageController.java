@@ -39,6 +39,7 @@ public class GameDifficultyPageController implements Initializable {
     String username=getFile.usernameLogin;
     CharacterCreationPageController getFileCharacterName = new CharacterCreationPageController();
     String characterName=getFileCharacterName.characterNameText;
+    String characterRole=getFileCharacterName.characterRole;
     public static String levelDifficulty="";
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -128,11 +129,15 @@ public class GameDifficultyPageController implements Initializable {
         confirmation.setVisible(true);
         nameArea.setText(characterName+" , You are good to go!");
     }
-    public void cancelPage (ActionEvent event) throws IOException{
+    public void cancelPage(ActionEvent event) throws IOException{
         threeButtons.setVisible(true);
         lv1Button.setFocusTraversable(true);
         lv2Button.setFocusTraversable(true);
         lv3Button.setFocusTraversable(true);
         confirmation.setVisible(false);
+    }
+    public void enterGame(ActionEvent event) throws IOException{
+        Main m=new Main();
+         m.changeScene("GamingDungeon.fxml");
     }
 }

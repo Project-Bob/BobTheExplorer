@@ -28,7 +28,9 @@ import javafx.scene.canvas.GraphicsContext;
 import java.util.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-
+import javafx.util.Duration;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 /**
  * FXML Controller class
  *
@@ -39,30 +41,92 @@ public class GamingDungeonController implements Initializable {
     /**
      * Initializes the controller class.
      */
+    Random rd=new Random();
+    private Timeline moveRightTimeline;
+    private Timeline moveLeftTimeline;
+    private Timeline moveUpTimeline;
+    private Timeline moveDownTimeline;
+    private boolean isMovingRight = false;
+    private boolean isMovingLeft = false;
+    private boolean isMovingUp = false;
+    private boolean isMovingDown = false;
+    public static int currentHealth=0;
     loginController getFile = new loginController();
+    CharacterCreationPageController getDetails = new CharacterCreationPageController();
+    GameDifficultyPageController pass = new GameDifficultyPageController();
     String username=getFile.usernameLogin;
+    String characterName=pass.characterName;
+    String characterRoleShow=pass.characterRole;
+    String characterAttackShow=getDetails.characterAttackShow;
+    String characterHealthShow=getDetails.characterHealthShow;
+    String characterSpeedShow=getDetails.characterSpeedShow;
+    String difficultyLevel=pass.levelDifficulty;
     String[]element=new String[96];
+    String[]items=new String[6];
     Canvas canvas = new Canvas(480, 320);  // Set the size of the canvas
+    Canvas itemCanvas = new Canvas(180, 30);
+    Canvas itemCanvasDelete = new Canvas(300, 50);
     GraphicsContext gc = canvas.getGraphicsContext2D();
-    Image rock = new Image(getClass().getClassLoader().getResourceAsStream("rock.png"));
+    GraphicsContext gcItem = itemCanvas.getGraphicsContext2D();
+    GraphicsContext gcItemDelete = itemCanvasDelete.getGraphicsContext2D();
+    Image rock = new Image(getClass().getClassLoader().getResourceAsStream("rock.jpg"));
     Image goblin= new Image(getClass().getClassLoader().getResourceAsStream("goblin.png"));
     Image slime= new Image(getClass().getClassLoader().getResourceAsStream("Slime_lvl1_Green.png"));
     Image spider= new Image(getClass().getClassLoader().getResourceAsStream("Laser Boost.jpg"));
-    Image item = new Image(getClass().getClassLoader().getResourceAsStream("Laser Boost.jpg"));
+    Image potion = new Image(getClass().getClassLoader().getResourceAsStream("potion.png"));
+    Image shield = new Image(getClass().getClassLoader().getResourceAsStream("shield.png"));
+    Image sword = new Image(getClass().getClassLoader().getResourceAsStream("sword.png"));
     Image door = new Image(getClass().getClassLoader().getResourceAsStream("megatron.gif"));
+    Image profilePicImg = new Image(getClass().getClassLoader().getResourceAsStream("pic.png"));
+    ImageView imgProfilePic = new ImageView(profilePicImg);
     Image characterToLeft = new Image(getClass().getClassLoader().getResourceAsStream("warriorToLeft.png"));
     Image characterToRight = new Image(getClass().getClassLoader().getResourceAsStream("warriorToRight.png"));
     boolean rightLeg=true;
     boolean directionRight=true;
+    int numMonster=rd.nextInt(1,4);
+    String[]monsterArray={"goblin","spider","slime"};
+    String[]itemArray={"potion","shield","sword"};
+    //int numItem=rd.nextInt(1,3);
+    int numItem=8;
+    int totalNumMonsterItem=numMonster+numItem;
+    String[][]monsterItemPosition=new String[totalNumMonsterItem][2];
+    Image imgPotionInList=new Image(getClass().getClassLoader().getResourceAsStream("potion.png"));
+    ImageView potionInList = new ImageView(imgPotionInList);
+    Image imgSwordInList=new Image(getClass().getClassLoader().getResourceAsStream("sword.png"));
+    ImageView swordInList = new ImageView(imgSwordInList);
+    Image imgShieldInList=new Image(getClass().getClassLoader().getResourceAsStream("shield.png"));
+    ImageView shieldInList = new ImageView(imgShieldInList);
+    String[]itemUser=new String[6];
+    int itemReplaced=7;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        buttonItem1.setFocusTraversable(false);
+        buttonItem2.setFocusTraversable(false);
+        buttonItem3.setFocusTraversable(false);
+        buttonItem4.setFocusTraversable(false);
+        buttonItem5.setFocusTraversable(false);
+        buttonItem6.setFocusTraversable(false);
+        for (int i=0;i<6;i++){
+            itemUser[i]="blank";
+        }
         logOutButton.setFocusTraversable(false);
         Image imgLogout=new Image(getClass().getClassLoader().getResourceAsStream("logoutButton.png"));
         ImageView imgLogoutView = new ImageView(imgLogout);
         imgLogoutView.setFitHeight(20);
         imgLogoutView.setFitWidth(40);
         logOutButton.setGraphic(imgLogoutView);
+        imgProfilePic.setFitHeight(68);
+        imgProfilePic.setFitWidth(68);
+        profilePic.setImage(imgProfilePic.getImage());
+        name.setText(characterName);
+        characterRole.setText("Role: "+characterRoleShow);
+        currentHealth=Integer.parseInt(characterHealthShow);
+        currentHealth--;
+        hpBar.setText("HP: "+currentHealth+" / "+characterHealthShow);
+        characterAP.setText("Attack Power: "+characterAttackShow);
+        characterSpeed.setText("Speed: "+characterSpeedShow);
         Image left=new Image(getClass().getClassLoader().getResourceAsStream("leftButton.png"));
         ImageView leftButtonView = new ImageView(left);
         leftButtonView.setFitHeight(40);
@@ -85,10 +149,8 @@ public class GamingDungeonController implements Initializable {
         downButton.setGraphic(downButtonView);
         usernameID.setText(username);
         Random rd=new Random();
-        int numMonster=rd.nextInt(1,4);
-        String[]monsterArray={"goblin","spider","slime"};
-        int numItem=rd.nextInt(1,3);
         int countMonster=0;
+        int countItem=0;
         for (int j=0; j<320;j+=40){
             for(int i=0; i<480;i+=40){
                 gc.drawImage(rock, i, j, 40,40);  
@@ -116,6 +178,28 @@ public class GamingDungeonController implements Initializable {
             element[position]=monsterName;
             countMonster++;
         }
+        
+        // Set position of items
+        while(countItem<numItem){
+            int positionX=rd.nextInt(0,12);
+            int positionY=rd.nextInt(0,8);
+            int position=positionY*12+positionX;
+            while(element[position].equals("goblin")||element[position].equals("spider")||element[position].equals("slime")||element[position].equals("potion")){
+                positionX=rd.nextInt(0,12);
+                positionY=rd.nextInt(0,8);
+                position=positionY*12+positionX;
+            }
+            String itemName=itemArray[rd.nextInt(0,itemArray.length)];
+            if (itemName.equals("potion"))
+                gc.drawImage(potion, positionX*40, positionY*40, 40,40); 
+            else if (itemName.equals("shield"))
+                gc.drawImage(shield, positionX*40, positionY*40, 40,40); 
+            else 
+                gc.drawImage(sword, positionX*40, positionY*40, 40,40); 
+            element[position]=itemName;
+            countItem++;
+        }
+        
         // Origin position of character (BOB)
         int characterY=rd.nextInt(0,8);
         int positionCharacter=characterY*12;
@@ -140,10 +224,356 @@ public class GamingDungeonController implements Initializable {
         for (int i=0; i<element.length;i++){
             System.out.println(i+" "+element[i]);
         }
-        
+        //Get position of all monster and items(including their name)
+        int countMonsterItemPosition=0;
+        for (int i=0;i<element.length;i++){
+            if (!(element[i].equals("rock"))&&!(element[i].equals("Bob"))&&!(element[i].equals("door"))){
+                monsterItemPosition[countMonsterItemPosition][0]=String.valueOf(i);
+                monsterItemPosition[countMonsterItemPosition][1]=element[i];
+                countMonsterItemPosition++;
+            }
+        }
+        gcItem.setFill(javafx.scene.paint.Color.LIGHTYELLOW);
+        gcItem.fillRect(0, 0, 180, 30); // Draw a filled rectangle
+        gcItem.setStroke(javafx.scene.paint.Color.BLACK);
+        gcItem.setLineWidth(1);
+        for (int i=0;i<6;i++){
+            gcItem.strokeLine(30*i+1.5, 1.5, 30*i+28.5, 1.5); // Draw a line
+            gcItem.strokeLine(30*i+1.5, 28.5, 30*i+28.5, 28.5);
+            gcItem.strokeLine(30*i+1.5, 1.5, 30*i+1.5, 28.5);
+            gcItem.strokeLine(30*i+28.5, 1.5, 30*i+28.5, 28.5);
+        }
+        //Item Bar Delete
+        gcItemDelete.setFill(javafx.scene.paint.Color.LIGHTYELLOW);
+        gcItemDelete.fillRect(0, 0, 300, 50); // Draw a filled rectangle
+        gcItemDelete.setStroke(javafx.scene.paint.Color.BLACK);
+        gcItemDelete.setLineWidth(1);
+        for (int i=0;i<6;i++){
+            gcItemDelete.strokeLine(50*i+1.5, 1.5, 50*i+48.5, 1.5); // Draw a line
+            gcItemDelete.strokeLine(50*i+1.5, 48.5, 50*i+48.5, 48.5);
+            gcItemDelete.strokeLine(50*i+1.5, 1.5, 50*i+1.5, 48.5);
+            gcItemDelete.strokeLine(50*i+48.5, 1.5, 50*i+48.5, 48.5);
+        }
+        //Split
         Image map = createImageFromCanvas(canvas);
         imgTest.setImage(map);
-    }    
+        Image itemList = createImageFromCanvas(itemCanvas);
+        itemBar.setImage(itemList);
+        Image itemListDelete = createImageFromCanvas(itemCanvasDelete);
+        itemBarDelete.setImage(itemListDelete);
+        // Make sure the canvas can capture keyboard input
+        moveRightTimeline = new Timeline(
+                new KeyFrame(Duration.seconds(0.15), event -> {
+                    try {
+                        if (isMovingRight) {
+                            goToRight(); // Call the goToRight method every 0.5s
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                })
+        );
+        moveRightTimeline.setCycleCount(Timeline.INDEFINITE); // Make it repeat indefinitely
+        moveLeftTimeline = new Timeline(
+                new KeyFrame(Duration.seconds(0.15), event -> {
+                    try {
+                        if (isMovingLeft) {
+                            goToLeft(); // Call the goToLeft method every 0.5s
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                })
+        );
+        moveLeftTimeline.setCycleCount(Timeline.INDEFINITE); // Make it repeat indefinitely
+        moveUpTimeline = new Timeline(
+                new KeyFrame(Duration.seconds(0.15), event -> {
+                    try {
+                        if (isMovingUp) {
+                            goUp(); // Call the goUp method every 0.5s
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                })
+        );
+        moveUpTimeline.setCycleCount(Timeline.INDEFINITE); // Make it repeat indefinitely
+        moveDownTimeline = new Timeline(
+                new KeyFrame(Duration.seconds(0.15), event -> {
+                    try {
+                        if (isMovingDown) {
+                            goDown(); // Call the goDown method every 0.5s
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                })
+        );
+        moveDownTimeline.setCycleCount(Timeline.INDEFINITE); // Make it repeat indefinitely
+        
+    leftButton.setFocusTraversable(true); 
+    leftButton.requestFocus(); 
+    rightButton.setFocusTraversable(true); 
+    rightButton.requestFocus(); 
+    upButton.setFocusTraversable(true); 
+    upButton.requestFocus(); 
+    downButton.setFocusTraversable(true); 
+    downButton.requestFocus(); 
+    // Add key event listener to the canvas
+    leftButton.setOnKeyPressed(event -> {
+        // Handle each key press for movement
+        if (event.getCode() == KeyCode.RIGHT||event.getCode() == KeyCode.D) {
+            isMovingLeft = false; // Stop the movement
+            moveLeftTimeline.stop();
+            isMovingUp = false; // Stop the movement
+            moveUpTimeline.stop();
+            isMovingDown = false; // Stop the movement
+            moveDownTimeline.stop();
+            if (!isMovingRight) {
+                isMovingRight = true;
+                moveRightTimeline.play(); // Move character to the right
+                rightButton.setFocusTraversable(true);
+                rightButton.requestFocus();
+            }
+        } else if (event.getCode() == KeyCode.LEFT||event.getCode() == KeyCode.A) {
+            isMovingRight = false; // Stop the movement
+            moveRightTimeline.stop();
+            isMovingUp = false; // Stop the movement
+            moveUpTimeline.stop();
+            isMovingDown = false; // Stop the movement
+            moveDownTimeline.stop();
+            if (!isMovingLeft) {
+                isMovingLeft = true;
+                moveLeftTimeline.play(); // Move character to the right
+                leftButton.setFocusTraversable(true);
+                leftButton.requestFocus();
+            }
+        } else if (event.getCode() == KeyCode.UP||event.getCode() == KeyCode.W) {
+            isMovingRight = false; // Stop the movement
+            moveRightTimeline.stop();
+            isMovingLeft = false; // Stop the movement
+            moveLeftTimeline.stop();
+            isMovingDown = false; // Stop the movement
+            moveDownTimeline.stop();
+            if (!isMovingUp) {
+                isMovingUp = true;
+                moveUpTimeline.play(); // Move character to the right
+                upButton.setFocusTraversable(true);
+                upButton.requestFocus();
+            }
+        } else if (event.getCode() == KeyCode.DOWN||event.getCode() == KeyCode.S) {
+            isMovingRight = false; // Stop the movement
+            moveRightTimeline.stop();
+            isMovingLeft = false; // Stop the movement
+            moveLeftTimeline.stop();
+            isMovingUp = false; // Stop the movement
+            moveUpTimeline.stop();
+            if (!isMovingDown) {
+                isMovingDown = true;
+                moveDownTimeline.play(); // Move character to the right
+                downButton.setFocusTraversable(true);
+                downButton.requestFocus();
+            }
+        }
+    });
+    leftButton.setOnKeyReleased(event -> {
+         if (event.getCode() == KeyCode.LEFT|| event.getCode() == KeyCode.A) {
+            // Stop moving the character to the left when the key is released
+            isMovingLeft = false; // Stop the movement
+            moveLeftTimeline.stop(); // Stop the timeline
+        }
+    });
+    rightButton.setOnKeyPressed(event -> {
+        // Handle each key press for movement
+        if (event.getCode() == KeyCode.RIGHT||event.getCode() == KeyCode.D) {
+            isMovingLeft = false; // Stop the movement
+            moveLeftTimeline.stop();
+            isMovingUp = false; // Stop the movement
+            moveUpTimeline.stop();
+            isMovingDown = false; // Stop the movement
+            moveDownTimeline.stop();
+            if (!isMovingRight) {
+                isMovingRight = true;
+                moveRightTimeline.play(); // Move character to the right
+                rightButton.setFocusTraversable(true);
+                rightButton.requestFocus();
+            }
+        } else if (event.getCode() == KeyCode.LEFT||event.getCode() == KeyCode.A) {
+            isMovingRight = false; // Stop the movement
+            moveRightTimeline.stop();
+            isMovingUp = false; // Stop the movement
+            moveUpTimeline.stop();
+            isMovingDown = false; // Stop the movement
+            moveDownTimeline.stop();
+            if (!isMovingLeft) {
+                isMovingLeft = true;
+                moveLeftTimeline.play(); // Move character to the right
+                leftButton.setFocusTraversable(true);
+                leftButton.requestFocus();
+            }
+        } else if (event.getCode() == KeyCode.UP||event.getCode() == KeyCode.W) {
+            isMovingRight = false; // Stop the movement
+            moveRightTimeline.stop();
+            isMovingLeft = false; // Stop the movement
+            moveLeftTimeline.stop();
+            isMovingDown = false; // Stop the movement
+            moveDownTimeline.stop();
+            if (!isMovingUp) {
+                isMovingUp = true;
+                moveUpTimeline.play(); // Move character to the right
+                upButton.setFocusTraversable(true);
+                upButton.requestFocus();
+            }
+        } else if (event.getCode() == KeyCode.DOWN||event.getCode() == KeyCode.S) {
+            isMovingRight = false; // Stop the movement
+            moveRightTimeline.stop();
+            isMovingLeft = false; // Stop the movement
+            moveLeftTimeline.stop();
+            isMovingUp = false; // Stop the movement
+            moveUpTimeline.stop();
+            if (!isMovingDown) {
+                isMovingDown = true;
+                moveDownTimeline.play(); // Move character to the right
+                downButton.setFocusTraversable(true);
+                downButton.requestFocus();
+            }
+        }
+    });
+    rightButton.setOnKeyReleased(event -> {
+         if (event.getCode() == KeyCode.RIGHT || event.getCode() == KeyCode.D) {
+            // Stop moving the character to the right when the key is released
+            isMovingRight = false; // Stop the movement
+            moveRightTimeline.stop(); // Stop the timeline
+        }
+    });
+    upButton.setOnKeyPressed(event -> {
+        // Handle each key press for movement
+        if (event.getCode() == KeyCode.RIGHT||event.getCode() == KeyCode.D) {
+            isMovingLeft = false; // Stop the movement
+            moveLeftTimeline.stop();
+            isMovingUp = false; // Stop the movement
+            moveUpTimeline.stop();
+            isMovingDown = false; // Stop the movement
+            moveDownTimeline.stop();
+            if (!isMovingRight) {
+                isMovingRight = true;
+                moveRightTimeline.play(); // Move character to the right
+                rightButton.setFocusTraversable(true);
+                rightButton.requestFocus();
+            }
+        } else if (event.getCode() == KeyCode.LEFT||event.getCode() == KeyCode.A) {
+            isMovingRight = false; // Stop the movement
+            moveRightTimeline.stop();
+            isMovingUp = false; // Stop the movement
+            moveUpTimeline.stop();
+            isMovingDown = false; // Stop the movement
+            moveDownTimeline.stop();
+            if (!isMovingLeft) {
+                isMovingLeft = true;
+                moveLeftTimeline.play(); // Move character to the right
+                leftButton.setFocusTraversable(true);
+                leftButton.requestFocus();
+            }
+        } else if (event.getCode() == KeyCode.UP||event.getCode() == KeyCode.W) {
+            isMovingRight = false; // Stop the movement
+            moveRightTimeline.stop();
+            isMovingLeft = false; // Stop the movement
+            moveLeftTimeline.stop();
+            isMovingDown = false; // Stop the movement
+            moveDownTimeline.stop();
+            if (!isMovingUp) {
+                isMovingUp = true;
+                moveUpTimeline.play(); // Move character to the right
+                upButton.setFocusTraversable(true);
+                upButton.requestFocus();
+            }
+        } else if (event.getCode() == KeyCode.DOWN||event.getCode() == KeyCode.S) {
+            isMovingRight = false; // Stop the movement
+            moveRightTimeline.stop();
+            isMovingLeft = false; // Stop the movement
+            moveLeftTimeline.stop();
+            isMovingUp = false; // Stop the movement
+            moveUpTimeline.stop();
+            if (!isMovingDown) {
+                isMovingDown = true;
+                moveDownTimeline.play(); // Move character to the right
+                downButton.setFocusTraversable(true);
+                downButton.requestFocus();
+            }
+        }
+    });
+    upButton.setOnKeyReleased(event -> {
+         if (event.getCode() == KeyCode.UP || event.getCode() == KeyCode.W) {
+            // Stop moving the character to the up when the key is released
+            isMovingUp = false; // Stop the movement
+            moveUpTimeline.stop(); // Stop the timeline
+        }
+    });
+    downButton.setOnKeyPressed(event -> {
+        // Handle each key press for movement
+        if (event.getCode() == KeyCode.RIGHT||event.getCode() == KeyCode.D) {
+            isMovingLeft = false; // Stop the movement
+            moveLeftTimeline.stop();
+            isMovingUp = false; // Stop the movement
+            moveUpTimeline.stop();
+            isMovingDown = false; // Stop the movement
+            moveDownTimeline.stop();
+            if (!isMovingRight) {
+                isMovingRight = true;
+                moveRightTimeline.play(); // Move character to the right
+                rightButton.setFocusTraversable(true);
+                rightButton.requestFocus();
+            }
+        } else if (event.getCode() == KeyCode.LEFT||event.getCode() == KeyCode.A) {
+            isMovingRight = false; // Stop the movement
+            moveRightTimeline.stop();
+            isMovingUp = false; // Stop the movement
+            moveUpTimeline.stop();
+            isMovingDown = false; // Stop the movement
+            moveDownTimeline.stop();
+            if (!isMovingLeft) {
+                isMovingLeft = true;
+                moveLeftTimeline.play(); // Move character to the right
+                leftButton.setFocusTraversable(true);
+                leftButton.requestFocus();
+            }
+        } else if (event.getCode() == KeyCode.UP||event.getCode() == KeyCode.W) {
+            isMovingRight = false; // Stop the movement
+            moveRightTimeline.stop();
+            isMovingLeft = false; // Stop the movement
+            moveLeftTimeline.stop();
+            isMovingDown = false; // Stop the movement
+            moveDownTimeline.stop();
+            if (!isMovingUp) {
+                isMovingUp = true;
+                moveUpTimeline.play(); // Move character to the right
+                upButton.setFocusTraversable(true);
+                upButton.requestFocus();
+            }
+        } else if (event.getCode() == KeyCode.DOWN||event.getCode() == KeyCode.S) {
+            isMovingRight = false; // Stop the movement
+            moveRightTimeline.stop();
+            isMovingLeft = false; // Stop the movement
+            moveLeftTimeline.stop();
+            isMovingUp = false; // Stop the movement
+            moveUpTimeline.stop();
+            if (!isMovingDown) {
+                isMovingDown = true;
+                moveDownTimeline.play(); // Move character to the right
+                downButton.setFocusTraversable(true);
+                downButton.requestFocus();
+            }
+        }
+    });
+    downButton.setOnKeyReleased(event -> {
+         if (event.getCode() == KeyCode.DOWN || event.getCode() == KeyCode.S) {
+            // Stop moving the character to the down when the key is released
+            isMovingDown = false; // Stop the movement
+            moveDownTimeline.stop(); // Stop the timeline
+        }
+    });
+
+   }    
     @FXML
     private Button logOutButton;
     @FXML
@@ -157,13 +587,178 @@ public class GamingDungeonController implements Initializable {
     @FXML
     private ImageView imgTest;
     @FXML
+    private ImageView itemBar;
+    @FXML
+    private ImageView itemBarDelete;
+    @FXML
+    private ImageView profilePic;
+    @FXML
+    private ImageView imageItemNew;
+    @FXML
     private Label usernameID;
+    @FXML
+    private Label name;
+    @FXML
+    private Label hpBar;
+    @FXML
+    private Label characterRole;
+    @FXML
+    private Label characterAP;
+    @FXML
+    private Label characterSpeed;
+    @FXML
+    private Button buttonItem1;
+    @FXML
+    private Button buttonItem2;
+    @FXML
+    private Button buttonItem3;
+    @FXML
+    private Button buttonItem4;
+    @FXML
+    private Button buttonItem5;
+    @FXML
+    private Button buttonItem6;
+    @FXML
+    private AnchorPane itemOverflow;
+    @FXML
+    private Button buttonItemReplace1;
+    @FXML
+    private Button buttonItemReplace2;
+    @FXML
+    private Button buttonItemReplace3;
+    @FXML
+    private Button buttonItemReplace4;
+    @FXML
+    private Button buttonItemReplace5;
+    @FXML
+    private Button buttonItemReplace6;
+    
     
     
     public void logOut() throws IOException{
          Main m=new Main();
          m.changeScene("loginPage.fxml");
     }
+    public void checkStatus(int characterCurrentBlockPosition){
+        for (int i=0;i<totalNumMonsterItem;i++){
+            if (monsterItemPosition[i][0].equals(String.valueOf(characterCurrentBlockPosition))){
+                for (int j=0; j<itemArray.length;j++){
+                    if(monsterItemPosition[i][1].equals(itemArray[j])){
+                        putItemInItemList(monsterItemPosition[i][1],characterCurrentBlockPosition);
+                    }
+                }
+            }
+        }
+    }
+    public void putItemInItemList(String itemName,int characterPosition){
+        // Create a Map to store ImageViews with their respective names
+        Map<String, ImageView> imageViewMap = new HashMap<>();
+        imageViewMap.put("potionInList", potionInList);
+        imageViewMap.put("swordInList", swordInList);
+        imageViewMap.put("shieldInList", shieldInList);
+        //Button
+        Map<String, Button> buttonMap = new HashMap<>();
+        buttonMap.put("0", buttonItem1);
+        buttonMap.put("1", buttonItem2);
+        buttonMap.put("2", buttonItem3);
+        buttonMap.put("3", buttonItem4);
+        buttonMap.put("4", buttonItem5);
+        buttonMap.put("5", buttonItem6);
+        //ButtonReplaced Item
+        Map<String, Button> buttonMapReplaceItem = new HashMap<>();
+        buttonMapReplaceItem.put("0", buttonItemReplace1);
+        buttonMapReplaceItem.put("1", buttonItemReplace2);
+        buttonMapReplaceItem.put("2", buttonItemReplace3);
+        buttonMapReplaceItem.put("3", buttonItemReplace4);
+        buttonMapReplaceItem.put("4", buttonItemReplace5);
+        buttonMapReplaceItem.put("5", buttonItemReplace6);
+        
+        //Split
+        String imageViewName=itemName+"InList";
+        int counterIndexItem=10;
+        for (int i=0;i<6;i++){
+            if(itemUser[i].equals("blank")){
+                counterIndexItem=i;
+                itemUser[i]=itemName;
+                break;
+            }
+        }
+        
+        String itemIndex=String.valueOf(counterIndexItem);
+        Button buttonItem=buttonMap.get(itemIndex);
+        Button buttonItemReplaced=buttonMapReplaceItem.get(itemIndex);
+        ImageView imageView = new ImageView(imageViewMap.get(imageViewName).getImage());
+        if(counterIndexItem<6){
+        if (imageView != null) {
+            imageView.setFitHeight(25);
+            imageView.setFitWidth(25);
+            buttonItem.setVisible(true);
+            buttonItem.setGraphic(imageView);
+            buttonItem.setStyle("-fx-padding: 0; -fx-background-color: transparent;");
+            ImageView imageViewReplaced = new ImageView(imageViewMap.get(imageViewName).getImage());
+            imageViewReplaced.setFitHeight(45);
+            imageViewReplaced.setFitWidth(45);
+            buttonItemReplaced.setVisible(true);
+            buttonItemReplaced.setGraphic(imageViewReplaced);
+            buttonItemReplaced.setStyle("-fx-padding: 0; -fx-background-color: transparent;");
+            /*
+            ImageView imageViewReplaced = new ImageView(imageViewMap.get(imageViewName).getImage());
+            imageViewReplaced.setFitHeight(45);
+            imageViewReplaced.setFitWidth(45);
+            buttonItemReplaced.setVisible(true);
+            buttonItemReplaced.setGraphic(imageViewReplaced); // Fixed: Use imageViewReplaced for the replaced button
+            buttonItemReplaced.setStyle("-fx-padding: 0; -fx-background-color: transparent;");*/
+        }
+        }
+        else{
+            itemOverflow.setVisible(true);
+            upButton.setDisable(true);
+            downButton.setDisable(true);
+            leftButton.setDisable(true);
+            rightButton.setDisable(true);
+            Image imageNew = imageViewMap.get(imageViewName).getImage();
+            imageItemNew.setImage(imageNew);
+        }
+        clearItem(characterPosition);
+    }
+    //Clear item once Bob reached its position
+    public void clearItem(int characterPosition){
+        int characterXPosition=characterPosition%12*40;
+        int characterYPosition=characterPosition/12*40;
+        gc.clearRect(characterXPosition, characterYPosition, 40, 40);
+        gc.drawImage(rock,characterXPosition, characterYPosition, 40, 40);
+        if(directionRight==true)
+            gc.drawImage(characterToRight, characterXPosition, characterYPosition, 40,40); 
+        else
+            gc.drawImage(characterToLeft, characterXPosition, characterYPosition, 40,40); 
+        Image map = createImageFromCanvas(canvas);
+        imgTest.setImage(map);
+    }
+    public void selectButtonReplace1(ActionEvent event) throws IOException{
+        itemReplaced=1;
+        System.out.println(itemReplaced);
+    }
+    public void selectButtonReplace2(ActionEvent event) throws IOException{
+        itemReplaced=2;
+        System.out.println(itemReplaced);
+    }
+    public void selectButtonReplace3(ActionEvent event) throws IOException{
+        itemReplaced=3;
+        System.out.println(itemReplaced);
+    }
+    public void selectButtonReplace4(ActionEvent event) throws IOException{
+        itemReplaced=4;
+        System.out.println(itemReplaced);
+    }
+    public void selectButtonReplace5(ActionEvent event) throws IOException{
+        itemReplaced=5;
+        System.out.println(itemReplaced);
+    }
+    public void selectButtonReplace6(ActionEvent event) throws IOException{
+        itemReplaced=6;
+        System.out.println(itemReplaced);
+    }
+    
     // Convert the canvas content into an Image
     public Image createImageFromCanvas(Canvas canvas) {
         // Create a writable image with the same size as the canvas
@@ -180,6 +775,13 @@ public class GamingDungeonController implements Initializable {
 
         return writableImage;
     }
+    public void closeItemReplaceBar() throws IOException{
+        itemOverflow.setVisible(false);
+        upButton.setDisable(false);
+        downButton.setDisable(false);
+        leftButton.setDisable(false);
+        rightButton.setDisable(false);
+    }
     public void goToRight() throws IOException{
         //get character current position(0-96)
         int characterCurrentBlockPosition=0;
@@ -195,6 +797,10 @@ public class GamingDungeonController implements Initializable {
         }
         else
             element[characterCurrentBlockPosition]="Bob";
+        for (int i=0; i<element.length; i++){
+            if (element[i].equals("Bob"))
+                characterCurrentBlockPosition=i;
+        }
         int characterYPosition=(row-1)*40;
         int characterXPosition=(column-1)*40;
         int characterXPositionNew=characterXPosition+40;
@@ -209,6 +815,7 @@ public class GamingDungeonController implements Initializable {
         Image map = createImageFromCanvas(canvas);
         imgTest.setImage(map);
         directionRight=true;
+        checkStatus(characterCurrentBlockPosition);
     }
     public void goToLeft() throws IOException{
         //get character current position(0-96)
@@ -225,6 +832,10 @@ public class GamingDungeonController implements Initializable {
         }
         else
             element[characterCurrentBlockPosition]="Bob";
+        for (int i=0; i<element.length; i++){
+            if (element[i].equals("Bob"))
+                characterCurrentBlockPosition=i;
+        }
         int characterYPosition=(row-1)*40;
         int characterXPosition=(column-1)*40;
         int characterXPositionNew=characterXPosition-40;
@@ -239,6 +850,7 @@ public class GamingDungeonController implements Initializable {
         Image map = createImageFromCanvas(canvas);
         imgTest.setImage(map);
         directionRight=false;
+        checkStatus(characterCurrentBlockPosition);
     }
     public void goUp() throws IOException{
         //get character current position(0-96)
@@ -255,6 +867,10 @@ public class GamingDungeonController implements Initializable {
         }
         else
             element[characterCurrentBlockPosition]="Bob";
+        for (int i=0; i<element.length; i++){
+            if (element[i].equals("Bob"))
+                characterCurrentBlockPosition=i;
+        }
         int characterYPosition=(row-1)*40;
         int characterXPosition=(column-1)*40;
         int characterXPositionNew=characterXPosition;
@@ -271,6 +887,7 @@ public class GamingDungeonController implements Initializable {
             gc.drawImage(characterToLeft, characterXPositionNew, characterYPositionNew, 40,40); 
         Image map = createImageFromCanvas(canvas);
         imgTest.setImage(map);
+        checkStatus(characterCurrentBlockPosition);
     }
     public void goDown() throws IOException{
         //get character current position(0-96)
@@ -287,6 +904,10 @@ public class GamingDungeonController implements Initializable {
         }
         else
             element[characterCurrentBlockPosition]="Bob";
+        for (int i=0; i<element.length; i++){
+            if (element[i].equals("Bob"))
+                characterCurrentBlockPosition=i;
+        }
         int characterYPosition=(row-1)*40;
         int characterXPosition=(column-1)*40;
         int characterXPositionNew=characterXPosition;
@@ -303,5 +924,7 @@ public class GamingDungeonController implements Initializable {
             gc.drawImage(characterToLeft, characterXPositionNew, characterYPositionNew, 40,40); 
         Image map = createImageFromCanvas(canvas);
         imgTest.setImage(map);
+        checkStatus(characterCurrentBlockPosition);
     }
+    
 }
