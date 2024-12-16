@@ -123,8 +123,8 @@ public class BattleStatusPageController implements Initializable {
 
     }
 
+    HeroStatus hero = new HeroStatus(HeroHP, HeroAP, HeroSpeed);
     public void Attack_Hero() throws IOException{
-        HeroStatus hero = new HeroStatus(HeroHP, HeroAP, HeroSpeed);
         if (HeroSpeed >= monster.getSpeed()) {
             monster.takeDamage(HeroAP);
             Instruction.setText(GamingDungeonController.monster_Detect + " take " + HeroAP + " damage. ");
@@ -149,6 +149,18 @@ public class BattleStatusPageController implements Initializable {
         HP_Monster.setText("HP: " + monster.getHp());
         AP_Monster.setText("Attack Power: " + monster.getAp());
         Speed_Monster.setText("Speed: " + monster.getSpeed());
+    }
+
+    public void Run() throws IOException{
+        if(HeroSpeed > monster.getSpeed()){
+            Instruction.setText("Run successfully !!!");
+            Main m = new Main();
+//            m.SceneTransitionHelper.changeSceneWithDelay("/projectbob/bobtheexplorer/UI/BattleStatus.fxml", "/projectbob/bobtheexplorer/UI/GamingDungeon.fxml", 3);
+            m.changeScene("GamingDungeon.fxml");
+        }
+        else{
+            Instruction.setText("You are unable to run!!!");
+        }
     }
 
     public void logOut() throws IOException {

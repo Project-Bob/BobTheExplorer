@@ -59,4 +59,19 @@ public class Main extends Application{
         stg.getScene().setRoot(pane);
     }
 
+//    public static void changeSceneWithDelay(Stage stage, String fxmlPath, int delayInSeconds) {
+//        PauseTransition pause = new PauseTransition(Duration.seconds(delayInSeconds));
+//
+//        pause.setOnFinished(event -> {
+//            try {
+//                Parent newSceneRoot = FXMLLoader.load(SceneTransitionHelper.class.getResource(fxmlPath));
+//                stage.setScene(new Scene(newSceneRoot));
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        });
+//
+//        pause.play(); // Start the delay
+//    }
+
 }
