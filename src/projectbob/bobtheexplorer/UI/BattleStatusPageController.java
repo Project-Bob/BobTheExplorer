@@ -130,6 +130,7 @@ public class BattleStatusPageController implements Initializable {
             Instruction.setText(GamingDungeonController.monster_Detect + " take " + HeroAP + " damage. ");
             if (monster.getHp() > 0) {
                 hero.takeDamage(monster.getAp());
+                Instruction.setText(GamingDungeonController.monster_Detect + " take " + HeroAP + " damage. Hero takes " + monster.getAp() + " damage. " );
             }
         }
         else {
