@@ -5,6 +5,7 @@
 package projectbob.bobtheexplorer;
 
 import projectbob.bobtheexplorer.util.*;
+import javafx.application.Application;
 
 /**
  * Main class where things load up first
@@ -25,6 +26,8 @@ public class Main {
         try {
             DB db = new DB(DB_CHECKSUM);
             props.setDBChecksum(db.getChecksum());
+            
+            Application.launch(projectbob.bobtheexplorer.UI.Main.class, args);
         } catch (IllegalStateException e) {
             System.err.println(e.getMessage()                   +
                     "\nPlease delete data.db file to reset "    +
