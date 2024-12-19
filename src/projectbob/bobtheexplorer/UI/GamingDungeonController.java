@@ -571,8 +571,6 @@ public class GamingDungeonController implements Initializable {
     private Label characterAP;
     @FXML
     private Label characterSpeed;
-    @FXML
-    private AnchorPane BattlePage;
 
 
     public void logOut() throws IOException {
@@ -682,7 +680,7 @@ public class GamingDungeonController implements Initializable {
 
         //detect monster
         if (detectMonster(characterCurrentBlockPosition, "up") == true) {
-
+            toBattleStatus();
         }
 
         int row = ((characterCurrentBlockPosition) / 12) + 1;
@@ -721,7 +719,7 @@ public class GamingDungeonController implements Initializable {
 
         //detect monster
         if (detectMonster(characterCurrentBlockPosition, "down") == true) {
-
+            toBattleStatus();
         }
 
         int row = ((characterCurrentBlockPosition) / 12) + 1;
@@ -841,6 +839,8 @@ public class GamingDungeonController implements Initializable {
         private Button Inventory;
         @FXML
         private Button Run;
+        @FXML
+        private AnchorPane BattlePage;
 
         HeroStatus hero = new HeroStatus(HeroHP, HeroAP, HeroSpeed);
         public void Attack_Hero() throws IOException{
@@ -878,7 +878,13 @@ public class GamingDungeonController implements Initializable {
                 // Delay the scene change by 1 second
                 PauseTransition pause = new PauseTransition(Duration.seconds(1));
                 pause.setOnFinished(event -> {
-                    BattlePage.setVisible(true);
+                    try {
+                        BattlePage.setVisible(false);
+
+
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 });
                 pause.play();
             }
