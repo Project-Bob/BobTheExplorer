@@ -9,37 +9,37 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.Parent;
 import javafx.stage.Stage;
-import com.gluonhq.charm.glisten.control.TextField;
-import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.effect.Glow;
-import javafx.scene.effect.Light.Distant;
-import javafx.scene.effect.Lighting;
-import javafx.scene.effect.Shadow;
+//import com.gluonhq.charm.glisten.control.TextField;
+//import javafx.geometry.Insets;
+//import javafx.scene.control.Button;
+//import javafx.scene.control.Label;
+//import javafx.scene.effect.DropShadow;
+//import javafx.scene.effect.Glow;
+//import javafx.scene.effect.Light.Distant;
+//import javafx.scene.effect.Lighting;
+//import javafx.scene.effect.Shadow;
 import javafx.scene.image.Image;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.RadialGradient;
-import javafx.scene.paint.Stop;
-import javafx.scene.text.Font;
+//import javafx.scene.layout.AnchorPane;
+//import javafx.scene.layout.HBox;
+//import javafx.scene.layout.VBox;
+//import javafx.scene.paint.Color;
+//import javafx.scene.paint.RadialGradient;
+//import javafx.scene.paint.Stop;
+//import javafx.scene.text.Font;
 import java.io.IOException;
 
 /**
  *
  * @author gztan
  */
-public class Main extends Application{
+public class App extends Application{
     public static void main(String[] args){       
         launch(args);
     }
     private static Stage stg;
     @Override
     public void start(Stage primaryStage)throws Exception{
-        SceneController sceneController = new SceneController();
+        //SceneController sceneController = new SceneController();
         SceneController.init(primaryStage);
         stg=primaryStage;
         Parent root=FXMLLoader.load(getClass().getResource("loginPage.fxml"));

@@ -17,6 +17,9 @@ import java.io.IOException;
 import javafx.event.ActionEvent;
 import com.gluonhq.charm.glisten.control.TextField;
 
+import projectbob.bobtheexplorer.Main;
+import java.sql.SQLException;
+
 /**
  * FXML Controller class
  *
@@ -43,25 +46,26 @@ public class RegisterPageController implements Initializable {
     private PasswordField confirmPassword;
     @FXML
     private Label registrationStatus;
-    public void userRegister(ActionEvent event) throws IOException{
+    public void userRegister(ActionEvent event) throws IOException, SQLException{
         checkRegister();
     }
-    public void checkRegister() throws IOException{
+    public void checkRegister() throws IOException, SQLException{
         if(newUsername.getText().isEmpty()&& newPassword.getText().isEmpty()){
             registrationStatus.setText("Please fill up all data");
         }
         else if(newPassword.getText().equals(confirmPassword.getText()) && !(newUsername.getText().isEmpty())){
+            Main.db.addScoreRecord(newUsername.getText(), newPassword.getText(), 0);
             registrationStatus.setText("Success!");
         }
         else if (!(newPassword.getText().equals(confirmPassword.getText()))){
-            registrationStatus.setText("Passwords are not tally");
+            registrationStatus.setText("Passwords do not tally");
         }
     }
     public void returnBack(ActionEvent event) throws IOException{
         returnBack();
     }
     public void returnBack() throws IOException{
-        projectbob.bobtheexplorer.UI.Main m=new projectbob.bobtheexplorer.UI.Main();
+        projectbob.bobtheexplorer.UI.App m=new projectbob.bobtheexplorer.UI.App();
         m.changeScene("loginPage.fxml");
     }
 

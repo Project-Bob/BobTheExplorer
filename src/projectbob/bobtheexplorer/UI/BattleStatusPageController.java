@@ -166,7 +166,7 @@ public class BattleStatusPageController implements Initializable {
             Instruction.setText("Run successfully !!! Loading ...");
             // Delay the scene change by 1 second
             PauseTransition pause = new PauseTransition(Duration.seconds(1));
-            Main m = new Main();
+            App m = new App();
             pause.setOnFinished(event -> {
                 try {
                     BackToDungeon();
@@ -182,7 +182,7 @@ public class BattleStatusPageController implements Initializable {
     }
 
     public void logOut() throws IOException {
-        Main m = new Main();
+        App m = new App();
         m.changeScene("loginPage.fxml");
     }
 }

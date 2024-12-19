@@ -581,7 +581,7 @@ public class GamingDungeonController implements Initializable {
 
 
     public void logOut() throws IOException {
-        Main m = new Main();
+        App m = new App();
         m.changeScene("loginPage.fxml");
     }
 

@@ -1,3 +1,6 @@
+## Database file
+data.db
+
 ## Gradle:
 .gradle/
 gradle-app.setting
