@@ -103,8 +103,7 @@ public class GamingDungeonController implements Initializable {
         profilePic.setImage(imgProfilePic.getImage());
         name.setText(characterName);
         characterRole.setText("Role: " + characterRoleShow);
-        currentHealth = Integer.parseInt(characterHealthShow);
-        currentHealth--;
+        currentHealth = hero.getHP_Hero();
         hpBar.setText("HP: " + currentHealth + " / " + characterHealthShow);
         characterAP.setText("Attack Power: " + characterAttackShow);
         characterSpeed.setText("Speed: " + characterSpeedShow);
@@ -613,6 +612,9 @@ public class GamingDungeonController implements Initializable {
 
         //detect the monster
         if (detectMonster(characterCurrentBlockPosition, "right") == true) {
+            HP_Monster.setText("HP: " + monster.getHp());
+            AP_Monster.setText("Attack Power: " + monster.getAp());
+            Speed_Monster.setText("Speed: " + monster.getSpeed());
             BattlePage.setVisible(true);
 //            upButton.setDisable(true);
 //            downButton.setDisable(true);
@@ -656,6 +658,9 @@ public class GamingDungeonController implements Initializable {
 
         //detect monster
         if (detectMonster(characterCurrentBlockPosition, "left") == true) {
+            HP_Monster.setText("HP: " + monster.getHp());
+            AP_Monster.setText("Attack Power: " + monster.getAp());
+            Speed_Monster.setText("Speed: " + monster.getSpeed());
             BattlePage.setVisible(true);
 //            upButton.setDisable(true);
 //            downButton.setDisable(true);
@@ -698,6 +703,9 @@ public class GamingDungeonController implements Initializable {
 
         //detect monster
         if (detectMonster(characterCurrentBlockPosition, "up") == true) {
+            HP_Monster.setText("HP: " + monster.getHp());
+            AP_Monster.setText("Attack Power: " + monster.getAp());
+            Speed_Monster.setText("Speed: " + monster.getSpeed());
             BattlePage.setVisible(true);
 //            upButton.setDisable(true);
 //            downButton.setDisable(true);
@@ -741,6 +749,9 @@ public class GamingDungeonController implements Initializable {
 
         //detect monster
         if (detectMonster(characterCurrentBlockPosition, "down") == true) {
+            HP_Monster.setText("HP: " + monster.getHp());
+            AP_Monster.setText("Attack Power: " + monster.getAp());
+            Speed_Monster.setText("Speed: " + monster.getSpeed());
             BattlePage.setVisible(true);
 //            upButton.setDisable(true);
 //            downButton.setDisable(true);
@@ -779,7 +790,6 @@ public class GamingDungeonController implements Initializable {
     }
 
     public boolean detectMonster(int characterCurrentBlockPosition, String direction) throws IOException {
-        Main m = new Main();
         switch (direction) {
             case "right":
                 if (characterCurrentBlockPosition % 12 != 11 && (element[characterCurrentBlockPosition + 1].equals("slime") ||
@@ -787,7 +797,7 @@ public class GamingDungeonController implements Initializable {
                         element[characterCurrentBlockPosition + 1].equals("spider"))) {
 
                     monster_Detect = element[characterCurrentBlockPosition + 1].toUpperCase();
-
+                    monster = Monster_Slime.createSlime(difficultyLevel);
                     return true;
                 }
                 break;
@@ -796,8 +806,7 @@ public class GamingDungeonController implements Initializable {
                         element[characterCurrentBlockPosition - 1].equals("goblin") ||
                         element[characterCurrentBlockPosition - 1].equals("spider"))) {
                     monster_Detect = element[characterCurrentBlockPosition - 1].toUpperCase();
-//                    m.changeScene("BattleStatusPage.fxml");
-
+                    monster = Monster_Slime.createSlime(difficultyLevel);
                     return true;
                 }
                 break;
@@ -806,7 +815,7 @@ public class GamingDungeonController implements Initializable {
                         element[characterCurrentBlockPosition - 12].equals("goblin") ||
                         element[characterCurrentBlockPosition - 12].equals("spider"))) {
                     monster_Detect = element[characterCurrentBlockPosition - 12].toUpperCase();
-//                    m.changeScene("BattleStatusPage.fxml");
+                    monster = Monster_Slime.createSlime(difficultyLevel);
                     return true;
                 }
                 break;
@@ -815,7 +824,7 @@ public class GamingDungeonController implements Initializable {
                         element[characterCurrentBlockPosition + 12].equals("goblin") ||
                         element[characterCurrentBlockPosition + 12].equals("spider"))) {
                     monster_Detect = element[characterCurrentBlockPosition + 12].toUpperCase();
-//                    m.changeScene("BattleStatusPage.fxml");
+                    monster = Monster_Slime.createSlime(difficultyLevel);
                     return true;
                 }
 
@@ -927,6 +936,8 @@ public class GamingDungeonController implements Initializable {
             HP_Hero.setText("HP: " + hero.getHP_Hero() + " / " + hero.getMaxHP_Hero());
             AP_Hero.setText("Attack Power: " + hero.getAP_Hero());
             Speed_Hero.setText("Speed: " + hero.getSpeed_Hero());
+            currentHealth = hero.getHP_Hero();
+            hpBar.setText("HP: " + currentHealth + " / " + characterHealthShow);
 
             //display the status of monster
             HP_Monster.setText("HP: " + monster.getHp());

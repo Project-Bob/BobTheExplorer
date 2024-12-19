@@ -7,24 +7,6 @@ public class Monster_Slime {
     private int ap;
     private int speed;
 
-    public Monster_Slime(int hp, int ap, int speed) {
-        this.hp = hp;
-        this.ap = ap;
-        this.speed = speed;
-    }
-
-    public int getHp() {
-        return hp;
-    }
-
-    public int getAp() {
-        return ap;
-    }
-
-    public int getSpeed() {
-        return speed;
-    }
-
     public static Monster_Slime createSlime(String difficulty){
         Random r = new Random();
         int HP_Slime=0, AP_Slime=0, Speed_Slime=0;
@@ -44,6 +26,24 @@ public class Monster_Slime {
             Speed_Slime = r.nextInt(16,22);
         }
         return new Monster_Slime(HP_Slime, AP_Slime, Speed_Slime);
+    }
+
+    public Monster_Slime(int hp, int ap, int speed) {
+        this.hp = hp;
+        this.ap = ap;
+        this.speed = speed;
+    }
+
+    public int getHp() {
+        return hp;
+    }
+
+    public int getAp() {
+        return ap;
+    }
+
+    public int getSpeed() {
+        return speed;
     }
 
     public void takeDamage(int damage) {
