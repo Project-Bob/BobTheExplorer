@@ -4,6 +4,7 @@
  */
 package projectbob.bobtheexplorer.UI;
 import javafx.animation.PauseTransition;
+import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -515,6 +516,10 @@ public class GamingDungeonController implements Initializable {
 
         //////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////battle status .///////////////////////////////////////
+
+        //disable visibility of battle status page
+        BattlePage.setVisible(false);
+
         //Hero Info
         Image Picture_Hero = new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/warriorToRight.png"));
         Hero_PIC.setImage(Picture_Hero);
@@ -540,6 +545,9 @@ public class GamingDungeonController implements Initializable {
         Instruction.setTextFill(Color.DARKBLUE);
         Instruction.setWrapText(true);
         Instruction.setStyle("-fx-border-color: black; -fx-background-color: light yellow; -fx-padding: 15px;");
+
+        //Background
+        BattlePage.setStyle("-fx-background-color:BEIGE;");
     }
 
 
@@ -605,7 +613,12 @@ public class GamingDungeonController implements Initializable {
 
         //detect the monster
         if (detectMonster(characterCurrentBlockPosition, "right") == true) {
-            toBattleStatus();
+            BattlePage.setVisible(true);
+//            upButton.setDisable(true);
+//            downButton.setDisable(true);
+//            leftButton.setDisable(true);
+//            rightButton.setDisable(true);
+
         }
 
         int row = ((characterCurrentBlockPosition) / 12) + 1;
@@ -643,7 +656,12 @@ public class GamingDungeonController implements Initializable {
 
         //detect monster
         if (detectMonster(characterCurrentBlockPosition, "left") == true) {
-            toBattleStatus();
+            BattlePage.setVisible(true);
+//            upButton.setDisable(true);
+//            downButton.setDisable(true);
+//            leftButton.setDisable(true);
+//            rightButton.setDisable(true);
+
         }
 
         int row = ((characterCurrentBlockPosition) / 12) + 1;
@@ -680,7 +698,11 @@ public class GamingDungeonController implements Initializable {
 
         //detect monster
         if (detectMonster(characterCurrentBlockPosition, "up") == true) {
-            toBattleStatus();
+            BattlePage.setVisible(true);
+//            upButton.setDisable(true);
+//            downButton.setDisable(true);
+//            leftButton.setDisable(true);
+//            rightButton.setDisable(true);
         }
 
         int row = ((characterCurrentBlockPosition) / 12) + 1;
@@ -719,7 +741,12 @@ public class GamingDungeonController implements Initializable {
 
         //detect monster
         if (detectMonster(characterCurrentBlockPosition, "down") == true) {
-            toBattleStatus();
+            BattlePage.setVisible(true);
+//            upButton.setDisable(true);
+//            downButton.setDisable(true);
+//            leftButton.setDisable(true);
+//            rightButton.setDisable(true);
+
         }
 
         int row = ((characterCurrentBlockPosition) / 12) + 1;
@@ -842,17 +869,52 @@ public class GamingDungeonController implements Initializable {
         @FXML
         private AnchorPane BattlePage;
 
+        //animation things
+        TranslateTransition translate = new TranslateTransition();
+        TranslateTransition translate2 = new TranslateTransition();
+
+        //hero attack button
         HeroStatus hero = new HeroStatus(HeroHP, HeroAP, HeroSpeed);
         public void Attack_Hero() throws IOException{
             if (HeroSpeed >= monster.getSpeed()) {
+                //animation things
+                translate.setNode(Hero_PIC);
+                translate.setDuration(Duration.millis(1000));
+                translate.setByX(100);
+                translate.setByY(-100);
+                translate.setAutoReverse(true);
+                translate.play();
+
+                // Reset position after the animation finishes
+                translate.setOnFinished(event -> {
+                    Hero_PIC.setTranslateX(0); // Reset X position
+                    Hero_PIC.setTranslateY(0); // Reset Y position
+                });
+
                 monster.takeDamage(HeroAP);
                 Instruction.setText(GamingDungeonController.monster_Detect + " take " + HeroAP + " damage. ");
+
                 if (monster.getHp() > 0) {
                     hero.takeDamage(monster.getAp());
                     Instruction.setText(GamingDungeonController.monster_Detect + " take " + HeroAP + " damage. Hero takes " + monster.getAp() + " damage. " );
                 }
             }
+
             else {
+                //animation things
+                translate.setNode(Hero_PIC);
+                translate.setDuration(Duration.millis(1000));
+                translate.setByX(100);
+                translate.setByY(-100);
+                translate.setAutoReverse(true);
+                translate.play();
+
+                // Reset position after the animation finishes
+                translate.setOnFinished(event -> {
+                    Hero_PIC.setTranslateX(0); // Reset X position
+                    Hero_PIC.setTranslateY(0); // Reset Y position
+                });
+
                 hero.takeDamage(monster.getAp());
                 Instruction.setText(characterName + " take " + monster.getAp() + " damage. ");
                 if (HeroHP > 0) {
@@ -870,21 +932,47 @@ public class GamingDungeonController implements Initializable {
             HP_Monster.setText("HP: " + monster.getHp());
             AP_Monster.setText("Attack Power: " + monster.getAp());
             Speed_Monster.setText("Speed: " + monster.getSpeed());
+
+            if(HeroHP == 0){
+                PauseTransition pause1 = new PauseTransition(Duration.seconds(1));
+                PauseTransition pause2 = new PauseTransition(Duration.seconds(2));
+                pause1.setOnFinished(event -> {
+                    Instruction.setText("GAME OVER !!!");
+                });
+                pause2.setOnFinished(event -> {
+                    BattlePage.setVisible(false);
+                });
+                pause1.play();
+                pause2.play();
+            }
+
+            if(monster.getHp() <= 0){
+                PauseTransition pause1 = new PauseTransition(Duration.seconds(1));
+                PauseTransition pause2 = new PauseTransition(Duration.seconds(2));
+                pause1.setOnFinished(event -> {
+                    Instruction.setText("You Defeat The Monster !");
+                });
+                pause2.setOnFinished(event -> {
+                    BattlePage.setVisible(false);
+                });
+                pause1.play();
+                pause2.play();
+            }
         }
 
+        //hero run button
         public void Run() throws IOException{
             if(HeroSpeed > monster.getSpeed()){
                 Instruction.setText("Run successfully !!! Loading ...");
                 // Delay the scene change by 1 second
                 PauseTransition pause = new PauseTransition(Duration.seconds(1));
                 pause.setOnFinished(event -> {
-                    try {
-                        BattlePage.setVisible(false);
+                    BattlePage.setVisible(false);
+                    upButton.setDisable(false);
+                    downButton.setDisable(false);
+                    leftButton.setDisable(false);
+                    rightButton.setDisable(false);
 
-
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
                 });
                 pause.play();
             }
