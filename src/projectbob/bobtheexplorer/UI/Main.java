@@ -39,6 +39,8 @@ public class Main extends Application{
     private static Stage stg;
     @Override
     public void start(Stage primaryStage)throws Exception{
+        SceneController sceneController = new SceneController();
+        SceneController.init(primaryStage);
         stg=primaryStage;
         Parent root=FXMLLoader.load(getClass().getResource("loginPage.fxml"));
         primaryStage.setTitle("Bob The Explorer");
@@ -58,20 +60,5 @@ public class Main extends Application{
         Parent pane=FXMLLoader.load(getClass().getResource(fxml));
         stg.getScene().setRoot(pane);
     }
-
-//    public static void changeSceneWithDelay(Stage stage, String fxmlPath, int delayInSeconds) {
-//        PauseTransition pause = new PauseTransition(Duration.seconds(delayInSeconds));
-//
-//        pause.setOnFinished(event -> {
-//            try {
-//                Parent newSceneRoot = FXMLLoader.load(SceneTransitionHelper.class.getResource(fxmlPath));
-//                stage.setScene(new Scene(newSceneRoot));
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        });
-//
-//        pause.play(); // Start the delay
-//    }
 
 }

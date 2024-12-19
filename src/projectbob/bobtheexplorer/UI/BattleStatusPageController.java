@@ -1,5 +1,6 @@
 package projectbob.bobtheexplorer.UI;
 
+import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -7,6 +8,7 @@ import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Label;
 import java.net.URL;
+import java.security.cert.PolicyNode;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -51,7 +53,6 @@ public class BattleStatusPageController implements Initializable {
     int HeroHP = Integer.parseInt(getInfo.characterHealthShow);
     int HeroAP = Integer.parseInt(getInfo.characterAttackShow);
     int HeroSpeed = Integer.parseInt(getInfo.characterSpeedShow);
-    
 
     @FXML
     private Button logOutButton;
@@ -85,6 +86,13 @@ public class BattleStatusPageController implements Initializable {
     private Button Inventory;
     @FXML
     private Button Run;
+    @FXML
+    private AnchorPane BattlePage;
+
+    private void BackToDungeon() throws IOException {
+        AnchorPane pane = FXMLLoader.load(getClass().getResource("GamingDungeon.fxml"));
+        BattlePage.getChildren().setAll(pane);
+    }
 
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -135,8 +143,9 @@ public class BattleStatusPageController implements Initializable {
         }
         else {
             hero.takeDamage(monster.getAp());
+            Instruction.setText(characterName + " take " + monster.getAp() + " damage. ");
             if (HeroHP > 0) {
-                Instruction.setText(characterName + " take " + monster.getAp() + " damage. ");
+                Instruction.setText(GamingDungeonController.monster_Detect + " take " + HeroAP + " damage. Hero takes " + monster.getAp() + " damage. " );
                 monster.takeDamage(HeroAP);
             }
         }
@@ -154,10 +163,18 @@ public class BattleStatusPageController implements Initializable {
 
     public void Run() throws IOException{
         if(HeroSpeed > monster.getSpeed()){
-            Instruction.setText("Run successfully !!!");
+            Instruction.setText("Run successfully !!! Loading ...");
+            // Delay the scene change by 1 second
+            PauseTransition pause = new PauseTransition(Duration.seconds(1));
             Main m = new Main();
-//            m.SceneTransitionHelper.changeSceneWithDelay("/projectbob/bobtheexplorer/UI/BattleStatus.fxml", "/projectbob/bobtheexplorer/UI/GamingDungeon.fxml", 3);
-            m.changeScene("GamingDungeon.fxml");
+            pause.setOnFinished(event -> {
+                try {
+                    BackToDungeon();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+            pause.play();
         }
         else{
             Instruction.setText("You are unable to run!!!");

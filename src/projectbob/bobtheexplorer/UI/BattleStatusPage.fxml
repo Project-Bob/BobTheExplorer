@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="500.0" prefWidth="510.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projectbob.bobtheexplorer.UI.BattleStatusPageController">
+<AnchorPane fx:id="BattlePage" prefHeight="500.0" prefWidth="510.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projectbob.bobtheexplorer.UI.BattleStatusPageController">
    <children>
       <HBox layoutX="35.0" layoutY="365.0" prefHeight="100.0" prefWidth="445.0">
          <children>

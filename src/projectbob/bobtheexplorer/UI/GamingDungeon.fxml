@@ -11,7 +11,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projectbob.bobtheexplorer.UI.GamingDungeonController">
+<AnchorPane id="AnchorPane" fx:id="DungeonField" prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projectbob.bobtheexplorer.UI.GamingDungeonController">
    <children>
       <Label layoutX="194.0" layoutY="3.0" text="Dungeon 1" textFill="#727731">
          <font>
@@ -74,7 +74,83 @@
          </children>
       </VBox>
       <ImageView fx:id="itemBar" fitHeight="30.0" fitWidth="200.0" layoutX="35.0" layoutY="460.0" pickOnBounds="true" preserveRatio="true" />
-      <Button fx:id="CheckingButton" layoutX="209.0" layoutY="431.0" mnemonicParsing="false" onAction="#checking" text="Button" />
+      <AnchorPane fx:id="BattlePage" layoutX="10.0" layoutY="10.0" prefHeight="500.0" prefWidth="510.0">
+         <children>
+            <HBox layoutX="35.0" layoutY="365.0" prefHeight="100.0" prefWidth="445.0">
+               <children>
+                  <Label fx:id="Instruction" prefHeight="100.0" prefWidth="225.0" text="Label" />
+                  <VBox prefHeight="100.0" prefWidth="35.0" />
+                  <VBox prefHeight="100.0" prefWidth="100.0">
+                     <children>
+                        <Button fx:id="Attack" alignment="CENTER" mnemonicParsing="false" onAction="#Attack_Hero" prefHeight="25.0" prefWidth="100.0" text="Attack" />
+                        <Button fx:id="Inventory" alignment="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Inventory" />
+                        <Button fx:id="Run" alignment="CENTER" mnemonicParsing="false" onAction="#Run" prefHeight="25.0" prefWidth="100.0" text="Run" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <Button fx:id="logOutButton1" alignment="CENTER_RIGHT" contentDisplay="RIGHT" graphicTextGap="0.0" layoutX="474.0" layoutY="24.0" mnemonicParsing="false" onAction="#logOut" textAlignment="RIGHT">
+               <padding>
+                  <Insets left="-10.0" right="-10.0" />
+               </padding>
+            </Button>
+            <ImageView fx:id="Monster_PIC" fitHeight="150.0" fitWidth="200.0" layoutX="260.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="Hero_PIC" fitHeight="150.0" fitWidth="200.0" layoutX="50.0" layoutY="211.0" pickOnBounds="true" preserveRatio="true" />
+            <VBox layoutX="60.0" layoutY="58.0" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label fx:id="HP_Monster" prefHeight="20.0" prefWidth="200.0" text="Label" />
+                  <Label fx:id="AP_Monster" prefHeight="20.0" prefWidth="200.0" text="Label" />
+                  <Label fx:id="Speed_Monster" prefHeight="20.0" prefWidth="200.0" text="Label" />
+               </children>
+            </VBox>
+            <Label fx:id="Name_Monster" layoutX="60.0" layoutY="38.0" prefHeight="20.0" prefWidth="200.0" text="Label" />
+            <VBox layoutX="260.0" layoutY="261.0" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label fx:id="HP_Hero" prefHeight="20.0" prefWidth="200.0" text="Label" />
+                  <Label fx:id="Role_Hero" prefHeight="20.0" prefWidth="200.0" text="Label" />
+                  <Label fx:id="AP_Hero" prefHeight="20.0" prefWidth="200.0" text="Label" />
+                  <Label fx:id="Speed_Hero" prefHeight="20.0" prefWidth="200.0" text="Label" />
+               </children>
+            </VBox>
+            <Label fx:id="Name_Hero" layoutX="260.0" layoutY="241.0" prefHeight="20.0" prefWidth="200.0" text="Label" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="BattlePage1" layoutX="10.0" layoutY="10.0" prefHeight="500.0" prefWidth="510.0">
+         <children>
+            <HBox layoutX="35.0" layoutY="365.0" prefHeight="100.0" prefWidth="445.0">
+               <children>
+                  <Label fx:id="Instruction1" prefHeight="100.0" prefWidth="225.0" text="Label" />
+                  <VBox prefHeight="100.0" prefWidth="35.0" />
+                  <VBox prefHeight="100.0" prefWidth="100.0">
+                     <children>
+                        <Button fx:id="Attack1" alignment="CENTER" mnemonicParsing="false" onAction="#Attack_Hero" prefHeight="25.0" prefWidth="100.0" text="Attack" />
+                        <Button fx:id="Inventory1" alignment="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Inventory" />
+                        <Button fx:id="Run1" alignment="CENTER" mnemonicParsing="false" onAction="#Run" prefHeight="25.0" prefWidth="100.0" text="Run" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <ImageView fx:id="Monster_PIC1" fitHeight="150.0" fitWidth="200.0" layoutX="260.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="Hero_PIC1" fitHeight="150.0" fitWidth="200.0" layoutX="50.0" layoutY="211.0" pickOnBounds="true" preserveRatio="true" />
+            <VBox layoutX="60.0" layoutY="58.0" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label fx:id="HP_Monster1" prefHeight="20.0" prefWidth="200.0" text="Label" />
+                  <Label fx:id="AP_Monster1" prefHeight="20.0" prefWidth="200.0" text="Label" />
+                  <Label fx:id="Speed_Monster1" prefHeight="20.0" prefWidth="200.0" text="Label" />
+               </children>
+            </VBox>
+            <Label fx:id="Name_Monster1" layoutX="60.0" layoutY="38.0" prefHeight="20.0" prefWidth="200.0" text="Label" />
+            <VBox layoutX="260.0" layoutY="261.0" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label fx:id="HP_Hero1" prefHeight="20.0" prefWidth="200.0" text="Label" />
+                  <Label fx:id="Role_Hero1" prefHeight="20.0" prefWidth="200.0" text="Label" />
+                  <Label fx:id="AP_Hero1" prefHeight="20.0" prefWidth="200.0" text="Label" />
+                  <Label fx:id="Speed_Hero1" prefHeight="20.0" prefWidth="200.0" text="Label" />
+               </children>
+            </VBox>
+            <Label fx:id="Name_Hero1" layoutX="260.0" layoutY="241.0" prefHeight="20.0" prefWidth="200.0" text="Label" />
+         </children>
+      </AnchorPane>
 
    </children>
 </AnchorPane>
