@@ -8,6 +8,7 @@ import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
@@ -16,6 +17,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
@@ -38,6 +40,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.util.Duration;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+
 /**
  * FXML Controller class
  *
@@ -91,6 +94,7 @@ public class GamingDungeonController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        timeStart();  //timer start
         System.out.println("Testing duplicate");
         logOutButton.setFocusTraversable(false);
         Image imgLogout = new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/logoutButton.png"));
@@ -512,7 +516,6 @@ public class GamingDungeonController implements Initializable {
         });
 
 
-
         //////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////battle status .///////////////////////////////////////
 
@@ -610,6 +613,14 @@ public class GamingDungeonController implements Initializable {
                 characterCurrentBlockPosition = i;
         }
 
+        //detect door
+        if(characterCurrentBlockPosition % 12 != 11&&(element[characterCurrentBlockPosition + 1].equals("door"))){
+            Main m = new Main();
+            timeStop();
+            m.changeScene("GamingDungeon.fxml");
+        }
+
+
         //detect the monster
         if (detectMonster(characterCurrentBlockPosition, "right") == true) {
             HP_Monster.setText("HP: " + monster.getHp());
@@ -629,6 +640,7 @@ public class GamingDungeonController implements Initializable {
 
         if (characterCurrentBlockPosition % 12 != 11) {
             element[characterCurrentBlockPosition + 1] = "Bob";
+            numOfMovement++;
         } else
             element[characterCurrentBlockPosition] = "Bob";
         int characterYPosition = (row - 1) * 40;
@@ -674,6 +686,7 @@ public class GamingDungeonController implements Initializable {
         element[characterCurrentBlockPosition] = "rock";
         if (characterCurrentBlockPosition % 12 != 0) {
             element[characterCurrentBlockPosition - 1] = "Bob";
+            numOfMovement++;
         } else
             element[characterCurrentBlockPosition] = "Bob";
         int characterYPosition = (row - 1) * 40;
@@ -718,6 +731,7 @@ public class GamingDungeonController implements Initializable {
         element[characterCurrentBlockPosition] = "rock";
         if (characterCurrentBlockPosition / 12 != 0) {
             element[characterCurrentBlockPosition - 12] = "Bob";
+            numOfMovement++;
         } else
             element[characterCurrentBlockPosition] = "Bob";
         int characterYPosition = (row - 1) * 40;
@@ -765,6 +779,7 @@ public class GamingDungeonController implements Initializable {
         element[characterCurrentBlockPosition] = "rock";
         if (characterCurrentBlockPosition / 12 != 7) {
             element[characterCurrentBlockPosition + 12] = "Bob";
+            numOfMovement++;
         } else
             element[characterCurrentBlockPosition] = "Bob";
         int characterYPosition = (row - 1) * 40;
@@ -834,164 +849,203 @@ public class GamingDungeonController implements Initializable {
     }
 
 
-
-
-
     ////////////////////////////////////////////////////////////////////////////////
     /////////battle  status ////////////////////////////////////////////////////////
 
-        Monster_Slime monster;
-        int HeroHP = Integer.parseInt(characterHealthShow);
-        int HeroAP = Integer.parseInt(characterAttackShow);
-        int HeroSpeed = Integer.parseInt(characterSpeedShow);
+    Monster_Slime monster;
+    int HeroHP = Integer.parseInt(characterHealthShow);
+    int HeroAP = Integer.parseInt(characterAttackShow);
+    int HeroSpeed = Integer.parseInt(characterSpeedShow);
+    public static int timeSpent;
+    public static int numMonstersDefeated;
+    public static int numOfMovement;
+    public static int numOfAction;
 
-        @FXML
-        private ImageView Hero_PIC;
-        @FXML
-        private Label Name_Hero;
-        @FXML
-        private Label Role_Hero;
-        @FXML
-        private Label HP_Hero;
-        @FXML
-        private Label AP_Hero;
-        @FXML
-        private Label Speed_Hero;
-        @FXML
-        private ImageView Monster_PIC;
-        @FXML
-        private Label Name_Monster;
-        @FXML
-        private Label HP_Monster;
-        @FXML
-        private Label AP_Monster;
-        @FXML
-        private Label Speed_Monster;
-        @FXML
-        private Label Instruction;
-        @FXML
-        private Button Attack;
-        @FXML
-        private Button Inventory;
-        @FXML
-        private Button Run;
-        @FXML
-        private AnchorPane BattlePage;
+    @FXML
+    private ImageView Hero_PIC;
+    @FXML
+    private Label Name_Hero;
+    @FXML
+    private Label Role_Hero;
+    @FXML
+    private Label HP_Hero;
+    @FXML
+    private Label AP_Hero;
+    @FXML
+    private Label Speed_Hero;
+    @FXML
+    private ImageView Monster_PIC;
+    @FXML
+    private Label Name_Monster;
+    @FXML
+    private Label HP_Monster;
+    @FXML
+    private Label AP_Monster;
+    @FXML
+    private Label Speed_Monster;
+    @FXML
+    private Label Instruction;
+    @FXML
+    private Button Attack;
+    @FXML
+    private Button Inventory;
+    @FXML
+    private Button Run;
+    @FXML
+    private AnchorPane BattlePage;
 
-        //animation things
-        TranslateTransition translate = new TranslateTransition();
-        TranslateTransition translate2 = new TranslateTransition();
+    //animation things
+    TranslateTransition translate = new TranslateTransition();
+    TranslateTransition translate2 = new TranslateTransition();
 
-        //hero attack button
-        HeroStatus hero = new HeroStatus(HeroHP, HeroAP, HeroSpeed);
-        public void Attack_Hero() throws IOException{
-            if (HeroSpeed >= monster.getSpeed()) {
-                //animation things
-                translate.setNode(Hero_PIC);
-                translate.setDuration(Duration.millis(1000));
-                translate.setByX(100);
-                translate.setByY(-100);
-                translate.setAutoReverse(true);
-                translate.play();
+    //hero attack button
+    HeroStatus hero = new HeroStatus(HeroHP, HeroAP, HeroSpeed);
 
-                // Reset position after the animation finishes
-                translate.setOnFinished(event -> {
-                    Hero_PIC.setTranslateX(0); // Reset X position
-                    Hero_PIC.setTranslateY(0); // Reset Y position
-                });
+    public void Attack_Hero(ActionEvent actionEvent) throws IOException {
+        numOfAction++;
+        if (HeroSpeed >= monster.getSpeed()) {
+            //animation things
+            translate.setNode(Hero_PIC);
+            translate.setDuration(Duration.millis(1000));
+            translate.setByX(100);
+            translate.setByY(-100);
+            translate.setAutoReverse(true);
+            translate.play();
 
-                monster.takeDamage(HeroAP);
-                Instruction.setText(GamingDungeonController.monster_Detect + " take " + HeroAP + " damage. ");
+            // Reset position after the animation finishes
+            translate.setOnFinished(event -> {
+                Hero_PIC.setTranslateX(0); // Reset X position
+                Hero_PIC.setTranslateY(0); // Reset Y position
+            });
 
-                if (monster.getHp() > 0) {
-                    hero.takeDamage(monster.getAp());
-                    Instruction.setText(GamingDungeonController.monster_Detect + " take " + HeroAP + " damage. Hero takes " + monster.getAp() + " damage. " );
-                }
-            }
+            monster.takeDamage(HeroAP);
+            Instruction.setText(GamingDungeonController.monster_Detect + " take " + HeroAP + " damage. ");
 
-            else {
-                //animation things
-                translate.setNode(Hero_PIC);
-                translate.setDuration(Duration.millis(1000));
-                translate.setByX(100);
-                translate.setByY(-100);
-                translate.setAutoReverse(true);
-                translate.play();
-
-                // Reset position after the animation finishes
-                translate.setOnFinished(event -> {
-                    Hero_PIC.setTranslateX(0); // Reset X position
-                    Hero_PIC.setTranslateY(0); // Reset Y position
-                });
-
+            if (monster.getHp() > 0) {
                 hero.takeDamage(monster.getAp());
-                Instruction.setText(characterName + " take " + monster.getAp() + " damage. ");
-                if (HeroHP > 0) {
-                    Instruction.setText(GamingDungeonController.monster_Detect + " take " + HeroAP + " damage. Hero takes " + monster.getAp() + " damage. " );
-                    monster.takeDamage(HeroAP);
-                }
+                Instruction.setText(GamingDungeonController.monster_Detect + " take " + HeroAP + " damage. Hero takes " + monster.getAp() + " damage. ");
             }
+        } else {
+            //animation things
+            translate.setNode(Hero_PIC);
+            translate.setDuration(Duration.millis(1000));
+            translate.setByX(100);
+            translate.setByY(-100);
+            translate.setAutoReverse(true);
+            translate.play();
 
-            //display the status of hero
-            HP_Hero.setText("HP: " + hero.getHP_Hero() + " / " + hero.getMaxHP_Hero());
-            AP_Hero.setText("Attack Power: " + hero.getAP_Hero());
-            Speed_Hero.setText("Speed: " + hero.getSpeed_Hero());
-            currentHealth = hero.getHP_Hero();
-            hpBar.setText("HP: " + currentHealth + " / " + characterHealthShow);
+            // Reset position after the animation finishes
+            translate.setOnFinished(event -> {
+                Hero_PIC.setTranslateX(0); // Reset X position
+                Hero_PIC.setTranslateY(0); // Reset Y position
+            });
 
-            //display the status of monster
-            HP_Monster.setText("HP: " + monster.getHp());
-            AP_Monster.setText("Attack Power: " + monster.getAp());
-            Speed_Monster.setText("Speed: " + monster.getSpeed());
-
-            if(HeroHP == 0){
-                PauseTransition pause1 = new PauseTransition(Duration.seconds(1));
-                PauseTransition pause2 = new PauseTransition(Duration.seconds(2));
-                pause1.setOnFinished(event -> {
-                    Instruction.setText("GAME OVER !!!");
-                });
-                pause2.setOnFinished(event -> {
-                    BattlePage.setVisible(false);
-                });
-                pause1.play();
-                pause2.play();
-            }
-
-            if(monster.getHp() <= 0){
-                PauseTransition pause1 = new PauseTransition(Duration.seconds(1));
-                PauseTransition pause2 = new PauseTransition(Duration.seconds(2));
-                pause1.setOnFinished(event -> {
-                    Instruction.setText("You Defeat The Monster !");
-                });
-                pause2.setOnFinished(event -> {
-                    BattlePage.setVisible(false);
-                });
-                pause1.play();
-                pause2.play();
+            hero.takeDamage(monster.getAp());
+            Instruction.setText(characterName + " take " + monster.getAp() + " damage. ");
+            if (HeroHP > 0) {
+                Instruction.setText(GamingDungeonController.monster_Detect + " take " + HeroAP + " damage. Hero takes " + monster.getAp() + " damage. ");
+                monster.takeDamage(HeroAP);
             }
         }
 
-        //hero run button
-        public void Run() throws IOException{
-            if(HeroSpeed > monster.getSpeed()){
-                Instruction.setText("Run successfully !!! Loading ...");
-                // Delay the scene change by 1 second
-                PauseTransition pause = new PauseTransition(Duration.seconds(1));
-                pause.setOnFinished(event -> {
-                    BattlePage.setVisible(false);
-                    upButton.setDisable(false);
-                    downButton.setDisable(false);
-                    leftButton.setDisable(false);
-                    rightButton.setDisable(false);
+        //display the status of hero
+        HP_Hero.setText("HP: " + hero.getHP_Hero() + " / " + hero.getMaxHP_Hero());
+        AP_Hero.setText("Attack Power: " + hero.getAP_Hero());
+        Speed_Hero.setText("Speed: " + hero.getSpeed_Hero());
+        currentHealth = hero.getHP_Hero();
+        hpBar.setText("HP: " + currentHealth + " / " + characterHealthShow);
 
-                });
-                pause.play();
-            }
-            else{
-                Instruction.setText("You are unable to run!!!");
-            }
+        //display the status of monster
+        HP_Monster.setText("HP: " + monster.getHp());
+        AP_Monster.setText("Attack Power: " + monster.getAp());
+        Speed_Monster.setText("Speed: " + monster.getSpeed());
+
+        if (hero.getHP_Hero()  == 0) {
+            timeStop();
+            timeSpent = seconds;
+            System.out.println("The total number of monster defeated is " + numMonstersDefeated);
+            System.out.println("The total time spend is " + timeSpent);
+            System.out.println("The total number of movement is " + numOfMovement);
+            System.out.println("The total number of action is " + numOfAction);
+            PauseTransition pause1 = new PauseTransition(Duration.seconds(1));
+            PauseTransition pause2 = new PauseTransition(Duration.seconds(2));
+            pause1.setOnFinished(event -> {
+                Instruction.setText("GAME OVER !!!");
+            });
+            pause2.setOnFinished(event -> {
+                BattlePage.setVisible(false);
+            });
+            pause1.play();
+            pause2.play();
         }
 
+        if (monster.getHp() <= 0) {
+            numMonstersDefeated ++;
+            PauseTransition pause1 = new PauseTransition(Duration.seconds(1));
+            PauseTransition pause2 = new PauseTransition(Duration.seconds(2));
+            pause1.setOnFinished(event -> {
+                Instruction.setText("You Defeat The Monster !");
+            });
+            pause2.setOnFinished(event -> {
+                BattlePage.setVisible(false);
+            });
+            pause1.play();
+            pause2.play();
+        }
+    }
+
+    //hero run button
+    public void Run() throws IOException {
+        numOfAction++;
+        if (HeroSpeed > monster.getSpeed()) {
+            Instruction.setText("Run successfully !!! Loading ...");
+            // Delay the scene change by 1 second
+            PauseTransition pause = new PauseTransition(Duration.seconds(1));
+            pause.setOnFinished(event -> {
+                BattlePage.setVisible(false);
+                upButton.setDisable(false);
+                downButton.setDisable(false);
+                leftButton.setDisable(false);
+                rightButton.setDisable(false);
+
+            });
+            pause.play();
+        } else {
+            Instruction.setText("You are unable to run!!!");
+        }
+    }
+
+    ///////////////////////////////Timer to track time spend/////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////
+    @FXML
+    private Label timerlabel;
+    @FXML
+    private AnchorPane DungeonField;
+
+    public static int seconds;
+    private Timeline timeline;
+
+    private void timeStart() {
+        // Create a Timeline that runs every second
+        timeline = new Timeline(
+                new KeyFrame(Duration.seconds(1), e -> updateTimer())  // Updates the timer every second
+        );
+        timeline.setCycleCount(Timeline.INDEFINITE);  // Run the timeline indefinitely
+        timeline.play();  // Start the timeline
+
+        // Add the timer label to the AnchorPane
+        DungeonField.getChildren().add(timerlabel);
 
     }
+    private void updateTimer() {
+        seconds++;  // Increment the seconds
+        timerlabel.setText("Time: " + seconds);  // Update the display text
+    }
+
+    private void timeStop() {
+        if (timeline != null) {  // Check if the timeline is initialized
+            timeline.stop();  // Stop the timeline
+        }
+    }
+}
 

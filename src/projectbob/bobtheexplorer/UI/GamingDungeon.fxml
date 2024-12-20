@@ -94,7 +94,7 @@
                   <Insets left="-10.0" right="-10.0" />
                </padding>
             </Button>
-            <ImageView fx:id="Monster_PIC" fitHeight="150.0" fitWidth="200.0" layoutX="260.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="Monster_PIC" fitHeight="150.0" fitWidth="200.0" layoutX="260.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true" />
             <ImageView fx:id="Hero_PIC" fitHeight="150.0" fitWidth="200.0" layoutX="50.0" layoutY="211.0" pickOnBounds="true" preserveRatio="true" />
             <VBox layoutX="60.0" layoutY="58.0" prefHeight="100.0" prefWidth="200.0">
                <children>
@@ -113,6 +113,11 @@
                </children>
             </VBox>
             <Label fx:id="Name_Hero" layoutX="260.0" layoutY="241.0" prefHeight="20.0" prefWidth="200.0" text="Label" />
+            <Label fx:id="timerlabel" alignment="CENTER" layoutX="369.0" layoutY="13.0" prefHeight="16.0" prefWidth="92.0" style="-fx-border-color: black;" text="Time: ">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
 
