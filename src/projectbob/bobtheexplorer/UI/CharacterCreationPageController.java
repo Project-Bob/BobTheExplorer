@@ -45,7 +45,6 @@ public class CharacterCreationPageController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         usernameID.setText(username);
-
         Image img=new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/logoutButton.png"));
         ImageView imgView = new ImageView(img);
         imgView.setFitHeight(20);
@@ -153,7 +152,7 @@ public class CharacterCreationPageController implements Initializable {
 
             //hero is created only when all the requirement is meet
             create();
-
+            HeroStatus hero = new HeroStatus(characterHPValue, characterAPValue, characterSpeedValue);
         }
     }
     public void generateWarrior(ActionEvent event) throws IOException{

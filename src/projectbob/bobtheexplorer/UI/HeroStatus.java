@@ -5,10 +5,17 @@ import javafx.scene.control.TextField;
 public class HeroStatus {
 
 //    private String Name_Hero;
-    private int HP_Hero;
-    private int maxHP_Hero;
-    private int AP_Hero;
-    private int speed_Hero;
+    private static int HP_Hero;
+    private static int maxHP_Hero;
+    private static int AP_Hero;
+    private static int speed_Hero;
+
+    public HeroStatus(){
+        this.HP_Hero = HP_Hero;
+        this.maxHP_Hero = HP_Hero;
+        this.AP_Hero = AP_Hero;
+        this.speed_Hero = speed_Hero;
+    }
 
     public HeroStatus(int HP_Hero, int AP_Hero, int speed_Hero) {
 //        this.Name_Hero = Name_Hero;
