@@ -88,11 +88,11 @@ public class GamingDungeonController implements Initializable {
     Image rock = new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/rock.jpg"));
     Image goblin = new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/goblin.png"));
     Image slime = new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/Slime_lvl1_Green.png"));
-    Image spider = new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/Laser Boost.jpg"));
+    Image spider = new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/spider.png"));
     Image potion = new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/potion.png"));
     Image shield = new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/shield.png"));
     Image sword = new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/sword.png"));
-    Image door = new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/megatron.gif"));
+    Image door = new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/door.jpg"));
     Image profilePicImg = new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/pic.png"));
     ImageView imgProfilePic = new ImageView(profilePicImg);
     Image characterToLeft = new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/warriorToLeft.png"));
@@ -643,10 +643,12 @@ public class GamingDungeonController implements Initializable {
         Instruction.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 16));
         Instruction.setTextFill(Color.DARKBLUE);
         Instruction.setWrapText(true);
-        Instruction.setStyle("-fx-border-color: black; -fx-background-color: light yellow; -fx-padding: 15px;");
+        Instruction.setStyle("-fx-border-color: white; -fx-background-color: white; -fx-padding: 15px;");
 
         //Background
-        BattlePage.setStyle("-fx-background-color:BEIGE;");
+        Image BattlePageBackGroundPIC = new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/battle status.jpg"));
+        BattlePageBackground.setImage(BattlePageBackGroundPIC);
+//        BattlePage.setStyle("-fx-background-color:black;");
     }
 
     @FXML
@@ -1349,13 +1351,14 @@ public class GamingDungeonController implements Initializable {
             else if(numMonster==0 && zoneLvl==5){
                 timeStop();
                 System.out.println("end");
-//                m.changeScene(//score board);
+                m.changeScene("ScoreBoard.fxml");
             }
         }
 
         //detect the monster
         if (detectMonster(characterCurrentBlockPosition, "right")) {
             Instruction.setText("Please choose your next step!!!");
+            Name_Monster.setText(GamingDungeonController.monster_Detect);
             HP_Monster.setText("HP: " + monster.getHp());
             AP_Monster.setText("Attack Power: " + monster.getAp());
             Speed_Monster.setText("Speed: " + monster.getSpeed());
@@ -1402,6 +1405,7 @@ public class GamingDungeonController implements Initializable {
         //detect monster
         if (detectMonster(characterCurrentBlockPosition, "left") == true) {
             Instruction.setText("Please choose your next step!!!");
+            Name_Monster.setText(GamingDungeonController.monster_Detect);
             HP_Monster.setText("HP: " + monster.getHp());
             AP_Monster.setText("Attack Power: " + monster.getAp());
             Speed_Monster.setText("Speed: " + monster.getSpeed());
@@ -1461,6 +1465,7 @@ public class GamingDungeonController implements Initializable {
         //detect monster
         if (detectMonster(characterCurrentBlockPosition, "up") == true) {
             Instruction.setText("Please choose your next step!!!");
+            Name_Monster.setText(GamingDungeonController.monster_Detect);
             HP_Monster.setText("HP: " + monster.getHp());
             AP_Monster.setText("Attack Power: " + monster.getAp());
             Speed_Monster.setText("Speed: " + monster.getSpeed());
@@ -1523,6 +1528,7 @@ public class GamingDungeonController implements Initializable {
         //detect monster
         if (detectMonster(characterCurrentBlockPosition, "down") == true) {
             Instruction.setText("Please choose your next step!!!");
+            Name_Monster.setText(GamingDungeonController.monster_Detect);
             HP_Monster.setText("HP: " + monster.getHp());
             AP_Monster.setText("Attack Power: " + monster.getAp());
             Speed_Monster.setText("Speed: " + monster.getSpeed());
@@ -1568,6 +1574,15 @@ public class GamingDungeonController implements Initializable {
                         element[characterCurrentBlockPosition + 1].equals("spider"))) {
                     numMonster--;
                     monster_Detect = element[characterCurrentBlockPosition + 1].toUpperCase();
+                    if(monster_Detect.equalsIgnoreCase("goblin")){
+                        Monster_PIC.setImage(goblin);
+                    }
+                    else if(monster_Detect.equalsIgnoreCase("spider")){
+                        Monster_PIC.setImage(spider);
+                    }
+                    else if(monster_Detect.equalsIgnoreCase("slime")){
+                        Monster_PIC.setImage(slime);
+                    }
                     monster = Monster_Slime.createSlime(difficultyLevel);
                     return true;
                 }
@@ -1578,6 +1593,15 @@ public class GamingDungeonController implements Initializable {
                         element[characterCurrentBlockPosition - 1].equals("spider"))) {
                     numMonster--;
                     monster_Detect = element[characterCurrentBlockPosition - 1].toUpperCase();
+                    if(monster_Detect.equalsIgnoreCase("goblin")){
+                        Monster_PIC.setImage(goblin);
+                    }
+                    else if(monster_Detect.equalsIgnoreCase("spider")){
+                        Monster_PIC.setImage(spider);
+                    }
+                    else if(monster_Detect.equalsIgnoreCase("slime")){
+                        Monster_PIC.setImage(slime);
+                    }
                     monster = Monster_Slime.createSlime(difficultyLevel);
                     return true;
                 }
@@ -1588,6 +1612,15 @@ public class GamingDungeonController implements Initializable {
                         element[characterCurrentBlockPosition - 12].equals("spider"))) {
                     numMonster--;
                     monster_Detect = element[characterCurrentBlockPosition - 12].toUpperCase();
+                    if(monster_Detect.equalsIgnoreCase("goblin")){
+                        Monster_PIC.setImage(goblin);
+                    }
+                    else if(monster_Detect.equalsIgnoreCase("spider")){
+                        Monster_PIC.setImage(spider);
+                    }
+                    else if(monster_Detect.equalsIgnoreCase("slime")){
+                        Monster_PIC.setImage(slime);
+                    }
                     monster = Monster_Slime.createSlime(difficultyLevel);
                     return true;
                 }
@@ -1598,6 +1631,15 @@ public class GamingDungeonController implements Initializable {
                         element[characterCurrentBlockPosition + 12].equals("spider"))) {
                     numMonster--;
                     monster_Detect = element[characterCurrentBlockPosition + 12].toUpperCase();
+                    if(monster_Detect.equalsIgnoreCase("goblin")){
+                        Monster_PIC.setImage(goblin);
+                    }
+                    else if(monster_Detect.equalsIgnoreCase("spider")){
+                        Monster_PIC.setImage(spider);
+                    }
+                    else if(monster_Detect.equalsIgnoreCase("slime")){
+                        Monster_PIC.setImage(slime);
+                    }
                     monster = Monster_Slime.createSlime(difficultyLevel);
                     return true;
                 }
@@ -1695,6 +1737,8 @@ public class GamingDungeonController implements Initializable {
     private Button buttonConfirmUsedItem;
     @FXML
     private Button closedButton;
+    @FXML
+    private ImageView BattlePageBackground;
 
     //pass the herostatus hero
     HeroStatus hero = new HeroStatus();
@@ -1790,7 +1834,12 @@ public class GamingDungeonController implements Initializable {
                 BattlePage.setVisible(false);
                 timeStop();
                 zoneLvl=1;
-//                m.changeScene(//score board)
+                Main m = new Main();
+                try {
+                    m.changeScene("ScoreBoard.fxml");
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             });
             pause1.play();
             pause2.play();

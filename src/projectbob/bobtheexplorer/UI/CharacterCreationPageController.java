@@ -54,6 +54,7 @@ public class CharacterCreationPageController implements Initializable {
         confirmCharacterButton.setDefaultButton(false);
         rulesButton.setFocusTraversable(false);
         logOutButton.setFocusTraversable(false);
+
     }
     @FXML
     private Button confirmButton;
@@ -113,6 +114,8 @@ public class CharacterCreationPageController implements Initializable {
     private Label speedShow;
     @FXML
     private Label difficultyShow;
+    @FXML
+    private AnchorPane characterCreation;
 
     public void createHero(ActionEvent event) throws IOException{
         createHero();
