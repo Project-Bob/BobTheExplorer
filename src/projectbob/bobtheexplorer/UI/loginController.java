@@ -7,11 +7,17 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+
+import java.awt.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import java.io.IOException;
 import javafx.event.ActionEvent;
@@ -42,6 +48,9 @@ public class loginController implements Initializable {
     private PasswordField password;
     @FXML
     private Label wrongID;
+    @FXML
+    private ImageView LoginBackground;
+
     public void userLogin(ActionEvent event) throws IOException{
         checkLogin();
     }

@@ -61,7 +61,6 @@ public class GamingDungeonController implements Initializable {
     private boolean isMovingUp = false;
     private boolean isMovingDown = false;
     public static String characterName = "";
-    private static int currentHealth;
     private int counterIndexItem = 10;
     private static int zoneLvl=1;
     loginController getFile = new loginController();
@@ -75,6 +74,7 @@ public class GamingDungeonController implements Initializable {
     String characterSpeedShow = getDetails.characterSpeedShow;
     String difficultyLevel = pass.levelDifficulty;
     public static String monster_Detect;
+
     ///////////////////////////////////split///////////////////////////////////
     String[] element = new String[96];
     Canvas canvas = new Canvas(480, 320);  // Set the size of the canvas
@@ -97,9 +97,8 @@ public class GamingDungeonController implements Initializable {
     ImageView imgProfilePic = new ImageView(profilePicImg);
     Image characterToLeft = new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/warriorToLeft.png"));
     Image characterToRight = new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/warriorToRight.png"));
-    boolean rightLeg = true;
     boolean directionRight = true;
-    int numMonster = rd.nextInt(1, 4);
+    private int numMonster = rd.nextInt(1, 4);
     String[] monsterArray = {"goblin", "spider", "slime"};
     String[] itemArray = {"potion", "shield", "sword"};
     //int numItem=rd.nextInt(1,3);
@@ -115,8 +114,8 @@ public class GamingDungeonController implements Initializable {
     public static String[] itemUser = {"blank", "blank", "blank", "blank", "blank", "blank"}; //Array for user item
     private int itemReplaced = 7;
     private String currentItemFound = "";
-    private int doorPositionInMap = 0;
     private int counterShieldUsed = 0;
+    private int indexItemSelectedToUse=7;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -150,7 +149,6 @@ public class GamingDungeonController implements Initializable {
         characterName = characterNamePass;
         name.setText(characterName);
         characterRole.setText("Role: " + characterRoleShow);
-        currentHealth = hero.getHP_Hero();
         hpBar.setText("HP: " + hero.getHP_Hero() + " / " + characterHealthShow);
         characterAP.setText("Attack Power: " + characterAttackShow);
         characterSpeed.setText("Speed: " + characterSpeedShow);
@@ -177,6 +175,8 @@ public class GamingDungeonController implements Initializable {
         usernameID.setText(username);
         int countMonster = 0;
         int countItem = 0;
+
+        // Set position of rock
         for (int j = 0; j < 320; j += 40) {
             for (int i = 0; i < 480; i += 40) {
                 gc.drawImage(rock, i, j, 40, 40);
@@ -184,6 +184,7 @@ public class GamingDungeonController implements Initializable {
         }
         for (int i = 0; i < element.length; i++)
             element[i] = "rock";
+
         // Set position of monster
         while (countMonster < numMonster) {
             int positionX = rd.nextInt(0, 12);
@@ -246,7 +247,6 @@ public class GamingDungeonController implements Initializable {
             positionDoor = (doorY + 1) * 12 - 1;
         }
         element[positionDoor] = "door";
-        doorPositionInMap = positionDoor;
         gc.drawImage(door, 440, doorY * 40, 40, 40);
 
         //Get position of all monster and items(including their name)
@@ -290,6 +290,7 @@ public class GamingDungeonController implements Initializable {
             gcItemUsed.strokeLine(50 * i + 1.5, 1.5, 50 * i + 1.5, 48.5);
             gcItemUsed.strokeLine(50 * i + 48.5, 1.5, 50 * i + 48.5, 48.5);
         }
+
         //Split
         Image map = createImageFromCanvas(canvas);
         imgTest.setImage(map);
@@ -299,6 +300,7 @@ public class GamingDungeonController implements Initializable {
         itemBarDelete.setImage(itemListDelete);
         Image itemListUsed = createImageFromCanvas(itemCanvasUsed);
         itemBarUsed.setImage(itemListUsed);
+
         // Make sure the canvas can capture keyboard input
         moveRightTimeline = new Timeline(
                 new KeyFrame(Duration.seconds(0.15), event -> {
@@ -622,7 +624,6 @@ public class GamingDungeonController implements Initializable {
         Image Picture_Hero = new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/warriorToRight.png"));
         Hero_PIC.setImage(Picture_Hero);
         Name_Hero.setText(characterName);
-//        HeroStatus hero = new HeroStatus(HeroHP, HeroAP, HeroSpeed);
         HP_Hero.setText("HP: " + hero.getHP_Hero() + " / " + characterHealthShow);
         Role_Hero.setText("Role: " + characterRoleShow);
         AP_Hero.setText("Attack Power: " + characterAttackShow);
@@ -649,6 +650,10 @@ public class GamingDungeonController implements Initializable {
     }
 
     @FXML
+    private Label errorMsg;
+    @FXML
+    private Label useItemName;
+    @FXML
     private Label zoneLevel;
     @FXML
     private Button logOutButton;
@@ -670,6 +675,8 @@ public class GamingDungeonController implements Initializable {
     private ImageView profilePic;
     @FXML
     private ImageView imageItemNew;
+    @FXML
+    private ImageView imageItemToBeUsed;
     @FXML
     private Label usernameID;
     @FXML
@@ -697,6 +704,8 @@ public class GamingDungeonController implements Initializable {
     @FXML
     private AnchorPane itemOverflow;
     @FXML
+    private AnchorPane confirmUseItem;
+    @FXML
     private Button buttonItemReplace1;
     @FXML
     private Button buttonItemReplace2;
@@ -708,14 +717,20 @@ public class GamingDungeonController implements Initializable {
     private Button buttonItemReplace5;
     @FXML
     private Button buttonItemReplace6;
+    @FXML
+    private Button confirmUseItemButton;
+    @FXML
+    private Button cancelUseItem;
 
 
     public void logOut() throws IOException {
         timeStop();
+        zoneLvl=1;
         Main m = new Main();
         m.changeScene("loginPage.fxml");
     }
 
+    //Detect item
     public void checkStatus(int characterCurrentBlockPosition) throws IOException {
         for (int i = 0; i < totalNumMonsterItem; i++) {
             if (monsterItemPosition[i][0].equals(String.valueOf(characterCurrentBlockPosition))) {
@@ -730,6 +745,7 @@ public class GamingDungeonController implements Initializable {
         }
     }
 
+    //Store the item
     public void putItemInItemList(String itemName) {
         // Create a Map to store ImageViews with their respective names
         currentItemFound = itemName;
@@ -797,20 +813,19 @@ public class GamingDungeonController implements Initializable {
                 buttonItemUsed.setVisible(true);
                 buttonItemUsed.setGraphic(imageViewUsed);
                 buttonItemUsed.setStyle("-fx-padding: 0; -fx-background-color: transparent;");
-            /*
-            ImageView imageViewReplaced = new ImageView(imageViewMap.get(imageViewName).getImage());
-            imageViewReplaced.setFitHeight(45);
-            imageViewReplaced.setFitWidth(45);
-            buttonItemReplaced.setVisible(true);
-            buttonItemReplaced.setGraphic(imageViewReplaced); // Fixed: Use imageViewReplaced for the replaced button
-            buttonItemReplaced.setStyle("-fx-padding: 0; -fx-background-color: transparent;");*/
             }
         } else {
             itemOverflow.setVisible(true);
-            //upButton.setDisable(true);
-            //downButton.setDisable(true);
+//            upButton.setDisable(true);
+//            downButton.setDisable(true);
 //            leftButton.setDisable(true);
 //            rightButton.setDisable(true);
+            buttonItem1.setDisable(true);
+            buttonItem2.setDisable(true);
+            buttonItem3.setDisable(true);
+            buttonItem4.setDisable(true);
+            buttonItem5.setDisable(true);
+            buttonItem6.setDisable(true);
             Image imageNew = imageViewMap.get(imageViewName).getImage();
             imageItemNew.setImage(imageNew);
         }
@@ -876,16 +891,11 @@ public class GamingDungeonController implements Initializable {
                 buttonItemUsed.setVisible(true);
                 buttonItemUsed.setGraphic(imageViewUsed);
                 buttonItemUsed.setStyle("-fx-padding: 0; -fx-background-color: transparent;");
-            /*
-            ImageView imageViewReplaced = new ImageView(imageViewMap.get(imageViewName).getImage());
-            imageViewReplaced.setFitHeight(45);
-            imageViewReplaced.setFitWidth(45);
-            buttonItemReplaced.setVisible(true);
-            buttonItemReplaced.setGraphic(imageViewReplaced); // Fixed: Use imageViewReplaced for the replaced button
-            buttonItemReplaced.setStyle("-fx-padding: 0; -fx-background-color: transparent;");*/
             }
         }
     }
+
+    //reset the button
     private void resetButtonToOriginalState(int index) {
         Map<String, Button> buttonMap = new HashMap<>();
         buttonMap.put("0", buttonItem1);
@@ -934,8 +944,6 @@ public class GamingDungeonController implements Initializable {
             buttonItemUsed.setStyle("");
         }
     }
-
-
 
     //Clear item once Bob reached its position
     public void clearItem(int characterPosition){
@@ -1139,17 +1147,57 @@ public class GamingDungeonController implements Initializable {
         useItemMethod(5);
     }
     public void useItemMethod(int indexItem){
-        String itemName=itemUser[indexItem];
+        indexItemSelectedToUse=indexItem;
+        Map<String, ImageView> imageViewMap = new HashMap<>();
+        imageViewMap.put("potionInList", potionInList);
+        imageViewMap.put("swordInList", swordInList);
+        imageViewMap.put("shieldInList", shieldInList);
+        String imageViewName=itemUser[indexItem]+"InList";
+        confirmUseItem.setVisible(true);
+//        upButton.setDisable(true);
+//        downButton.setDisable(true);
+//        leftButton.setDisable(true);
+//        rightButton.setDisable(true);
+        buttonItem1.setDisable(true);
+        buttonItem2.setDisable(true);
+        buttonItem3.setDisable(true);
+        buttonItem4.setDisable(true);
+        buttonItem5.setDisable(true);
+        buttonItem6.setDisable(true);
+        useItemName.setText(itemUser[indexItem]);
+        Image imageNew = imageViewMap.get(imageViewName).getImage();
+        imageItemToBeUsed.setImage(imageNew);
+
+    }
+
+    public void confirmUseItem(ActionEvent event) throws IOException{
+
+        System.out.println("Use "+itemUser[indexItemSelectedToUse]);
+        String itemName=itemUser[indexItemSelectedToUse];
+        itemUser[indexItemSelectedToUse]="blank";
+
+        System.out.println("Now "+indexItemSelectedToUse+" is "+itemUser[indexItemSelectedToUse]);
         if (itemName.equals("potion")){
-            System.out.println("Use "+itemUser[indexItem]);
-            itemUser[indexItem]="blank";
-            System.out.println("Now "+indexItem+" is "+itemUser[indexItem]);
+            System.out.println("Use "+itemUser[indexItemSelectedToUse]);
+            itemUser[indexItemSelectedToUse]="blank";
+            System.out.println("Now "+indexItemSelectedToUse+" is "+itemUser[indexItemSelectedToUse]);
             hero.setHP(hero.getHP_Hero()+20);
             if (hero.getHP_Hero()>Integer.parseInt(characterHealthShow))
                 hero.setHP( Integer.parseInt(characterHealthShow));
             hpBar.setText("HP: "+hero.getHP_Hero()+" / "+characterHealthShow);
             HP_Hero.setText("HP: " + hero.getHP_Hero() + " / " + characterHealthShow);
         }
+        Map<String, Button> buttonMap = new HashMap<>();
+        buttonMap.put("1", buttonItem1);
+        buttonMap.put("2", buttonItem2);
+        buttonMap.put("3", buttonItem3);
+        buttonMap.put("4", buttonItem4);
+        buttonMap.put("5", buttonItem5);
+        buttonMap.put("6", buttonItem6);
+        String itemIndex=String.valueOf(indexItemSelectedToUse+1);
+        Button buttonItem=buttonMap.get(itemIndex);
+        buttonItem.setGraphic(null);
+        cancelUseItem();
         for (int i = 0; i < itemUser.length; i++) {
             if (!itemUser[i].equals("blank"))
                 putItemInItemListLoop(itemUser[i], i);
@@ -1232,6 +1280,29 @@ public class GamingDungeonController implements Initializable {
 //        downButton.setDisable(false);
 //        leftButton.setDisable(false);
 //        rightButton.setDisable(false);
+        buttonItem1.setDisable(false);
+        buttonItem2.setDisable(false);
+        buttonItem3.setDisable(false);
+        buttonItem4.setDisable(false);
+        buttonItem5.setDisable(false);
+        buttonItem6.setDisable(false);
+        counterIndexItem=5;
+
+    }
+
+    public void cancelUseItem() throws IOException{
+
+        confirmUseItem.setVisible(false);
+//        upButton.setDisable(false);
+//        downButton.setDisable(false);
+//        leftButton.setDisable(false);
+//        rightButton.setDisable(false);
+        buttonItem1.setDisable(false);
+        buttonItem2.setDisable(false);
+        buttonItem3.setDisable(false);
+        buttonItem4.setDisable(false);
+        buttonItem5.setDisable(false);
+        buttonItem6.setDisable(false);
         counterIndexItem=5;
     }
 
@@ -1257,13 +1328,30 @@ public class GamingDungeonController implements Initializable {
 
     public void goToRight() throws IOException {
         //get character current position(0-96)
+        Main m = new Main();
         int characterCurrentBlockPosition = 0;
         for (int i = 0; i < element.length; i++) {
             if (element[i].equals("Bob"))
                 characterCurrentBlockPosition = i;
         }
         //detect the door
-        detectDoor(characterCurrentBlockPosition, "right");
+
+        if(detectDoor(characterCurrentBlockPosition, "right")){
+            if(numMonster==0 && zoneLvl<5){
+                zoneLvl++;
+                timeStop();
+                m.changeScene("GamingDungeon.fxml");
+            }
+            else if(numMonster>0){
+                errorMsg.setText("There are still "+numMonster+" left in the dungeon");
+                return;
+            }
+            else if(numMonster==0 && zoneLvl==5){
+                timeStop();
+                System.out.println("end");
+//                m.changeScene(//score board);
+            }
+        }
 
         //detect the monster
         if (detectMonster(characterCurrentBlockPosition, "right")) {
@@ -1347,13 +1435,29 @@ public class GamingDungeonController implements Initializable {
 
     public void goUp() throws IOException {
         //get character current position(0-96)
+        Main m = new Main();
         int characterCurrentBlockPosition = 0;
         for (int i = 0; i < element.length; i++) {
             if (element[i].equals("Bob"))
                 characterCurrentBlockPosition = i;
         }
         //detect door
-        detectDoor(characterCurrentBlockPosition, "up");
+        if(detectDoor(characterCurrentBlockPosition, "up")){
+            if(numMonster==0 && zoneLvl<5){
+                zoneLvl++;
+                timeStop();
+                m.changeScene("GamingDungeon.fxml");
+            }
+            else if(numMonster>0){
+                errorMsg.setText("There are still "+numMonster+" left in the dungeon");
+                return;
+            }
+            else if(numMonster==0 && zoneLvl==5){
+                timeStop();
+                System.out.println("end");
+//                m.changeScene(//score board);
+            }
+        }
         //detect monster
         if (detectMonster(characterCurrentBlockPosition, "up") == true) {
             Instruction.setText("Please choose your next step!!!");
@@ -1393,13 +1497,29 @@ public class GamingDungeonController implements Initializable {
 
     public void goDown() throws IOException {
         //get character current position(0-96)
+        Main m = new Main();
         int characterCurrentBlockPosition = 0;
         for (int i = 0; i < element.length; i++) {
             if (element[i].equals("Bob"))
                 characterCurrentBlockPosition = i;
         }
         //detect door
-        detectDoor(characterCurrentBlockPosition, "down");
+        if(detectDoor(characterCurrentBlockPosition, "down")){
+            if(numMonster==0 && zoneLvl<5){
+                zoneLvl++;
+                timeStop();
+                m.changeScene("GamingDungeon.fxml");
+            }
+            else if(numMonster>0){
+                errorMsg.setText("There are still "+numMonster+" left in the dungeon");
+                return;
+            }
+            else if(numMonster==0 && zoneLvl==5){
+                timeStop();
+                System.out.println("end");
+//                m.changeScene(//score board);
+            }
+        }
         //detect monster
         if (detectMonster(characterCurrentBlockPosition, "down") == true) {
             Instruction.setText("Please choose your next step!!!");
@@ -1446,7 +1566,7 @@ public class GamingDungeonController implements Initializable {
                 if (characterCurrentBlockPosition % 12 != 11 && (element[characterCurrentBlockPosition + 1].equals("slime") ||
                         element[characterCurrentBlockPosition + 1].equals("goblin") ||
                         element[characterCurrentBlockPosition + 1].equals("spider"))) {
-
+                    numMonster--;
                     monster_Detect = element[characterCurrentBlockPosition + 1].toUpperCase();
                     monster = Monster_Slime.createSlime(difficultyLevel);
                     return true;
@@ -1456,6 +1576,7 @@ public class GamingDungeonController implements Initializable {
                 if (characterCurrentBlockPosition % 12 != 0 && (element[characterCurrentBlockPosition - 1].equals("slime") ||
                         element[characterCurrentBlockPosition - 1].equals("goblin") ||
                         element[characterCurrentBlockPosition - 1].equals("spider"))) {
+                    numMonster--;
                     monster_Detect = element[characterCurrentBlockPosition - 1].toUpperCase();
                     monster = Monster_Slime.createSlime(difficultyLevel);
                     return true;
@@ -1465,6 +1586,7 @@ public class GamingDungeonController implements Initializable {
                 if (characterCurrentBlockPosition / 12 != 0 && (element[characterCurrentBlockPosition - 12].equals("slime") ||
                         element[characterCurrentBlockPosition - 12].equals("goblin") ||
                         element[characterCurrentBlockPosition - 12].equals("spider"))) {
+                    numMonster--;
                     monster_Detect = element[characterCurrentBlockPosition - 12].toUpperCase();
                     monster = Monster_Slime.createSlime(difficultyLevel);
                     return true;
@@ -1474,6 +1596,7 @@ public class GamingDungeonController implements Initializable {
                 if (characterCurrentBlockPosition / 12 != 7 && (element[characterCurrentBlockPosition + 12].equals("slime") ||
                         element[characterCurrentBlockPosition + 12].equals("goblin") ||
                         element[characterCurrentBlockPosition + 12].equals("spider"))) {
+                    numMonster--;
                     monster_Detect = element[characterCurrentBlockPosition + 12].toUpperCase();
                     monster = Monster_Slime.createSlime(difficultyLevel);
                     return true;
@@ -1484,31 +1607,25 @@ public class GamingDungeonController implements Initializable {
         return false;
     }
 
-    public void detectDoor(int characterCurrentBlockPosition, String direction) throws IOException {
-        Main m = new Main();
+    public boolean detectDoor(int characterCurrentBlockPosition, String direction) throws IOException {
         switch (direction) {
             case "right":
                 if (characterCurrentBlockPosition % 12 != 11 && (element[characterCurrentBlockPosition + 1].equals("door"))) {
-                    zoneLvl++;
-                    timeStop();
-                    m.changeScene("GamingDungeon.fxml");
+                    return true;
                 }
                 break;
             case "up":
-                if (characterCurrentBlockPosition / 12 != 0 && (element[characterCurrentBlockPosition - 12].equals("door"))){
-                    zoneLvl++;
-                    timeStop();
-                    m.changeScene("GamingDungeon.fxml");
+                if (characterCurrentBlockPosition / 12 != 0 && (element[characterCurrentBlockPosition - 12].equals("door"))) {
+                    return true;
                 }
                 break;
             case "down":
-                if (characterCurrentBlockPosition / 12 != 7 && (element[characterCurrentBlockPosition + 12].equals("door"))){
-                    zoneLvl++;
-                    timeStop();
-                    m.changeScene("GamingDungeon.fxml");
+                if (characterCurrentBlockPosition / 12 != 7 && (element[characterCurrentBlockPosition + 12].equals("door"))) {
+                    return true;
                 }
                 break;
         }
+        return false;
     }
 
 
@@ -1667,9 +1784,13 @@ public class GamingDungeonController implements Initializable {
             PauseTransition pause2 = new PauseTransition(Duration.seconds(2));
             pause1.setOnFinished(event -> {
                 Instruction.setText("GAME OVER !!!");
+
             });
             pause2.setOnFinished(event -> {
                 BattlePage.setVisible(false);
+                timeStop();
+                zoneLvl=1;
+//                m.changeScene(//score board)
             });
             pause1.play();
             pause2.play();

@@ -6,18 +6,24 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.effect.Glow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="500.0" style="-fx-background-color: LIGHTYELLOW;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projectbob.bobtheexplorer.UI.loginController">
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projectbob.bobtheexplorer.UI.loginController">
    <children>
+      <ImageView fx:id="LoginBackground" blendMode="HARD_LIGHT" fitHeight="500.0" fitWidth="500.0" opacity="0.88" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../test/loginPage.jpg" />
+         </image></ImageView>
       <VBox layoutY="140.0" prefHeight="200.0" prefWidth="500.0" spacing="15.0">
          <children>
             <HBox alignment="CENTER" prefHeight="27.0" prefWidth="307.0">
                <children>
-                  <Label prefHeight="36.0" prefWidth="66.0" text="Username: " textAlignment="JUSTIFY">
+                  <Label prefHeight="36.0" prefWidth="66.0" text="Username: " textAlignment="JUSTIFY" textFill="WHITE">
                      <padding>
                         <Insets top="8.0" />
                      </padding>
@@ -30,7 +36,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="21.0" prefWidth="200.0">
                <children>
-                  <Label prefHeight="43.0" prefWidth="66.0" text="Password:">
+                  <Label prefHeight="43.0" prefWidth="66.0" text="Password:" textAlignment="JUSTIFY" textFill="WHITE">
                      <padding>
                         <Insets top="8.0" />
                      </padding>
@@ -44,17 +50,17 @@
                   <PasswordField fx:id="password" alignment="TOP_LEFT" prefHeight="25.0" prefWidth="169.0" promptText="Enter password..." />
                </children>
             </HBox>
-            <HBox alignment="CENTER" blendMode="DARKEN" nodeOrientation="LEFT_TO_RIGHT" prefHeight="35.0" prefWidth="195.0" spacing="20.0">
+            <HBox alignment="CENTER" blendMode="DARKEN" focusTraversable="true" nodeOrientation="LEFT_TO_RIGHT" prefHeight="35.0" prefWidth="195.0" spacing="20.0">
                <children>
-                  <Button fx:id="loginButton" alignment="BOTTOM_LEFT" contentDisplay="TOP" defaultButton="true" graphicTextGap="100.0" lineSpacing="60.0" mnemonicParsing="false" onAction="#userLogin" style="-fx-background-color: #b3bd8c;" text="Login" textAlignment="CENTER">
-                     <opaqueInsets>
-                        <Insets bottom="20.0" left="20.0" right="10.0" top="10.0" />
-                     </opaqueInsets>
+                  <Button fx:id="registerButton" mnemonicParsing="false" onAction="#userRegister" style="-fx-background-color: black;" text="Register" textFill="#234143">
                      <font>
                         <Font name="System Bold Italic" size="12.0" />
                      </font>
                   </Button>
-                  <Button fx:id="registerButton" mnemonicParsing="false" onAction="#userRegister" style="-fx-background-color: #b3bd8c;" text="Register">
+                  <Button fx:id="loginButton" alignment="BOTTOM_LEFT" contentDisplay="TOP" defaultButton="true" graphicTextGap="100.0" lineSpacing="60.0" mnemonicParsing="false" onAction="#userLogin" style="-fx-background-color: black;" text="Login" textAlignment="CENTER" textFill="#234143">
+                     <opaqueInsets>
+                        <Insets bottom="20.0" left="20.0" right="10.0" top="10.0" />
+                     </opaqueInsets>
                      <font>
                         <Font name="System Bold Italic" size="12.0" />
                      </font>
@@ -66,7 +72,7 @@
             <Insets top="20.0" />
          </padding>
       </VBox>
-      <Label alignment="CENTER" contentDisplay="CENTER" graphicTextGap="7.0" layoutY="75.0" prefHeight="23.0" prefWidth="500.0" text="WELCOME TO BOB THE EXPLORER" textAlignment="CENTER" underline="true">
+      <Label alignment="CENTER" contentDisplay="CENTER" graphicTextGap="7.0" layoutY="75.0" prefHeight="23.0" prefWidth="500.0" text="WELCOME TO BOB THE EXPLORER" textAlignment="CENTER" textFill="WHITE" underline="true">
          <font>
             <Font name="Elephant Italic" size="17.0" />
          </font>
@@ -80,7 +86,7 @@
       </Label>
       <HBox alignment="CENTER" layoutX="160.0" layoutY="108.0" prefHeight="31.0" prefWidth="180.0">
          <children>
-            <Label fx:id="wrongID" alignment="CENTER" prefHeight="18.0" prefWidth="176.0" textAlignment="CENTER" />
+            <Label fx:id="wrongID" alignment="CENTER" prefHeight="18.0" prefWidth="176.0" textAlignment="CENTER" textFill="WHITE" />
          </children>
       </HBox>
    </children>
