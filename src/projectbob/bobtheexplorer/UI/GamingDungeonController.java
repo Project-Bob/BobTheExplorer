@@ -1459,7 +1459,7 @@ public class GamingDungeonController implements Initializable {
             else if(numMonster==0 && zoneLvl==5){
                 timeStop();
                 System.out.println("end");
-//                m.changeScene(//score board);
+                m.changeScene("ScoreBoard.fxml");
             }
         }
         //detect monster
@@ -1522,7 +1522,7 @@ public class GamingDungeonController implements Initializable {
             else if(numMonster==0 && zoneLvl==5){
                 timeStop();
                 System.out.println("end");
-//                m.changeScene(//score board);
+                m.changeScene("ScoreBoard.fxml");
             }
         }
         //detect monster
