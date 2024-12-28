@@ -20,7 +20,7 @@
       </Label>
       <AnchorPane id="AnchorPane" fx:id="DungeonPage" prefHeight="500.0" prefWidth="500.0">
          <children>
-            <Label layoutX="194.0" layoutY="3.0" text="Dungeon 1" textFill="#727731">
+            <Label layoutX="194.0" layoutY="3.0" text="Dungeon" textFill="#727731">
                <font>
                   <Font name="System Bold Italic" size="26.0" />
                </font>

@@ -3,6 +3,7 @@ package projectbob.bobtheexplorer.UI;
 import java.util.Random;
 
 public class Monster_Slime {
+    private String name;
     private int hp;
     private int ap;
     private int speed;
@@ -34,12 +35,24 @@ public class Monster_Slime {
         this.speed = speed;
     }
 
+    public void setName(String name){
+        this.name = name;
+    }
+
+    public String getName(){
+        return name;
+    }
+
     public int getHp() {
         return hp;
     }
 
     public int getAp() {
         return ap;
+    }
+
+    public void setAp(int ap){
+        this.ap = ap;
     }
 
     public int getSpeed() {

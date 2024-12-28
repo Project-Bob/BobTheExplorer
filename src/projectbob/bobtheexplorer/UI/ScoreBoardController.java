@@ -2,15 +2,26 @@ package projectbob.bobtheexplorer.UI;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 
 import java.awt.*;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class ScoreBoardController implements Initializable {
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //TODO
+    }
+
+    @FXML
+    private Button logOutButton;
+
+    public void logOut() throws IOException {
+        Main m=new Main();
+        m.changeScene("loginPage.fxml");
     }
 
 }

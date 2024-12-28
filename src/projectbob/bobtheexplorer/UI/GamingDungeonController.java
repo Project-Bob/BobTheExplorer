@@ -83,7 +83,7 @@ public class GamingDungeonController implements Initializable {
     Image shield = new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/shield.png"));
     Image sword = new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/sword.png"));
     Image door = new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/door.jpg"));
-    Image profilePicImg = new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/pic.png"));
+    Image profilePicImg = new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/warriorToRight.png"));
     ImageView imgProfilePic = new ImageView(profilePicImg);
     Image characterToLeft = new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/warriorToLeft.png"));
     Image characterToRight = new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/warriorToRight.png"));
@@ -108,8 +108,9 @@ public class GamingDungeonController implements Initializable {
     public static String[] itemUser = {"blank", "blank", "blank", "blank", "blank", "blank"}; //Array for user item
     private int itemReplaced = 7;
     private String currentItemFound = "";
-    private int counterShieldUsed = 0;
+    protected int counterShieldUsed = 0;
     private int indexItemSelectedToUseOrRemove =7;
+    private boolean berserkActivated = false;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -1597,6 +1598,7 @@ public class GamingDungeonController implements Initializable {
                     monster_Detect = element[characterCurrentBlockPosition + 1].toUpperCase();
                     if(monster_Detect.equalsIgnoreCase("goblin")){
                         Monster_PIC.setImage(goblin);
+                        berserkActivated = false;
                     }
                     else if(monster_Detect.equalsIgnoreCase("spider")){
                         Monster_PIC.setImage(spider);
@@ -1616,6 +1618,7 @@ public class GamingDungeonController implements Initializable {
                     monster_Detect = element[characterCurrentBlockPosition - 1].toUpperCase();
                     if(monster_Detect.equalsIgnoreCase("goblin")){
                         Monster_PIC.setImage(goblin);
+                        berserkActivated = false;
                     }
                     else if(monster_Detect.equalsIgnoreCase("spider")){
                         Monster_PIC.setImage(spider);
@@ -1635,6 +1638,7 @@ public class GamingDungeonController implements Initializable {
                     monster_Detect = element[characterCurrentBlockPosition - 12].toUpperCase();
                     if(monster_Detect.equalsIgnoreCase("goblin")){
                         Monster_PIC.setImage(goblin);
+                        berserkActivated = false;
                     }
                     else if(monster_Detect.equalsIgnoreCase("spider")){
                         Monster_PIC.setImage(spider);
@@ -1654,6 +1658,7 @@ public class GamingDungeonController implements Initializable {
                     monster_Detect = element[characterCurrentBlockPosition + 12].toUpperCase();
                     if(monster_Detect.equalsIgnoreCase("goblin")){
                         Monster_PIC.setImage(goblin);
+                        berserkActivated = false;
                     }
                     else if(monster_Detect.equalsIgnoreCase("spider")){
                         Monster_PIC.setImage(spider);
@@ -1795,7 +1800,19 @@ public class GamingDungeonController implements Initializable {
                     Instruction.setText(GamingDungeonController.monster_Detect + " take " + hero.getAP_Hero() + " damage. Hero takes " + monster.getAp() + " damage. ");
                 }
                 else{
-                    Instruction.setText(GamingDungeonController.monster_Detect + " take " + hero.getAP_Hero() + " damage. Hero used shield to defend ");
+                    if(monster_Detect.equalsIgnoreCase("Slime")){
+                        counterShieldUsed = 0;
+                        Instruction.setText("Your shield has been dissolved by the slime!!!");
+                        hero.takeDamage(monster.getAp());PauseTransition pause1 = new PauseTransition(Duration.seconds(1));
+                        PauseTransition pause3 = new PauseTransition(Duration.seconds(1.5));
+                        pause3.setOnFinished(event -> {
+                            Instruction.setText(GamingDungeonController.monster_Detect + " take " + hero.getAP_Hero() + " damage. Hero takes " + monster.getAp() + " damage. ");
+                        });
+                        pause3.play();
+                    }
+                    else{
+                        Instruction.setText(GamingDungeonController.monster_Detect + " take " + hero.getAP_Hero() + " damage. Hero used shield to defend ");
+                    }
                 }
             }
         }else {
@@ -1821,9 +1838,45 @@ public class GamingDungeonController implements Initializable {
                     Instruction.setText(GamingDungeonController.monster_Detect + " take " + hero.getAP_Hero() + " damage. Hero takes " + monster.getAp() + " damage. ");
                 }
                 else{
-                    Instruction.setText(GamingDungeonController.monster_Detect + " take " + hero.getAP_Hero() + " damage. Hero takes shield to defense. ");
+                    if(monster_Detect.equalsIgnoreCase("Slime")){
+                        counterShieldUsed = 0;
+                        Instruction.setText("Your shield has been dissolved by the slime!!!");
+                        hero.takeDamage(monster.getAp());PauseTransition pause1 = new PauseTransition(Duration.seconds(1));
+                        PauseTransition pause3 = new PauseTransition(Duration.seconds(1.5));
+                        pause3.setOnFinished(event -> {
+                            Instruction.setText(GamingDungeonController.monster_Detect + " take " + hero.getAP_Hero() + " damage. Hero takes " + monster.getAp() + " damage. ");
+                        });
+                        pause3.play();
+                    }
+                    else{
+                        Instruction.setText(GamingDungeonController.monster_Detect + " take " + hero.getAP_Hero() + " damage. Hero used shield to defend ");
+                    }
                 }
                 monster.takeDamage(hero.getAP_Hero());
+            }
+        }
+
+        if(monster_Detect.equalsIgnoreCase("goblin") && monster.getHp()>0 && monster.getHp()<=25){
+            if(berserkActivated == false) {
+                PauseTransition pause4 = new PauseTransition(Duration.seconds(1));
+                pause4.setOnFinished(event -> {
+                    Instruction.setText("Goblin has entered berserk mode!!! Goblin attack rise 10 points.");
+                    monster.setAp(monster.getAp() + 10);
+                    AP_Monster.setText("Attack Power: " + monster.getAp());
+                });
+                pause4.play();
+            }
+            berserkActivated = true;
+        }
+        if(monster.getHp()>0) {
+            if (monster_Detect.equalsIgnoreCase("Spider")) {
+                PauseTransition pause5 = new PauseTransition(Duration.seconds(1));
+                pause5.setOnFinished(event -> {
+                    Instruction.setText("You are poison by the Spider!!! HP -5 points");
+                    hero.setHP(hero.getHP_Hero() - 5);
+                    HP_Hero.setText("HP: " + hero.getHP_Hero() + " / " + characterHealthShow);
+                });
+                pause5.play();
             }
         }
 
@@ -1945,6 +1998,19 @@ public class GamingDungeonController implements Initializable {
         zoneLvl = 1;
         timeStop();
         m.changeScene("ScoreBoard.fxml");
+    }
+
+    public void monsterAbility(String name){
+        if(name.equals("slime")){
+            counterShieldUsed = 0;
+        }
+        else if(name.equals("spider")){
+            Instruction.setText("Unable to attack! You are trap by web!");
+
+        }
+        else if(name.equals("goblin")){
+
+        }
     }
 }
 

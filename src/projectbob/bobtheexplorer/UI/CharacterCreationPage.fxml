@@ -18,6 +18,11 @@
 
 <AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="500.0" style="-fx-background-color: lightyellow;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projectbob.bobtheexplorer.UI.CharacterCreationPageController">
    <children>
+      <ImageView fitHeight="500.0" fitWidth="500.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../test/loginPage.jpg" />
+         </image>
+      </ImageView>
       <Label layoutX="63.0" layoutY="6.0" text="Welcome to Bob The Explorer! " textFill="#727731">
          <font>
             <Font name="System Bold Italic" size="26.0" />
@@ -112,7 +117,7 @@
             <Image url="@../Mark%209.jpg" />
          </image>
       </ImageView>
-      <Label fx:id="role" alignment="CENTER" contentDisplay="CENTER" layoutX="183.0" layoutY="200.0" prefHeight="18.0" prefWidth="133.0" text="WARRIOR" textAlignment="CENTER">
+      <Label fx:id="role" alignment="CENTER" contentDisplay="CENTER" layoutX="183.0" layoutY="200.0" prefHeight="18.0" prefWidth="133.0" text="WARRIOR" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="Bodoni MT Bold Italic" size="13.0" />
          </font>
@@ -130,12 +135,12 @@
       <Button fx:id="rulesButton" layoutX="14.0" layoutY="109.0" mnemonicParsing="false" onAction="#displayRules" text="How to Play?" />
       <HBox layoutX="16.0" layoutY="78.0" prefHeight="34.0" prefWidth="141.0">
          <children>
-            <Label text="ID: ">
+            <Label text="ID: " textFill="WHITE">
                <font>
                   <Font name="Elephant" size="14.0" />
                </font>
             </Label>
-            <Label fx:id="usernameID" prefHeight="18.0" prefWidth="100.0">
+            <Label fx:id="usernameID" prefHeight="18.0" prefWidth="100.0" textFill="WHITE">
                <font>
                   <Font name="Elephant" size="13.0" />
                </font>
