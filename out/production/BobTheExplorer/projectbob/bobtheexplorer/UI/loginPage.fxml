@@ -15,7 +15,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projectbob.bobtheexplorer.UI.loginController">
    <children>
-      <ImageView fx:id="LoginBackground" blendMode="HARD_LIGHT" fitHeight="500.0" fitWidth="500.0" opacity="0.88" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="LoginBackground" blendMode="DARKEN" fitHeight="500.0" fitWidth="500.0" opacity="0.88" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../test/loginPage.jpg" />
          </image></ImageView>
@@ -52,17 +52,17 @@
             </HBox>
             <HBox alignment="CENTER" blendMode="DARKEN" focusTraversable="true" nodeOrientation="LEFT_TO_RIGHT" prefHeight="35.0" prefWidth="195.0" spacing="20.0">
                <children>
-                  <Button fx:id="registerButton" mnemonicParsing="false" onAction="#userRegister" style="-fx-background-color: black;" text="Register" textFill="#234143">
-                     <font>
-                        <Font name="System Bold Italic" size="12.0" />
-                     </font>
-                  </Button>
                   <Button fx:id="loginButton" alignment="BOTTOM_LEFT" contentDisplay="TOP" defaultButton="true" graphicTextGap="100.0" lineSpacing="60.0" mnemonicParsing="false" onAction="#userLogin" style="-fx-background-color: black;" text="Login" textAlignment="CENTER" textFill="#234143">
                      <opaqueInsets>
                         <Insets bottom="20.0" left="20.0" right="10.0" top="10.0" />
                      </opaqueInsets>
                      <font>
-                        <Font name="System Bold Italic" size="12.0" />
+                        <Font name="System Bold Italic" size="13.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="registerButton" mnemonicParsing="false" onAction="#userRegister" style="-fx-background-color: black;" text="Register" textFill="#234142">
+                     <font>
+                        <Font name="System Bold Italic" size="13.0" />
                      </font>
                   </Button>
                </children>
@@ -77,16 +77,12 @@
             <Font name="Elephant Italic" size="17.0" />
          </font>
          <effect>
-            <Glow level="0.42">
-               <input>
-                  
-               </input>
-            </Glow>
+            <Glow level="0.42" />
          </effect>
       </Label>
       <HBox alignment="CENTER" layoutX="160.0" layoutY="108.0" prefHeight="31.0" prefWidth="180.0">
          <children>
-            <Label fx:id="wrongID" alignment="CENTER" prefHeight="18.0" prefWidth="176.0" textAlignment="CENTER" textFill="WHITE" />
+            <Label fx:id="wrongID" alignment="CENTER" prefHeight="18.0" prefWidth="176.0" textAlignment="CENTER" textFill="RED" />
          </children>
       </HBox>
    </children>

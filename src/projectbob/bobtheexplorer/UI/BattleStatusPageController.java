@@ -97,7 +97,6 @@ public class BattleStatusPageController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         // LogOut Button
-        GamingDungeonController a = new GamingDungeonController();
         Image img = new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/logoutButton.png"));
         ImageView imgView = new ImageView(img);
         imgView.setFitHeight(20);

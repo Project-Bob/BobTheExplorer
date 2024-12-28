@@ -52,15 +52,15 @@
             </HBox>
             <HBox alignment="CENTER" blendMode="DARKEN" focusTraversable="true" nodeOrientation="LEFT_TO_RIGHT" prefHeight="35.0" prefWidth="195.0" spacing="20.0">
                <children>
-                  <Button fx:id="registerButton" mnemonicParsing="false" onAction="#userRegister" style="-fx-background-color: black;" text="Register" textFill="#234142">
-                     <font>
-                        <Font name="System Bold Italic" size="13.0" />
-                     </font>
-                  </Button>
                   <Button fx:id="loginButton" alignment="BOTTOM_LEFT" contentDisplay="TOP" defaultButton="true" graphicTextGap="100.0" lineSpacing="60.0" mnemonicParsing="false" onAction="#userLogin" style="-fx-background-color: black;" text="Login" textAlignment="CENTER" textFill="#234143">
                      <opaqueInsets>
                         <Insets bottom="20.0" left="20.0" right="10.0" top="10.0" />
                      </opaqueInsets>
+                     <font>
+                        <Font name="System Bold Italic" size="13.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="registerButton" mnemonicParsing="false" onAction="#userRegister" style="-fx-background-color: black;" text="Register" textFill="#234142">
                      <font>
                         <Font name="System Bold Italic" size="13.0" />
                      </font>

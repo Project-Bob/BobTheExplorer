@@ -6,37 +6,27 @@ package projectbob.bobtheexplorer.UI;
 import javafx.animation.PauseTransition;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.Label;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
-import javafx.stage.Stage;
+
 import java.io.IOException;
 import javafx.event.ActionEvent;
-import com.gluonhq.charm.glisten.control.TextField;
+
 import java.util.Random;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.TextAlignment;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import java.util.*;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.util.Duration;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -98,7 +88,11 @@ public class GamingDungeonController implements Initializable {
     Image characterToLeft = new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/warriorToLeft.png"));
     Image characterToRight = new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/warriorToRight.png"));
     boolean directionRight = true;
-    private int numMonster = rd.nextInt(1, 4);
+    private int numMonster =
+            "Level 1".equals(difficultyLevel) ? new Random().nextInt(1, 4) :
+                    "Level 2".equals(difficultyLevel) ? new Random().nextInt(2, 5) :
+                            "Level 3".equals(difficultyLevel) ? new Random().nextInt(3, 6):
+                                    new Random().nextInt(1,4);
     String[] monsterArray = {"goblin", "spider", "slime"};
     String[] itemArray = {"potion", "shield", "sword"};
     //int numItem=rd.nextInt(1,3);
@@ -115,7 +109,7 @@ public class GamingDungeonController implements Initializable {
     private int itemReplaced = 7;
     private String currentItemFound = "";
     private int counterShieldUsed = 0;
-    private int indexItemSelectedToUse=7;
+    private int indexItemSelectedToUseOrRemove =7;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -123,6 +117,7 @@ public class GamingDungeonController implements Initializable {
         timeStart();//timer start
         itemOverflow.setVisible(false);
         itemUsed.setVisible(false);
+        result.setVisible(false);
         System.out.println(itemUser[0]);
         zoneLevel.setText("Zone " + zoneLvl);
         for (int i = 0; i < itemUser.length; i++) {
@@ -722,6 +717,8 @@ public class GamingDungeonController implements Initializable {
     @FXML
     private Button confirmUseItemButton;
     @FXML
+    private Button confirmRemoveItemButton;
+    @FXML
     private Button cancelUseItem;
 
 
@@ -1148,8 +1145,9 @@ public class GamingDungeonController implements Initializable {
     public void useItem6(ActionEvent event) throws IOException{
         useItemMethod(5);
     }
+
     public void useItemMethod(int indexItem){
-        indexItemSelectedToUse=indexItem;
+        indexItemSelectedToUseOrRemove =indexItem;
         Map<String, ImageView> imageViewMap = new HashMap<>();
         imageViewMap.put("potionInList", potionInList);
         imageViewMap.put("swordInList", swordInList);
@@ -1174,20 +1172,27 @@ public class GamingDungeonController implements Initializable {
 
     public void confirmUseItem(ActionEvent event) throws IOException{
 
-        System.out.println("Use "+itemUser[indexItemSelectedToUse]);
-        String itemName=itemUser[indexItemSelectedToUse];
-        itemUser[indexItemSelectedToUse]="blank";
-
-        System.out.println("Now "+indexItemSelectedToUse+" is "+itemUser[indexItemSelectedToUse]);
+        System.out.println("Use "+itemUser[indexItemSelectedToUseOrRemove]);
+        String itemName=itemUser[indexItemSelectedToUseOrRemove];
+        itemUser[indexItemSelectedToUseOrRemove]="blank";
+        System.out.println("Now "+ indexItemSelectedToUseOrRemove +" is "+itemUser[indexItemSelectedToUseOrRemove]);
         if (itemName.equals("potion")){
-            System.out.println("Use "+itemUser[indexItemSelectedToUse]);
-            itemUser[indexItemSelectedToUse]="blank";
-            System.out.println("Now "+indexItemSelectedToUse+" is "+itemUser[indexItemSelectedToUse]);
+            System.out.println("Use "+itemUser[indexItemSelectedToUseOrRemove]);
+            itemUser[indexItemSelectedToUseOrRemove]="blank";
+            System.out.println("Now "+ indexItemSelectedToUseOrRemove +" is "+itemUser[indexItemSelectedToUseOrRemove]);
             hero.setHP(hero.getHP_Hero()+20);
             if (hero.getHP_Hero()>Integer.parseInt(characterHealthShow))
                 hero.setHP( Integer.parseInt(characterHealthShow));
             hpBar.setText("HP: "+hero.getHP_Hero()+" / "+characterHealthShow);
             HP_Hero.setText("HP: " + hero.getHP_Hero() + " / " + characterHealthShow);
+        }
+        if (itemName.equals("sword")){
+            hero.setAP(hero.getAP_Hero()+10);
+            characterAP.setText("Attack Power: " + hero.getAP_Hero());
+            AP_Hero.setText("Attack Power: " + hero.getAP_Hero());
+        }
+        if(itemName.equals("shield")){
+            counterShieldUsed = 2;
         }
         Map<String, Button> buttonMap = new HashMap<>();
         buttonMap.put("1", buttonItem1);
@@ -1196,7 +1201,7 @@ public class GamingDungeonController implements Initializable {
         buttonMap.put("4", buttonItem4);
         buttonMap.put("5", buttonItem5);
         buttonMap.put("6", buttonItem6);
-        String itemIndex=String.valueOf(indexItemSelectedToUse+1);
+        String itemIndex=String.valueOf(indexItemSelectedToUseOrRemove +1);
         Button buttonItem=buttonMap.get(itemIndex);
         buttonItem.setGraphic(null);
         cancelUseItem();
@@ -1208,6 +1213,21 @@ public class GamingDungeonController implements Initializable {
             }
         }
     }
+
+    public void confirmRemoveItem(ActionEvent actionEvent)throws  IOException{
+        System.out.println("Remove "+itemUser[indexItemSelectedToUseOrRemove]);
+        itemUser[indexItemSelectedToUseOrRemove]="blank";
+        System.out.println("Now "+ indexItemSelectedToUseOrRemove +" is "+itemUser[indexItemSelectedToUseOrRemove]);
+        for (int i = 0; i < itemUser.length; i++) {
+            if (!itemUser[i].equals("blank"))
+                putItemInItemListLoop(itemUser[i], i);
+            else {
+                resetButtonToOriginalState(i);
+            }
+        }
+        cancelUseItem();
+    }
+
     public void useItemBarMethod(int indexItem){
         System.out.println("Use "+itemUser[indexItem]);
         String itemName=itemUser[indexItem];
@@ -1222,6 +1242,7 @@ public class GamingDungeonController implements Initializable {
         }
         if (itemName.equals("sword")){
             hero.setAP(hero.getAP_Hero()+10);
+            characterAP.setText("Attack Power: " + hero.getAP_Hero());
             AP_Hero.setText("Attack Power: " + hero.getAP_Hero());
         }
         if(itemName.equals("shield")){
@@ -1340,6 +1361,7 @@ public class GamingDungeonController implements Initializable {
 
         if(detectDoor(characterCurrentBlockPosition, "right")){
             if(numMonster==0 && zoneLvl<5){
+                hero.setAP(HeroAP);//to reset the attackpower to initial attackpower
                 zoneLvl++;
                 timeStop();
                 m.changeScene("GamingDungeon.fxml");
@@ -1349,9 +1371,8 @@ public class GamingDungeonController implements Initializable {
                 return;
             }
             else if(numMonster==0 && zoneLvl==5){
-                timeStop();
-                System.out.println("end");
-                m.changeScene("ScoreBoard.fxml");
+                message.setText("Victory");
+                result.setVisible(true);
             }
         }
 
@@ -1448,6 +1469,7 @@ public class GamingDungeonController implements Initializable {
         //detect door
         if(detectDoor(characterCurrentBlockPosition, "up")){
             if(numMonster==0 && zoneLvl<5){
+                hero.setAP(HeroAP);//to reset the attackpower to initial attackpower
                 zoneLvl++;
                 timeStop();
                 m.changeScene("GamingDungeon.fxml");
@@ -1457,9 +1479,8 @@ public class GamingDungeonController implements Initializable {
                 return;
             }
             else if(numMonster==0 && zoneLvl==5){
-                timeStop();
-                System.out.println("end");
-                m.changeScene("ScoreBoard.fxml");
+                message.setText("Victory");
+                result.setVisible(true);
             }
         }
         //detect monster
@@ -1511,6 +1532,7 @@ public class GamingDungeonController implements Initializable {
         //detect door
         if(detectDoor(characterCurrentBlockPosition, "down")){
             if(numMonster==0 && zoneLvl<5){
+                hero.setAP(HeroAP); //to reset the attackpower to initial attackpower
                 zoneLvl++;
                 timeStop();
                 m.changeScene("GamingDungeon.fxml");
@@ -1520,9 +1542,8 @@ public class GamingDungeonController implements Initializable {
                 return;
             }
             else if(numMonster==0 && zoneLvl==5){
-                timeStop();
-                System.out.println("end");
-                m.changeScene("ScoreBoard.fxml");
+                message.setText("Victory");
+                result.setVisible(true);
             }
         }
         //detect monster
@@ -1831,15 +1852,8 @@ public class GamingDungeonController implements Initializable {
 
             });
             pause2.setOnFinished(event -> {
-                BattlePage.setVisible(false);
-                timeStop();
-                zoneLvl=1;
-                Main m = new Main();
-                try {
-                    m.changeScene("ScoreBoard.fxml");
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+                message.setText("Game Over");
+                result.setVisible(true);
             });
             pause1.play();
             pause2.play();
@@ -1848,6 +1862,7 @@ public class GamingDungeonController implements Initializable {
         if (monster.getHp() <= 0) {
             numMonstersDefeated ++;
             hero.setAP(HeroAP);
+            characterAP.setText("Attack Power: " + hero.getAP_Hero());
             AP_Hero.setText("Attack Power: " + hero.getAP_Hero());
             PauseTransition pause1 = new PauseTransition(Duration.seconds(1));
             PauseTransition pause2 = new PauseTransition(Duration.seconds(2));
@@ -1872,6 +1887,7 @@ public class GamingDungeonController implements Initializable {
         numOfAction++;
         counterShieldUsed = 0;
         hero.setAP(HeroAP);
+        characterAP.setText("Attack Power: " + hero.getAP_Hero());
         AP_Hero.setText("Attack Power: " + hero.getAP_Hero());
         if (HeroSpeed > monster.getSpeed()) {
             Instruction.setText("Run successfully !!! Loading ...");
@@ -1914,6 +1930,21 @@ public class GamingDungeonController implements Initializable {
         if (timeline != null) {  // Check if the timeline is initialized
             timeline.stop();  // Stop the timeline
         }
+    }
+
+    //display messages victory or game over
+    @FXML
+    private AnchorPane result;
+    @FXML
+    private Label message;
+    @FXML
+    private Button continueButton;
+
+    public void actionContinue(ActionEvent actionEvent) throws IOException{
+        Main m = new Main();
+        zoneLvl = 1;
+        timeStop();
+        m.changeScene("ScoreBoard.fxml");
     }
 }
 
