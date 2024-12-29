@@ -87,10 +87,10 @@
             <Label fx:id="wrongID" alignment="CENTER" prefHeight="18.0" prefWidth="176.0" textAlignment="CENTER" textFill="RED" />
          </children>
       </HBox>
-      <MenuButton layoutX="32.0" layoutY="31.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="74.0" text="Menu">
+      <MenuButton layoutX="399.0" layoutY="26.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="74.0" text="Menu">
         <items>
-          <MenuItem fx:id="buttonRulesRegulation" mnemonicParsing="false" onAction="#actionRulesRegulation" text="Rules and Regulation" />
-          <MenuItem fx:id="buttonScoreBoard" mnemonicParsing="false" onAction="#actionScoreBoard"  text="Score Board" />
+          <MenuItem fx:id="buttonRulesRegulation" mnemonicParsing="false" onAction="#actionRulesRegulation" text="Rules" />
+          <MenuItem fx:id="buttonScoreBoard" mnemonicParsing="false" onAction="#actionScoreBoard" text="Score Board" />
             <MenuItem fx:id="buttonExit" mnemonicParsing="false" onAction="#actionExit" text="Exit" />
         </items>
          <opaqueInsets>
@@ -100,7 +100,7 @@
       <AnchorPane fx:id="rules" layoutX="17.0" layoutY="83.0" prefHeight="391.0" prefWidth="466.0" style="-fx-background-color: #ffd68a;" visible="false">
          <children>
             <Button fx:id="buttonBackToLoginPage" layoutX="205.0" layoutY="329.0" mnemonicParsing="false" onAction="#cancelRules" text="Done" />
-            <Label layoutX="73.0" text="Rules &amp; Regulations" textFill="#2d3816" underline="true">
+            <Label layoutX="73.0" text="Rules and Regulation" textFill="#2d3816" underline="true">
                <font>
                   <Font name="Bookman Old Style Bold Italic" size="30.0" />
                </font>

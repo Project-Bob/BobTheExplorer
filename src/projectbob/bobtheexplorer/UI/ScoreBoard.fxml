@@ -3,9 +3,13 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.effect.Glow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Ellipse?>
 <?import javafx.scene.shape.Rectangle?>
@@ -129,7 +133,31 @@
             </Label>
          </children>
       </VBox>
-      <Button fx:id="logOutButton" alignment="CENTER_RIGHT" contentDisplay="RIGHT" graphicTextGap="0.0" layoutX="474.0" layoutY="24.0" mnemonicParsing="false" onAction="#logOut" textAlignment="RIGHT">
+      <MenuButton layoutX="28.0" layoutY="20.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="74.0" text="Menu">
+         <items>
+            <MenuItem fx:id="buttonRulesRegulation" mnemonicParsing="false" onAction="#actionRulesRegulation" text="Rules" />
+            <MenuItem fx:id="buttonScoreBoard" mnemonicParsing="false" onAction="#actionScoreBoard" text="Score Board" />
+            <MenuItem fx:id="buttonExit" mnemonicParsing="false" onAction="#actionExit" text="Exit" />
+         </items>
+         <opaqueInsets>
+            <Insets bottom="10.0" left="20.0" right="10.0" top="10.0" />
+         </opaqueInsets>
+      </MenuButton>
+      <AnchorPane fx:id="rules" layoutX="27.0" layoutY="93.0" prefHeight="391.0" prefWidth="466.0" style="-fx-background-color: #ffd68a;" visible="false">
+         <children>
+            <Button fx:id="buttonBackToLoginPage" layoutX="205.0" layoutY="329.0" mnemonicParsing="false" onAction="#cancelRules" text="Done" />
+            <Label layoutX="73.0" text="Rules and Regulation" textFill="#2d3816" underline="true">
+               <font>
+                  <Font name="Bookman Old Style Bold Italic" size="30.0" />
+               </font>
+               <effect>
+                  <Glow />
+               </effect>
+            </Label>
+            <HBox layoutX="-1.0" layoutY="45.0" prefHeight="275.0" prefWidth="463.0" />
+         </children>
+      </AnchorPane>
+      <Button fx:id="logOutButton" alignment="CENTER_RIGHT" contentDisplay="RIGHT" graphicTextGap="0.0" layoutX="462.0" layoutY="16.0" mnemonicParsing="false" onAction="#logOut" prefHeight="26.0" prefWidth="0.0" textAlignment="CENTER">
          <padding>
             <Insets left="-10.0" right="-10.0" />
          </padding>
