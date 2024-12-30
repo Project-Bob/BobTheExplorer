@@ -32,6 +32,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.event.EventHandler;
 
 /**
@@ -177,6 +178,8 @@ public class GamingDungeonController implements Initializable {
         
         // Handler function for key press event
         EventHandler<KeyEvent> handleKeyPress = event -> {
+            // Ignore key press if overlay is active
+            if (itemOverflow.isVisible() || confirmUseItem.isVisible()) return;
             // Handle each key press for movement
             if (event.getCode() == KeyCode.RIGHT || event.getCode() == KeyCode.D) {
                 isMovingLeft = false; // Stop the movement
@@ -267,6 +270,107 @@ public class GamingDungeonController implements Initializable {
                 isMovingDown = false; // Stop the movement
                 moveDownTimeline.stop(); // Stop the timeline
             } else if (event.getCode() == KeyCode.UP || event.getCode() == KeyCode.W) {
+                // Stop moving the character to the up when the key is released
+                isMovingUp = false; // Stop the movement
+                moveUpTimeline.stop(); // Stop the timeline
+            }
+        };
+        
+        // Handler function for mouse press event
+        EventHandler<MouseEvent> handleMousePress = event -> {
+            // Ignore mouse press if overlay is active
+            if (itemOverflow.isVisible() || confirmUseItem.isVisible()) return;
+
+            // Handle each mouse press for movement
+            if (event.getSource().equals(rightButton)) {
+                isMovingLeft = false; // Stop the movement
+                moveLeftTimeline.stop();
+                isMovingUp = false; // Stop the movement
+                moveUpTimeline.stop();
+                isMovingDown = false; // Stop the movement
+                if (!isMovingRight) {
+                    isMovingRight = true;
+                    try {
+                        goToRight();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    moveRightTimeline.play(); // Move character to the right
+                    rightButton.setFocusTraversable(true);
+                    rightButton.requestFocus();
+                }
+            } else if (event.getSource().equals(leftButton)) {
+                isMovingRight = false; // Stop the movement
+                moveRightTimeline.stop();
+                isMovingUp = false; // Stop the movement
+                moveUpTimeline.stop();
+                isMovingDown = false; // Stop the movement
+                moveDownTimeline.stop();
+                if (!isMovingLeft) {
+                    isMovingLeft = true;
+                    try {
+                        goToLeft();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    moveLeftTimeline.play(); // Move character to the right
+                    leftButton.setFocusTraversable(true);
+                    leftButton.requestFocus();
+                }
+            } else if (event.getSource().equals(upButton)) {
+                isMovingRight = false; // Stop the movement
+                moveRightTimeline.stop();
+                isMovingLeft = false; // Stop the movement
+                moveLeftTimeline.stop();
+                isMovingDown = false; // Stop the movement
+                moveDownTimeline.stop();
+                if (!isMovingUp) {
+                    isMovingUp = true;
+                    try {
+                        goUp();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    moveUpTimeline.play(); // Move character to the right
+                    upButton.setFocusTraversable(true);
+                    upButton.requestFocus();
+                }
+            } else if (event.getSource().equals(downButton)) {
+                isMovingRight = false; // Stop the movement
+                moveRightTimeline.stop();
+                isMovingLeft = false; // Stop the movement
+                moveLeftTimeline.stop();
+                isMovingUp = false; // Stop the movement
+                moveUpTimeline.stop();
+                if (!isMovingDown) {
+                    isMovingDown = true;
+                    try {
+                        goDown();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    moveDownTimeline.play(); // Move character to the right
+                    downButton.setFocusTraversable(true);
+                    downButton.requestFocus();
+                }
+            }
+        };
+        
+        // Handler function for mouse release event
+        EventHandler<MouseEvent> handleMouseRelease = event -> {
+            if (event.getSource().equals(leftButton)) {
+                // Stop moving the character to the left when the key is released
+                isMovingLeft = false; // Stop the movement
+                moveLeftTimeline.stop(); // Stop the timeline
+            } else if (event.getSource().equals(rightButton)) {
+                // Stop moving the character to the right when the key is released
+                isMovingRight = false; // Stop the movement
+                moveRightTimeline.stop(); // Stop the timeline
+            } else if (event.getSource().equals(downButton)) {
+                // Stop moving the character to the down when the key is released
+                isMovingDown = false; // Stop the movement
+                moveDownTimeline.stop(); // Stop the timeline
+            } else if (event.getSource().equals(upButton)) {
                 // Stop moving the character to the up when the key is released
                 isMovingUp = false; // Stop the movement
                 moveUpTimeline.stop(); // Stop the timeline
@@ -465,6 +569,16 @@ public class GamingDungeonController implements Initializable {
         upButton.setOnKeyReleased(handleKeyRelease);
         downButton.setOnKeyPressed(handleKeyPress);
         downButton.setOnKeyReleased(handleKeyRelease);
+        
+        // Add mouse event listener to the canvas
+        leftButton.setOnMousePressed(handleMousePress);
+        leftButton.setOnMouseReleased(handleMouseRelease);
+        rightButton.setOnMousePressed(handleMousePress);
+        rightButton.setOnMouseReleased(handleMouseRelease);
+        upButton.setOnMousePressed(handleMousePress);
+        upButton.setOnMouseReleased(handleMouseRelease);
+        downButton.setOnMousePressed(handleMousePress);
+        downButton.setOnMouseReleased(handleMouseRelease);
 
 
         //////////////////////////////////////////////////////////////////////////////////////
@@ -588,7 +702,15 @@ public class GamingDungeonController implements Initializable {
     }
 
     //Detect item
-    public void checkStatus(int characterCurrentBlockPosition) throws IOException {
+    public void checkStatus(int characterCurrentBlockPosition, String direction) throws IOException {
+        if (direction.equals("right") && characterCurrentBlockPosition % 12 != 11)
+            characterCurrentBlockPosition += 1;
+        else if (direction.equals("left") && characterCurrentBlockPosition % 12 != 0)
+            characterCurrentBlockPosition -= 1;
+        else if (direction.equals("up") && characterCurrentBlockPosition / 12 != 0)
+            characterCurrentBlockPosition -= 12;
+        else if (direction.equals("down") && characterCurrentBlockPosition / 12 != 7)
+            characterCurrentBlockPosition += 12;
         for (int i = 0; i < totalNumMonsterItem; i++) {
             if (monsterItemPosition[i][0].equals(String.valueOf(characterCurrentBlockPosition))) {
                 for (int j = 0; j < itemArray.length; j++) {
@@ -672,11 +794,16 @@ public class GamingDungeonController implements Initializable {
                 buttonItemUsed.setStyle("-fx-padding: 0; -fx-background-color: transparent;");
             }
         } else {
+            // Resets character momentum
+            isMovingRight = false; // Stop the movement
+            moveRightTimeline.stop();
+            isMovingLeft = false; // Stop the movement
+            moveLeftTimeline.stop();
+            isMovingUp = false; // Stop the movement
+            moveUpTimeline.stop();
+            isMovingDown = false; // Stop the movement
+            moveDownTimeline.stop();
             itemOverflow.setVisible(true);
-//            upButton.setDisable(true);
-//            downButton.setDisable(true);
-//            leftButton.setDisable(true);
-//            rightButton.setDisable(true);
             buttonItem1.setDisable(true);
             buttonItem2.setDisable(true);
             buttonItem3.setDisable(true);
@@ -1012,10 +1139,6 @@ public class GamingDungeonController implements Initializable {
         imageViewMap.put("shieldInList", shieldInList);
         String imageViewName=itemUser[indexItem]+"InList";
         confirmUseItem.setVisible(true);
-//        upButton.setDisable(true);
-//        downButton.setDisable(true);
-//        leftButton.setDisable(true);
-//        rightButton.setDisable(true);
         buttonItem1.setDisable(true);
         buttonItem2.setDisable(true);
         buttonItem3.setDisable(true);
@@ -1157,10 +1280,6 @@ public class GamingDungeonController implements Initializable {
 
     public void closeItemReplaceBar() throws IOException{
         itemOverflow.setVisible(false);
-//        upButton.setDisable(false);
-//        downButton.setDisable(false);
-//        leftButton.setDisable(false);
-//        rightButton.setDisable(false);
         buttonItem1.setDisable(false);
         buttonItem2.setDisable(false);
         buttonItem3.setDisable(false);
@@ -1174,10 +1293,6 @@ public class GamingDungeonController implements Initializable {
     public void cancelUseItem() throws IOException{
 
         confirmUseItem.setVisible(false);
-//        upButton.setDisable(false);
-//        downButton.setDisable(false);
-//        leftButton.setDisable(false);
-//        rightButton.setDisable(false);
         buttonItem1.setDisable(false);
         buttonItem2.setDisable(false);
         buttonItem3.setDisable(false);
@@ -1263,7 +1378,7 @@ public class GamingDungeonController implements Initializable {
             characterXPositionNew = characterXPosition;
         }
 
-        checkStatus(characterCurrentBlockPosition);
+        checkStatus(characterCurrentBlockPosition, "right");
         gc.clearRect(characterXPosition, characterYPosition, 40, 40);
         gc.drawImage(rock, characterXPosition, characterYPosition, 40, 40);
         gc.drawImage(characterToRight, characterXPositionNew, characterYPositionNew, 40, 40);
@@ -1307,7 +1422,7 @@ public class GamingDungeonController implements Initializable {
             characterYPositionNew = characterYPosition;
             characterXPositionNew = characterXPosition;
         }
-        checkStatus(characterCurrentBlockPosition);
+        checkStatus(characterCurrentBlockPosition, "left");
         gc.clearRect(characterXPosition, characterYPosition, 40, 40);
         gc.drawImage(rock, characterXPosition, characterYPosition, 40, 40);
         gc.drawImage(characterToLeft, characterXPositionNew, characterYPositionNew, 40, 40);
@@ -1368,7 +1483,7 @@ public class GamingDungeonController implements Initializable {
             characterXPositionNew = characterXPosition;
         }
 
-        checkStatus(characterCurrentBlockPosition);
+        checkStatus(characterCurrentBlockPosition, "up");
         gc.clearRect(characterXPosition, characterYPosition, 40, 40);
         gc.drawImage(rock, characterXPosition, characterYPosition, 40, 40);
         if (directionRight == true)
@@ -1434,7 +1549,7 @@ public class GamingDungeonController implements Initializable {
             characterXPositionNew = characterXPosition;
         }
 
-        checkStatus(characterCurrentBlockPosition);
+        checkStatus(characterCurrentBlockPosition, "down");
         gc.clearRect(characterXPosition, characterYPosition, 40, 40);
         gc.drawImage(rock, characterXPosition, characterYPosition, 40, 40);
         if (directionRight == true)

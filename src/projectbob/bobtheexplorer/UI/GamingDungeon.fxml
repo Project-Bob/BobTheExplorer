@@ -52,10 +52,10 @@
                </padding>
             </Button>
             <ImageView fx:id="imgTest" fitHeight="320.0" fitWidth="480.0" layoutX="6.0" layoutY="41.0" pickOnBounds="true" preserveRatio="true" />
-            <Button fx:id="rightButton" layoutX="438.0" layoutY="444.0" minWidth="53.0" mnemonicParsing="false" onAction="#goToRight" prefHeight="34.0" prefWidth="53.0" />
-            <Button fx:id="leftButton" layoutX="331.0" layoutY="444.0" minWidth="53.0" mnemonicParsing="false" onAction="#goToLeft" prefHeight="34.0" prefWidth="53.0" />
-            <Button fx:id="downButton" layoutX="385.0" layoutY="444.0" minWidth="53.0" mnemonicParsing="false" onAction="#goDown" prefHeight="34.0" prefWidth="53.0" />
-            <Button fx:id="upButton" layoutX="385.0" layoutY="396.0" minWidth="53.0" mnemonicParsing="false" onAction="#goUp" prefHeight="34.0" prefWidth="53.0" />
+            <Button fx:id="rightButton" layoutX="438.0" layoutY="444.0" minWidth="53.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="53.0" />
+            <Button fx:id="leftButton" layoutX="331.0" layoutY="444.0" minWidth="53.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="53.0" />
+            <Button fx:id="downButton" layoutX="385.0" layoutY="444.0" minWidth="53.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="53.0" />
+            <Button fx:id="upButton" layoutX="385.0" layoutY="396.0" minWidth="53.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="53.0" />
             <VBox layoutX="14.0" layoutY="361.0" prefHeight="88.0" prefWidth="166.0">
                <children>
                   <Label fx:id="name" prefHeight="16.0" prefWidth="179.0">
