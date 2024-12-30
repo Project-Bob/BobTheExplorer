@@ -317,12 +317,12 @@ public class CharacterCreationPageController implements Initializable {
             characterName.setText("Bob The Marksman");
     }
     public void logOut() throws IOException{
-        Main m=new Main();
+        App m=new App();
         m.changeScene("loginPage.fxml");
     }
 
     public void goToDifficulty() throws IOException{
-        Main m=new Main();
+        App m=new App();
         m.changeScene("GameDifficultyPage.fxml");
     }
     public void displayRules(ActionEvent event) throws IOException{

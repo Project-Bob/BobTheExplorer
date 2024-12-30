@@ -4,6 +4,7 @@
  */
 package projectbob.bobtheexplorer.UI;
 import javafx.fxml.FXML;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 
@@ -13,15 +14,22 @@ import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+
 import javafx.scene.control.MenuItem;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+
 import java.io.IOException;
 import javafx.event.ActionEvent;
 import com.gluonhq.charm.glisten.control.TextField;
+
+import projectbob.bobtheexplorer.Main;
+import java.util.HashMap;
+import java.sql.SQLException;
+import org.apache.commons.codec.digest.DigestUtils;
 
 /**
  * FXML Controller class
@@ -65,17 +73,18 @@ public class loginController implements Initializable {
     public void userLogin(ActionEvent event) throws IOException{
         checkLogin();
     }
-    public void checkLogin() throws IOException{
-        if(username.getText().toString().equals("hihihi") && password.getText().toString().equals("123")){
+    public void checkLogin() throws IOException, SQLException{
+        HashMap q = Main.db.findPlayer(username.getText().toString());
+        
+        if(username.getText().isEmpty()&& password.getText().isEmpty()){
+            wrongID.setText("Please fill up all data");
+        } else if (q.get(username.getText().toString()) == null) wrongID.setText("Wrong username or password !!!");
+        else if(q.get(username.getText().toString()).equals(DigestUtils.md5Hex(password.getText().toString()))){
             wrongID.setText("Success!");
             usernameLogin=username.getText();
             goToCreatePage();
             //CharacterCreationPageController getFile = new CharacterCreationPageController();
             //getFile.getID();
-
-        }
-        else if(username.getText().isEmpty()&& password.getText().isEmpty()){
-            wrongID.setText("Please fill up all data");
         }
         else{
             wrongID.setText("Wrong username or password !!!");
@@ -85,11 +94,11 @@ public class loginController implements Initializable {
         checkRegister();
     }
     public void checkRegister() throws IOException{
-        Main m=new Main();
+        App m=new App();
         m.changeScene("RegisterPage.fxml");
     }
     public void goToCreatePage() throws IOException{
-        Main m=new Main();
+        App m=new App();
         m.changeScene("CharacterCreationPage.fxml");
     }
 

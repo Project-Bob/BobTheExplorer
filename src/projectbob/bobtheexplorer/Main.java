@@ -5,6 +5,7 @@
 package projectbob.bobtheexplorer;
 
 import projectbob.bobtheexplorer.util.*;
+import javafx.application.Application;
 
 /**
  * Main class where things load up first
@@ -14,6 +15,7 @@ public class Main {
     /**
      * @param args the command line arguments
      */
+    public static DB db;
     public static void main(String[] args) {
         // Loads properties
         Properties props = new Properties();
@@ -23,8 +25,10 @@ public class Main {
 
         // Loads database
         try {
-            DB db = new DB(DB_CHECKSUM);
+            db = new DB(DB_CHECKSUM, props);
             props.setDBChecksum(db.getChecksum());
+            
+            Application.launch(projectbob.bobtheexplorer.UI.App.class, args);
         } catch (IllegalStateException e) {
             System.err.println(e.getMessage()                   +
                     "\nPlease delete data.db file to reset "    +

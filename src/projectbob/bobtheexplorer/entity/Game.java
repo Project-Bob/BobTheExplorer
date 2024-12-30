@@ -174,12 +174,28 @@ public class Game {
         System.out.println("Total number of move and number of action is " + (getNumAction()+getNumMove()));
     }
 
-    public void calculationScore(){
-        getNumMove();
-        getNumAction();
-        getNumMonstersDefeated();
-        int difficulty_Monster = difficultyMonster;
-        int difficulty_Hero = difficultyHero;
+    public int calculationScore(){
+        int scoreNumMove = 10 * (int)Math.exp(-0.01 * (getNumMove() - 1));
+        int scoreNumAction = 90 * (int)Math.exp(-0.1 * (getNumMove() - 1));
+        
+        
+        return (scoreNumMove + scoreNumAction + getNumMonstersDefeated()) * (int)(difficultyMonster * difficultyHero);
+        
+        /*
+        Formula to count score:
+        Base score is 100 given that the player finishes the game in one move
+        and one action (not ideal of course), and the base score will decrease
+        exponentially. Flat score bonus is awarded based on the number of
+        monsters defeated. Finally, the score is multiplied with both
+        monster and player difficulties.
+        
+        Weightage:
+        numMove: 10, numAction: 90, monstersDefeated: flat
+        
+        score(numMove) = 10 . exp(-0.01(x-1))
+        score(numAction) = 90 . exp(-0.1(x-1))
+        score(monstersDefeated) = monstersDefeated
+        */
     }
 }
 

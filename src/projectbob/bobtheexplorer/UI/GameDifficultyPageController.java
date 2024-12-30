@@ -116,7 +116,7 @@ public class GameDifficultyPageController implements Initializable {
     private AnchorPane confirmation;
 
     public void logOut() throws IOException{
-        Main m=new Main();
+        App m=new App();
         m.changeScene("loginPage.fxml");
     }
     public void chooseLevel1(ActionEvent event) throws IOException{
@@ -147,7 +147,7 @@ public class GameDifficultyPageController implements Initializable {
         confirmation.setVisible(false);
     }
     public void enterGame(ActionEvent event) throws IOException{
-        Main m=new Main();
+        App m=new App();
         m.changeScene("GamingDungeon.fxml");
     }
 }
