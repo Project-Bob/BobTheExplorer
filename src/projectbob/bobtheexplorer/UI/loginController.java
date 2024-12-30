@@ -70,7 +70,7 @@ public class loginController implements Initializable {
     @FXML
     private Button buttonBackToLoginPage;
 
-    public void userLogin(ActionEvent event) throws IOException{
+    public void userLogin(ActionEvent event) throws IOException, SQLException {
         checkLogin();
     }
     public void checkLogin() throws IOException, SQLException{
@@ -107,7 +107,7 @@ public class loginController implements Initializable {
     }
 
     public void actionScoreBoard(ActionEvent actionEvent)throws IOException{
-        Main m = new Main();
+        App m = new App();
         m.changeScene("ScoreBoard.fxml");
     }
 

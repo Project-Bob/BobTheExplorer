@@ -42,7 +42,7 @@ public class ScoreBoardController implements Initializable {
     private Button buttonBackToLoginPage;
 
     public void logOut() throws IOException {
-        Main m=new Main();
+        App m=new App();
         m.changeScene("loginPage.fxml");
     }
 
@@ -51,7 +51,7 @@ public class ScoreBoardController implements Initializable {
     }
 
     public void actionScoreBoard(ActionEvent actionEvent)throws IOException{
-        Main m = new Main();
+        App m = new App();
         m.changeScene("ScoreBoard.fxml");
     }
 

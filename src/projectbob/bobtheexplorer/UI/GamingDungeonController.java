@@ -726,7 +726,7 @@ public class GamingDungeonController implements Initializable {
     public void logOut() throws IOException {
         timeStop();
         zoneLvl=1;
-        Main m = new Main();
+        App m = new App();
         m.changeScene("loginPage.fxml");
     }
 
@@ -1352,7 +1352,7 @@ public class GamingDungeonController implements Initializable {
 
     public void goToRight() throws IOException {
         //get character current position(0-96)
-        Main m = new Main();
+        App m = new App();
         int characterCurrentBlockPosition = 0;
         for (int i = 0; i < element.length; i++) {
             if (element[i].equals("Bob"))
@@ -1461,7 +1461,7 @@ public class GamingDungeonController implements Initializable {
 
     public void goUp() throws IOException {
         //get character current position(0-96)
-        Main m = new Main();
+        App m = new App();
         int characterCurrentBlockPosition = 0;
         for (int i = 0; i < element.length; i++) {
             if (element[i].equals("Bob"))
@@ -1524,7 +1524,7 @@ public class GamingDungeonController implements Initializable {
 
     public void goDown() throws IOException {
         //get character current position(0-96)
-        Main m = new Main();
+        App m = new App();
         int characterCurrentBlockPosition = 0;
         for (int i = 0; i < element.length; i++) {
             if (element[i].equals("Bob"))
@@ -1994,7 +1994,7 @@ public class GamingDungeonController implements Initializable {
     private Button continueButton;
 
     public void actionContinue(ActionEvent actionEvent) throws IOException{
-        Main m = new Main();
+        App m = new App();
         zoneLvl = 1;
         timeStop();
         m.changeScene("ScoreBoard.fxml");

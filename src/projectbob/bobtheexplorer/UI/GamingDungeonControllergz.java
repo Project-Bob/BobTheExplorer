@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
  */
-package testing123;
+package projectbob.bobtheexplorer.UI;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -36,7 +36,7 @@ import javafx.animation.Timeline;
  *
  * @author gztan
  */
-public class GamingDungeonController implements Initializable {
+public class GamingDungeonControllergz implements Initializable {
 
     /**
      * Initializes the controller class.
@@ -663,7 +663,7 @@ public class GamingDungeonController implements Initializable {
     
     public void logOut() throws IOException{
         zoneLvl=1;
-         Main m=new Main();
+         App m=new App();
          m.changeScene("loginPage.fxml");
     }
     public void checkStatus(int characterCurrentBlockPosition)throws IOException{
@@ -671,7 +671,7 @@ public class GamingDungeonController implements Initializable {
         if(doorPositionInMap==characterCurrentBlockPosition){
             if(numMonster==0){
                 zoneLvl++;
-                Main m=new Main();
+                App m=new App();
                 m.changeScene("GamingDungeon.fxml");
             }
             else{
