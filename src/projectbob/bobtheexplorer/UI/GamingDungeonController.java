@@ -31,6 +31,9 @@ import javafx.util.Duration;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 
+import javafx.scene.input.KeyEvent;
+import javafx.event.EventHandler;
+
 /**
  * FXML Controller class
  *
@@ -171,6 +174,104 @@ public class GamingDungeonController implements Initializable {
         usernameID.setText(username);
         int countMonster = 0;
         int countItem = 0;
+        
+        // Handler function for key press event
+        EventHandler<KeyEvent> handleKeyPress = event -> {
+            // Handle each key press for movement
+            if (event.getCode() == KeyCode.RIGHT || event.getCode() == KeyCode.D) {
+                isMovingLeft = false; // Stop the movement
+                moveLeftTimeline.stop();
+                isMovingUp = false; // Stop the movement
+                moveUpTimeline.stop();
+                isMovingDown = false; // Stop the movement
+                if (!isMovingRight) {
+                    isMovingRight = true;
+                    try {
+                        goToRight();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    moveRightTimeline.play(); // Move character to the right
+                    rightButton.setFocusTraversable(true);
+                    rightButton.requestFocus();
+                }
+            } else if (event.getCode() == KeyCode.LEFT || event.getCode() == KeyCode.A) {
+                isMovingRight = false; // Stop the movement
+                moveRightTimeline.stop();
+                isMovingUp = false; // Stop the movement
+                moveUpTimeline.stop();
+                isMovingDown = false; // Stop the movement
+                moveDownTimeline.stop();
+                if (!isMovingLeft) {
+                    isMovingLeft = true;
+                    try {
+                        goToLeft();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    moveLeftTimeline.play(); // Move character to the right
+                    leftButton.setFocusTraversable(true);
+                    leftButton.requestFocus();
+                }
+            } else if (event.getCode() == KeyCode.UP || event.getCode() == KeyCode.W) {
+                isMovingRight = false; // Stop the movement
+                moveRightTimeline.stop();
+                isMovingLeft = false; // Stop the movement
+                moveLeftTimeline.stop();
+                isMovingDown = false; // Stop the movement
+                moveDownTimeline.stop();
+                if (!isMovingUp) {
+                    isMovingUp = true;
+                    try {
+                        goUp();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    moveUpTimeline.play(); // Move character to the right
+                    upButton.setFocusTraversable(true);
+                    upButton.requestFocus();
+                }
+            } else if (event.getCode() == KeyCode.DOWN || event.getCode() == KeyCode.S) {
+                isMovingRight = false; // Stop the movement
+                moveRightTimeline.stop();
+                isMovingLeft = false; // Stop the movement
+                moveLeftTimeline.stop();
+                isMovingUp = false; // Stop the movement
+                moveUpTimeline.stop();
+                if (!isMovingDown) {
+                    isMovingDown = true;
+                    try {
+                        goDown();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    moveDownTimeline.play(); // Move character to the right
+                    downButton.setFocusTraversable(true);
+                    downButton.requestFocus();
+                }
+            }
+        };
+        
+        // Handler function for key release event
+        EventHandler<KeyEvent> handleKeyRelease = event -> {
+            if (event.getCode() == KeyCode.LEFT || event.getCode() == KeyCode.A) {
+                // Stop moving the character to the left when the key is released
+                isMovingLeft = false; // Stop the movement
+                moveLeftTimeline.stop(); // Stop the timeline
+            } else if (event.getCode() == KeyCode.RIGHT || event.getCode() == KeyCode.D) {
+                // Stop moving the character to the right when the key is released
+                isMovingRight = false; // Stop the movement
+                moveRightTimeline.stop(); // Stop the timeline
+            } else if (event.getCode() == KeyCode.DOWN || event.getCode() == KeyCode.S) {
+                // Stop moving the character to the down when the key is released
+                isMovingDown = false; // Stop the movement
+                moveDownTimeline.stop(); // Stop the timeline
+            } else if (event.getCode() == KeyCode.UP || event.getCode() == KeyCode.W) {
+                // Stop moving the character to the up when the key is released
+                isMovingUp = false; // Stop the movement
+                moveUpTimeline.stop(); // Stop the timeline
+            }
+        };
 
         // Set position of rock
         for (int j = 0; j < 320; j += 40) {
@@ -356,258 +457,14 @@ public class GamingDungeonController implements Initializable {
         downButton.setFocusTraversable(true);
         downButton.requestFocus();
         // Add key event listener to the canvas
-        leftButton.setOnKeyPressed(event -> {
-            // Handle each key press for movement
-            if (event.getCode() == KeyCode.RIGHT || event.getCode() == KeyCode.D) {
-                isMovingLeft = false; // Stop the movement
-                moveLeftTimeline.stop();
-                isMovingUp = false; // Stop the movement
-                moveUpTimeline.stop();
-                isMovingDown = false; // Stop the movement
-                moveDownTimeline.stop();
-                if (!isMovingRight) {
-                    isMovingRight = true;
-                    moveRightTimeline.play(); // Move character to the right
-                    rightButton.setFocusTraversable(true);
-                    rightButton.requestFocus();
-                }
-            } else if (event.getCode() == KeyCode.LEFT || event.getCode() == KeyCode.A) {
-                isMovingRight = false; // Stop the movement
-                moveRightTimeline.stop();
-                isMovingUp = false; // Stop the movement
-                moveUpTimeline.stop();
-                isMovingDown = false; // Stop the movement
-                moveDownTimeline.stop();
-                if (!isMovingLeft) {
-                    isMovingLeft = true;
-                    moveLeftTimeline.play(); // Move character to the right
-                    leftButton.setFocusTraversable(true);
-                    leftButton.requestFocus();
-                }
-            } else if (event.getCode() == KeyCode.UP || event.getCode() == KeyCode.W) {
-                isMovingRight = false; // Stop the movement
-                moveRightTimeline.stop();
-                isMovingLeft = false; // Stop the movement
-                moveLeftTimeline.stop();
-                isMovingDown = false; // Stop the movement
-                moveDownTimeline.stop();
-                if (!isMovingUp) {
-                    isMovingUp = true;
-                    moveUpTimeline.play(); // Move character to the right
-                    upButton.setFocusTraversable(true);
-                    upButton.requestFocus();
-                }
-            } else if (event.getCode() == KeyCode.DOWN || event.getCode() == KeyCode.S) {
-                isMovingRight = false; // Stop the movement
-                moveRightTimeline.stop();
-                isMovingLeft = false; // Stop the movement
-                moveLeftTimeline.stop();
-                isMovingUp = false; // Stop the movement
-                moveUpTimeline.stop();
-                if (!isMovingDown) {
-                    isMovingDown = true;
-                    moveDownTimeline.play(); // Move character to the right
-                    downButton.setFocusTraversable(true);
-                    downButton.requestFocus();
-                }
-            }
-        });
-        leftButton.setOnKeyReleased(event -> {
-            if (event.getCode() == KeyCode.LEFT || event.getCode() == KeyCode.A) {
-                // Stop moving the character to the left when the key is released
-                isMovingLeft = false; // Stop the movement
-                moveLeftTimeline.stop(); // Stop the timeline
-            }
-        });
-        rightButton.setOnKeyPressed(event -> {
-            // Handle each key press for movement
-            if (event.getCode() == KeyCode.RIGHT || event.getCode() == KeyCode.D) {
-                isMovingLeft = false; // Stop the movement
-                moveLeftTimeline.stop();
-                isMovingUp = false; // Stop the movement
-                moveUpTimeline.stop();
-                isMovingDown = false; // Stop the movement
-                moveDownTimeline.stop();
-                if (!isMovingRight) {
-                    isMovingRight = true;
-                    moveRightTimeline.play(); // Move character to the right
-                    rightButton.setFocusTraversable(true);
-                    rightButton.requestFocus();
-                }
-            } else if (event.getCode() == KeyCode.LEFT || event.getCode() == KeyCode.A) {
-                isMovingRight = false; // Stop the movement
-                moveRightTimeline.stop();
-                isMovingUp = false; // Stop the movement
-                moveUpTimeline.stop();
-                isMovingDown = false; // Stop the movement
-                moveDownTimeline.stop();
-                if (!isMovingLeft) {
-                    isMovingLeft = true;
-                    moveLeftTimeline.play(); // Move character to the right
-                    leftButton.setFocusTraversable(true);
-                    leftButton.requestFocus();
-                }
-            } else if (event.getCode() == KeyCode.UP || event.getCode() == KeyCode.W) {
-                isMovingRight = false; // Stop the movement
-                moveRightTimeline.stop();
-                isMovingLeft = false; // Stop the movement
-                moveLeftTimeline.stop();
-                isMovingDown = false; // Stop the movement
-                moveDownTimeline.stop();
-                if (!isMovingUp) {
-                    isMovingUp = true;
-                    moveUpTimeline.play(); // Move character to the right
-                    upButton.setFocusTraversable(true);
-                    upButton.requestFocus();
-                }
-            } else if (event.getCode() == KeyCode.DOWN || event.getCode() == KeyCode.S) {
-                isMovingRight = false; // Stop the movement
-                moveRightTimeline.stop();
-                isMovingLeft = false; // Stop the movement
-                moveLeftTimeline.stop();
-                isMovingUp = false; // Stop the movement
-                moveUpTimeline.stop();
-                if (!isMovingDown) {
-                    isMovingDown = true;
-                    moveDownTimeline.play(); // Move character to the right
-                    downButton.setFocusTraversable(true);
-                    downButton.requestFocus();
-                }
-            }
-        });
-        rightButton.setOnKeyReleased(event -> {
-            if (event.getCode() == KeyCode.RIGHT || event.getCode() == KeyCode.D) {
-                // Stop moving the character to the right when the key is released
-                isMovingRight = false; // Stop the movement
-                moveRightTimeline.stop(); // Stop the timeline
-            }
-        });
-        upButton.setOnKeyPressed(event -> {
-            // Handle each key press for movement
-            if (event.getCode() == KeyCode.RIGHT || event.getCode() == KeyCode.D) {
-                isMovingLeft = false; // Stop the movement
-                moveLeftTimeline.stop();
-                isMovingUp = false; // Stop the movement
-                moveUpTimeline.stop();
-                isMovingDown = false; // Stop the movement
-                moveDownTimeline.stop();
-                if (!isMovingRight) {
-                    isMovingRight = true;
-                    moveRightTimeline.play(); // Move character to the right
-                    rightButton.setFocusTraversable(true);
-                    rightButton.requestFocus();
-                }
-            } else if (event.getCode() == KeyCode.LEFT || event.getCode() == KeyCode.A) {
-                isMovingRight = false; // Stop the movement
-                moveRightTimeline.stop();
-                isMovingUp = false; // Stop the movement
-                moveUpTimeline.stop();
-                isMovingDown = false; // Stop the movement
-                moveDownTimeline.stop();
-                if (!isMovingLeft) {
-                    isMovingLeft = true;
-                    moveLeftTimeline.play(); // Move character to the right
-                    leftButton.setFocusTraversable(true);
-                    leftButton.requestFocus();
-                }
-            } else if (event.getCode() == KeyCode.UP || event.getCode() == KeyCode.W) {
-                isMovingRight = false; // Stop the movement
-                moveRightTimeline.stop();
-                isMovingLeft = false; // Stop the movement
-                moveLeftTimeline.stop();
-                isMovingDown = false; // Stop the movement
-                moveDownTimeline.stop();
-                if (!isMovingUp) {
-                    isMovingUp = true;
-                    moveUpTimeline.play(); // Move character to the right
-                    upButton.setFocusTraversable(true);
-                    upButton.requestFocus();
-                }
-            } else if (event.getCode() == KeyCode.DOWN || event.getCode() == KeyCode.S) {
-                isMovingRight = false; // Stop the movement
-                moveRightTimeline.stop();
-                isMovingLeft = false; // Stop the movement
-                moveLeftTimeline.stop();
-                isMovingUp = false; // Stop the movement
-                moveUpTimeline.stop();
-                if (!isMovingDown) {
-                    isMovingDown = true;
-                    moveDownTimeline.play(); // Move character to the right
-                    downButton.setFocusTraversable(true);
-                    downButton.requestFocus();
-                }
-            }
-        });
-        upButton.setOnKeyReleased(event -> {
-            if (event.getCode() == KeyCode.UP || event.getCode() == KeyCode.W) {
-                // Stop moving the character to the up when the key is released
-                isMovingUp = false; // Stop the movement
-                moveUpTimeline.stop(); // Stop the timeline
-            }
-        });
-        downButton.setOnKeyPressed(event -> {
-            // Handle each key press for movement
-            if (event.getCode() == KeyCode.RIGHT || event.getCode() == KeyCode.D) {
-                isMovingLeft = false; // Stop the movement
-                moveLeftTimeline.stop();
-                isMovingUp = false; // Stop the movement
-                moveUpTimeline.stop();
-                isMovingDown = false; // Stop the movement
-                moveDownTimeline.stop();
-                if (!isMovingRight) {
-                    isMovingRight = true;
-                    moveRightTimeline.play(); // Move character to the right
-                    rightButton.setFocusTraversable(true);
-                    rightButton.requestFocus();
-                }
-            } else if (event.getCode() == KeyCode.LEFT || event.getCode() == KeyCode.A) {
-                isMovingRight = false; // Stop the movement
-                moveRightTimeline.stop();
-                isMovingUp = false; // Stop the movement
-                moveUpTimeline.stop();
-                isMovingDown = false; // Stop the movement
-                moveDownTimeline.stop();
-                if (!isMovingLeft) {
-                    isMovingLeft = true;
-                    moveLeftTimeline.play(); // Move character to the right
-                    leftButton.setFocusTraversable(true);
-                    leftButton.requestFocus();
-                }
-            } else if (event.getCode() == KeyCode.UP || event.getCode() == KeyCode.W) {
-                isMovingRight = false; // Stop the movement
-                moveRightTimeline.stop();
-                isMovingLeft = false; // Stop the movement
-                moveLeftTimeline.stop();
-                isMovingDown = false; // Stop the movement
-                moveDownTimeline.stop();
-                if (!isMovingUp) {
-                    isMovingUp = true;
-                    moveUpTimeline.play(); // Move character to the right
-                    upButton.setFocusTraversable(true);
-                    upButton.requestFocus();
-                }
-            } else if (event.getCode() == KeyCode.DOWN || event.getCode() == KeyCode.S) {
-                isMovingRight = false; // Stop the movement
-                moveRightTimeline.stop();
-                isMovingLeft = false; // Stop the movement
-                moveLeftTimeline.stop();
-                isMovingUp = false; // Stop the movement
-                moveUpTimeline.stop();
-                if (!isMovingDown) {
-                    isMovingDown = true;
-                    moveDownTimeline.play(); // Move character to the right
-                    downButton.setFocusTraversable(true);
-                    downButton.requestFocus();
-                }
-            }
-        });
-        downButton.setOnKeyReleased(event -> {
-            if (event.getCode() == KeyCode.DOWN || event.getCode() == KeyCode.S) {
-                // Stop moving the character to the down when the key is released
-                isMovingDown = false; // Stop the movement
-                moveDownTimeline.stop(); // Stop the timeline
-            }
-        });
+        leftButton.setOnKeyPressed(handleKeyPress);
+        leftButton.setOnKeyReleased(handleKeyRelease);
+        rightButton.setOnKeyPressed(handleKeyPress);
+        rightButton.setOnKeyReleased(handleKeyRelease);
+        upButton.setOnKeyPressed(handleKeyPress);
+        upButton.setOnKeyReleased(handleKeyRelease);
+        downButton.setOnKeyPressed(handleKeyPress);
+        downButton.setOnKeyReleased(handleKeyRelease);
 
 
         //////////////////////////////////////////////////////////////////////////////////////
