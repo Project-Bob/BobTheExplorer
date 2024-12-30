@@ -54,7 +54,6 @@ public class CharacterCreationPageController implements Initializable {
         confirmCharacterButton.setDefaultButton(false);
         rulesButton.setFocusTraversable(false);
         logOutButton.setFocusTraversable(false);
-
     }
     @FXML
     private Button confirmButton;
