@@ -60,10 +60,7 @@ public class Monster_Slime {
     }
 
     public void takeDamage(int damage) {
-        hp -= damage;
-        if (getHp() < 0) {
-            hp = 0;
-        }
+        this.hp = Math.max(0, this.hp - damage);
     }
 
 }

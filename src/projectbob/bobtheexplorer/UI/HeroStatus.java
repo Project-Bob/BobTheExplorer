@@ -58,9 +58,6 @@ public class HeroStatus {
     }
 
     public void takeDamage(int damage) {
-        HP_Hero -= damage;
-        if (getHP_Hero() < 0) {
-            HP_Hero = 0;
-        }
+        this.HP_Hero = Math.max(0, this.HP_Hero - damage);
     }
 }

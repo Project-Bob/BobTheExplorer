@@ -123,7 +123,7 @@ public class BattleStatusPageController implements Initializable {
         AP_Monster.setText("Attack Power: " + monster.getAp());
         Speed_Monster.setText("Speed: " + monster.getSpeed());
 
-        Instruction.setText("Please choose your next step!!!");
+        Instruction.setText("Please choose your next action.");
         Instruction.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 16));
         Instruction.setTextFill(Color.DARKBLUE);
         Instruction.setWrapText(true);
@@ -135,17 +135,17 @@ public class BattleStatusPageController implements Initializable {
     public void Attack_Hero() throws IOException{
         if (HeroSpeed >= monster.getSpeed()) {
             monster.takeDamage(HeroAP);
-            Instruction.setText(GamingDungeonController.monster_Detect + " take " + HeroAP + " damage. ");
+            Instruction.setText(GamingDungeonController.monster_Detect + " takes " + HeroAP + " damage. ");
             if (monster.getHp() > 0) {
                 hero.takeDamage(monster.getAp());
-                Instruction.setText(GamingDungeonController.monster_Detect + " take " + HeroAP + " damage. Hero takes " + monster.getAp() + " damage. " );
+                Instruction.setText(GamingDungeonController.monster_Detect + " takes " + HeroAP + " damage. " + characterName + " takes " + monster.getAp() + " damage. " );
             }
         }
         else {
             hero.takeDamage(monster.getAp());
-            Instruction.setText(characterName + " take " + monster.getAp() + " damage. ");
+            Instruction.setText(characterName + " takes " + monster.getAp() + " damage. ");
             if (HeroHP > 0) {
-                Instruction.setText(GamingDungeonController.monster_Detect + " take " + HeroAP + " damage. Hero takes " + monster.getAp() + " damage. " );
+                Instruction.setText(GamingDungeonController.monster_Detect + " takes " + HeroAP + " damage. " + characterName + " takes " + monster.getAp() + " damage. " );
                 monster.takeDamage(HeroAP);
             }
         }
@@ -163,7 +163,7 @@ public class BattleStatusPageController implements Initializable {
 
     public void Run() throws IOException{
         if(HeroSpeed > monster.getSpeed()){
-            Instruction.setText("Run successfully !!! Loading ...");
+            Instruction.setText("Escape successful! Loading...");
             // Delay the scene change by 1 second
             PauseTransition pause = new PauseTransition(Duration.seconds(1));
             App m = new App();
@@ -177,7 +177,7 @@ public class BattleStatusPageController implements Initializable {
             pause.play();
         }
         else{
-            Instruction.setText("You are unable to run!!!");
+            Instruction.setText("You are unable to escape!");
         }
     }
 
