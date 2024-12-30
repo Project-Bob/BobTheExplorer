@@ -4,20 +4,28 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.effect.Glow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="500.0" style="-fx-background-color: LIGHTYELLOW;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projectbob.bobtheexplorer.UI.loginController">
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projectbob.bobtheexplorer.UI.loginController">
    <children>
+      <ImageView fx:id="LoginBackground" blendMode="DARKEN" fitHeight="500.0" fitWidth="500.0" opacity="0.88" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../test/loginPage.jpg" />
+         </image></ImageView>
       <VBox layoutY="140.0" prefHeight="200.0" prefWidth="500.0" spacing="15.0">
          <children>
             <HBox alignment="CENTER" prefHeight="27.0" prefWidth="307.0">
                <children>
-                  <Label prefHeight="36.0" prefWidth="66.0" text="Username: " textAlignment="JUSTIFY">
+                  <Label prefHeight="36.0" prefWidth="66.0" text="Username: " textAlignment="JUSTIFY" textFill="WHITE">
                      <padding>
                         <Insets top="8.0" />
                      </padding>
@@ -30,7 +38,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="21.0" prefWidth="200.0">
                <children>
-                  <Label prefHeight="43.0" prefWidth="66.0" text="Password:">
+                  <Label prefHeight="43.0" prefWidth="66.0" text="Password:" textAlignment="JUSTIFY" textFill="WHITE">
                      <padding>
                         <Insets top="8.0" />
                      </padding>
@@ -44,19 +52,19 @@
                   <PasswordField fx:id="password" alignment="TOP_LEFT" prefHeight="25.0" prefWidth="169.0" promptText="Enter password..." />
                </children>
             </HBox>
-            <HBox alignment="CENTER" blendMode="DARKEN" nodeOrientation="LEFT_TO_RIGHT" prefHeight="35.0" prefWidth="195.0" spacing="20.0">
+            <HBox alignment="CENTER" blendMode="DARKEN" focusTraversable="true" nodeOrientation="LEFT_TO_RIGHT" prefHeight="35.0" prefWidth="195.0" spacing="20.0">
                <children>
-                  <Button fx:id="loginButton" alignment="BOTTOM_LEFT" contentDisplay="TOP" defaultButton="true" graphicTextGap="100.0" lineSpacing="60.0" mnemonicParsing="false" onAction="#userLogin" style="-fx-background-color: #b3bd8c;" text="Login" textAlignment="CENTER">
+                  <Button fx:id="loginButton" alignment="BOTTOM_LEFT" contentDisplay="TOP" defaultButton="true" graphicTextGap="100.0" lineSpacing="60.0" mnemonicParsing="false" onAction="#userLogin" style="-fx-background-color: black;" text="Login" textAlignment="CENTER" textFill="#234143">
                      <opaqueInsets>
                         <Insets bottom="20.0" left="20.0" right="10.0" top="10.0" />
                      </opaqueInsets>
                      <font>
-                        <Font name="System Bold Italic" size="12.0" />
+                        <Font name="System Bold Italic" size="13.0" />
                      </font>
                   </Button>
-                  <Button fx:id="registerButton" mnemonicParsing="false" onAction="#userRegister" style="-fx-background-color: #b3bd8c;" text="Register">
+                  <Button fx:id="registerButton" mnemonicParsing="false" onAction="#userRegister" style="-fx-background-color: black;" text="Register" textFill="#234142">
                      <font>
-                        <Font name="System Bold Italic" size="12.0" />
+                        <Font name="System Bold Italic" size="13.0" />
                      </font>
                   </Button>
                </children>
@@ -66,23 +74,43 @@
             <Insets top="20.0" />
          </padding>
       </VBox>
-      <Label alignment="CENTER" contentDisplay="CENTER" graphicTextGap="7.0" layoutY="75.0" prefHeight="23.0" prefWidth="500.0" text="WELCOME TO BOB THE EXPLORER" textAlignment="CENTER" underline="true">
+      <Label alignment="CENTER" contentDisplay="CENTER" graphicTextGap="7.0" layoutY="75.0" prefHeight="23.0" prefWidth="500.0" text="WELCOME TO BOB THE EXPLORER" textAlignment="CENTER" textFill="WHITE" underline="true">
          <font>
             <Font name="Elephant Italic" size="17.0" />
          </font>
          <effect>
-            <Glow level="0.42">
-               <input>
-                  
-               </input>
-            </Glow>
+            <Glow level="0.42" />
          </effect>
       </Label>
       <HBox alignment="CENTER" layoutX="160.0" layoutY="108.0" prefHeight="31.0" prefWidth="180.0">
          <children>
-            <Label fx:id="wrongID" alignment="CENTER" prefHeight="18.0" prefWidth="176.0" textAlignment="CENTER" />
+            <Label fx:id="wrongID" alignment="CENTER" prefHeight="18.0" prefWidth="176.0" textAlignment="CENTER" textFill="RED" />
          </children>
       </HBox>
+      <MenuButton layoutX="399.0" layoutY="26.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="74.0" text="Menu">
+        <items>
+          <MenuItem fx:id="buttonRulesRegulation" mnemonicParsing="false" onAction="#actionRulesRegulation" text="Rules" />
+          <MenuItem fx:id="buttonScoreBoard" mnemonicParsing="false" onAction="#actionScoreBoard" text="Score Board" />
+            <MenuItem fx:id="buttonExit" mnemonicParsing="false" onAction="#actionExit" text="Exit" />
+        </items>
+         <opaqueInsets>
+            <Insets bottom="10.0" left="20.0" right="10.0" top="10.0" />
+         </opaqueInsets>
+      </MenuButton>
+      <AnchorPane fx:id="rules" layoutX="17.0" layoutY="83.0" prefHeight="391.0" prefWidth="466.0" style="-fx-background-color: #ffd68a;" visible="false">
+         <children>
+            <Button fx:id="buttonBackToLoginPage" layoutX="205.0" layoutY="329.0" mnemonicParsing="false" onAction="#cancelRules" text="Done" />
+            <Label layoutX="73.0" text="Rules and Regulation" textFill="#2d3816" underline="true">
+               <font>
+                  <Font name="Bookman Old Style Bold Italic" size="30.0" />
+               </font>
+               <effect>
+                  <Glow />
+               </effect>
+            </Label>
+            <HBox layoutX="-1.0" layoutY="45.0" prefHeight="275.0" prefWidth="463.0" />
+         </children>
+      </AnchorPane>
    </children>
    
 </AnchorPane>

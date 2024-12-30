@@ -11,110 +11,250 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="DungeonField" prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projectbob.bobtheexplorer.UI.GamingDungeonController">
+<AnchorPane id="AnchorPane" fx:id="MainPage" prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projectbob.bobtheexplorer.UI.GamingDungeonController">
    <children>
-      <Label layoutX="194.0" layoutY="3.0" text="Dungeon 1" textFill="#727731">
+      <Label fx:id="timerlabel" alignment="CENTER" layoutX="369.0" layoutY="11.0" prefHeight="24.0" prefWidth="82.0" style="-fx-border-color: black;" text="Time: ">
          <font>
-            <Font name="System Bold Italic" size="26.0" />
+            <Font size="14.0" />
          </font>
-         <effect>
-            <DropShadow height="5.43" radius="6.1075" spread="0.53">
-               <color>
-                  <Color red="0.7365623712539673" green="0.7456140518188477" blue="0.2025124579668045" />
-               </color>
-            </DropShadow>
-         </effect>
       </Label>
-
-      <HBox layoutX="14.0" layoutY="12.0" prefHeight="34.0" prefWidth="141.0">
+      <AnchorPane id="AnchorPane" fx:id="DungeonPage" prefHeight="500.0" prefWidth="500.0">
          <children>
-            <Label text="ID: ">
+            <Label layoutX="194.0" layoutY="3.0" text="Dungeon" textFill="#727731">
                <font>
-                  <Font name="Elephant" size="14.0" />
+                  <Font name="System Bold Italic" size="26.0" />
                </font>
+               <effect>
+                  <DropShadow height="5.43" radius="6.1075" spread="0.53">
+                     <color>
+                        <Color red="0.7365623712539673" green="0.7456140518188477" blue="0.2025124579668045" />
+                     </color>
+                  </DropShadow>
+               </effect>
             </Label>
-            <Label fx:id="usernameID" prefHeight="18.0" prefWidth="100.0">
-               <font>
-                  <Font name="Elephant" size="13.0" />
-               </font>
-            </Label>
-         </children>
-      </HBox>
-      <Button fx:id="logOutButton" alignment="CENTER_RIGHT" contentDisplay="RIGHT" graphicTextGap="0.0" layoutX="464.0" layoutY="14.0" mnemonicParsing="false" onAction="#logOut" textAlignment="RIGHT">
-         <padding>
-            <Insets left="-10.0" right="-10.0" />
-         </padding>
-      </Button>
-
-      <ImageView fx:id="imgTest" fitHeight="320.0" fitWidth="480.0" layoutX="10.0" layoutY="41.0" pickOnBounds="true" preserveRatio="true" />
-      <Button fx:id="rightButton" layoutX="438.0" layoutY="444.0" minWidth="53.0" mnemonicParsing="false" onAction="#goToRight" prefHeight="34.0" prefWidth="53.0" />
-      <Button fx:id="leftButton" layoutX="331.0" layoutY="444.0" minWidth="53.0" mnemonicParsing="false" onAction="#goToLeft" prefHeight="34.0" prefWidth="53.0" />
-      <Button fx:id="downButton" layoutX="385.0" layoutY="444.0" minWidth="53.0" mnemonicParsing="false" onAction="#goDown" prefHeight="34.0" prefWidth="53.0" />
-      <Button fx:id="upButton" layoutX="385.0" layoutY="396.0" minWidth="53.0" mnemonicParsing="false" onAction="#goUp" prefHeight="34.0" prefWidth="53.0" />
-      <VBox layoutX="14.0" layoutY="361.0" prefHeight="88.0" prefWidth="166.0">
-         <children>
-            <Label fx:id="name" prefHeight="16.0" prefWidth="179.0">
-               <font>
-                  <Font name="Franklin Gothic Heavy Italic" size="12.0" />
-               </font>
-            </Label>
-            <HBox prefHeight="58.0" prefWidth="199.0">
+            <HBox layoutX="14.0" layoutY="5.0" prefHeight="16.0" prefWidth="142.0">
                <children>
-                  <ImageView fx:id="profilePic" fitHeight="68.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true" />
-                  <VBox prefHeight="58.0" prefWidth="148.0">
-                     <children>
-                        <Label fx:id="hpBar" prefHeight="18.0" prefWidth="166.0" text="Label" />
-                        <Label fx:id="characterRole" prefHeight="18.0" prefWidth="133.0" text="Label" />
-                        <Label fx:id="characterAP" prefHeight="18.0" prefWidth="176.0" text="Label" />
-                        <Label fx:id="characterSpeed" prefHeight="18.0" prefWidth="164.0" text="Label" />
-                     </children>
-                  </VBox>
+                  <Label text="ID: ">
+                     <font>
+                        <Font name="Elephant" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="usernameID" prefHeight="18.0" prefWidth="100.0">
+                     <font>
+                        <Font name="Elephant" size="13.0" />
+                     </font>
+                  </Label>
                </children>
             </HBox>
-         </children>
-      </VBox>
-      <ImageView fx:id="itemBar" fitHeight="30.0" fitWidth="200.0" layoutX="35.0" layoutY="460.0" pickOnBounds="true" preserveRatio="true" />
-      <AnchorPane fx:id="BattlePage" prefHeight="510.0" prefWidth="520.0">
-         <children>
-            <HBox layoutX="35.0" layoutY="365.0" prefHeight="100.0" prefWidth="445.0">
-               <children>
-                  <Label fx:id="Instruction" prefHeight="100.0" prefWidth="225.0" text="Label" />
-                  <VBox prefHeight="100.0" prefWidth="35.0" />
-                  <VBox prefHeight="100.0" prefWidth="100.0">
-                     <children>
-                        <Button fx:id="Attack" alignment="CENTER" mnemonicParsing="false" onAction="#Attack_Hero" prefHeight="25.0" prefWidth="100.0" text="Attack" />
-                        <Button fx:id="Inventory" alignment="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Inventory" />
-                        <Button fx:id="Run" alignment="CENTER" mnemonicParsing="false" onAction="#Run" prefHeight="25.0" prefWidth="100.0" text="Run" />
-                     </children>
-                  </VBox>
-               </children>
-            </HBox>
-            <Button fx:id="logOutButton1" alignment="CENTER_RIGHT" contentDisplay="RIGHT" graphicTextGap="0.0" layoutX="474.0" layoutY="24.0" mnemonicParsing="false" onAction="#logOut" textAlignment="RIGHT">
+            <Button fx:id="logOutButton" alignment="CENTER_RIGHT" contentDisplay="RIGHT" graphicTextGap="0.0" layoutX="464.0" layoutY="14.0" mnemonicParsing="false" onAction="#logOut" textAlignment="RIGHT">
                <padding>
                   <Insets left="-10.0" right="-10.0" />
                </padding>
             </Button>
-            <ImageView fx:id="Monster_PIC" fitHeight="150.0" fitWidth="200.0" layoutX="260.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="Hero_PIC" fitHeight="150.0" fitWidth="200.0" layoutX="50.0" layoutY="211.0" pickOnBounds="true" preserveRatio="true" />
-            <VBox layoutX="60.0" layoutY="58.0" prefHeight="100.0" prefWidth="200.0">
+            <ImageView fx:id="imgTest" fitHeight="320.0" fitWidth="480.0" layoutX="6.0" layoutY="41.0" pickOnBounds="true" preserveRatio="true" />
+            <Button fx:id="rightButton" layoutX="438.0" layoutY="444.0" minWidth="53.0" mnemonicParsing="false" onAction="#goToRight" prefHeight="34.0" prefWidth="53.0" />
+            <Button fx:id="leftButton" layoutX="331.0" layoutY="444.0" minWidth="53.0" mnemonicParsing="false" onAction="#goToLeft" prefHeight="34.0" prefWidth="53.0" />
+            <Button fx:id="downButton" layoutX="385.0" layoutY="444.0" minWidth="53.0" mnemonicParsing="false" onAction="#goDown" prefHeight="34.0" prefWidth="53.0" />
+            <Button fx:id="upButton" layoutX="385.0" layoutY="396.0" minWidth="53.0" mnemonicParsing="false" onAction="#goUp" prefHeight="34.0" prefWidth="53.0" />
+            <VBox layoutX="14.0" layoutY="361.0" prefHeight="88.0" prefWidth="166.0">
                <children>
-                  <Label fx:id="HP_Monster" prefHeight="20.0" prefWidth="200.0" text="Label" />
-                  <Label fx:id="AP_Monster" prefHeight="20.0" prefWidth="200.0" text="Label" />
-                  <Label fx:id="Speed_Monster" prefHeight="20.0" prefWidth="200.0" text="Label" />
+                  <Label fx:id="name" prefHeight="16.0" prefWidth="179.0">
+                     <font>
+                        <Font name="Franklin Gothic Heavy Italic" size="12.0" />
+                     </font>
+                  </Label>
+                  <HBox prefHeight="58.0" prefWidth="199.0">
+                     <children>
+                        <ImageView fx:id="profilePic" fitHeight="68.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true" />
+                        <VBox prefHeight="58.0" prefWidth="148.0">
+                           <children>
+                              <Label fx:id="hpBar" prefHeight="18.0" prefWidth="166.0" text="Label" />
+                              <Label fx:id="characterRole" prefHeight="18.0" prefWidth="133.0" text="Label" />
+                              <Label fx:id="characterAP" prefHeight="18.0" prefWidth="176.0" text="Label" />
+                              <Label fx:id="characterSpeed" prefHeight="18.0" prefWidth="164.0" text="Label" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
                </children>
             </VBox>
-            <Label fx:id="Name_Monster" layoutX="60.0" layoutY="38.0" prefHeight="20.0" prefWidth="200.0" text="Label" />
-            <VBox layoutX="260.0" layoutY="261.0" prefHeight="100.0" prefWidth="200.0">
+            <ImageView fx:id="itemBar" fitHeight="30.0" fitWidth="200.0" layoutX="35.0" layoutY="460.0" pickOnBounds="true" preserveRatio="true" />
+            <Button fx:id="buttonItem1" layoutX="37.5" layoutY="462.5" mnemonicParsing="false" onAction="#useItem1" prefHeight="25.0" prefWidth="25.0" visible="false" />
+            <Button fx:id="buttonItem2" layoutX="67.5" layoutY="462.5" mnemonicParsing="false" onAction="#useItem2" prefHeight="25.0" prefWidth="25.0" visible="false" />
+            <Button fx:id="buttonItem3" layoutX="97.5" layoutY="462.5" mnemonicParsing="false" onAction="#useItem3" prefHeight="25.0" prefWidth="25.0" visible="false" />
+            <Button fx:id="buttonItem4" layoutX="127.5" layoutY="462.5" mnemonicParsing="false" onAction="#useItem4" prefHeight="25.0" prefWidth="25.0" visible="false" />
+            <Button fx:id="buttonItem5" layoutX="157.5" layoutY="462.5" mnemonicParsing="false" onAction="#useItem5" prefHeight="25.0" prefWidth="25.0" visible="false" />
+            <Button fx:id="buttonItem6" layoutX="187.5" layoutY="462.5" mnemonicParsing="false" onAction="#useItem6" prefHeight="25.0" prefWidth="25.0" visible="false" />
+            <AnchorPane fx:id="itemOverflow" layoutX="45.0" layoutY="121.0" prefHeight="146.0" prefWidth="430.0" style="-fx-background-color: #fff04d;" visible="false">
                <children>
-                  <Label fx:id="HP_Hero" prefHeight="20.0" prefWidth="200.0" text="Label" />
-                  <Label fx:id="Role_Hero" prefHeight="20.0" prefWidth="200.0" text="Label" />
-                  <Label fx:id="AP_Hero" prefHeight="20.0" prefWidth="200.0" text="Label" />
-                  <Label fx:id="Speed_Hero" prefHeight="20.0" prefWidth="200.0" text="Label" />
+                  <ImageView fx:id="itemBarDelete" fitHeight="50.0" fitWidth="300.0" layoutX="65.0" layoutY="61.0" pickOnBounds="true" preserveRatio="true" />
+                  <HBox layoutX="148.0" layoutY="117.0" prefHeight="30.0" prefWidth="133.0" spacing="20.0">
+                     <children>
+                        <Button fx:id="confirmChangeItem" mnemonicParsing="false" onAction="#confirmReplaceItem" text="Confirm" />
+                        <Button fx:id="ignoreButton" mnemonicParsing="false" onAction="#closeItemReplaceBar" text="Ignore" />
+                     </children>
+                  </HBox>
+                  <Label layoutX="115.0" layoutY="1.0" text="Your inventory is full. ">
+                     <font>
+                        <Font name="Comic Sans MS Bold Italic" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="5.0" layoutY="18.0" prefHeight="24.0" prefWidth="421.0" text="Kindly select an item to be replaced with">
+                     <font>
+                        <Font name="Comic Sans MS Bold Italic" size="17.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="buttonItemReplace1" layoutX="67.5" layoutY="63.5" mnemonicParsing="false" onAction="#selectButtonReplace1" prefHeight="45.0" prefWidth="45.0" />
+                  <Button fx:id="buttonItemReplace2" layoutX="117.5" layoutY="63.5" mnemonicParsing="false" onAction="#selectButtonReplace2" prefHeight="45.0" prefWidth="45.0" />
+                  <Button fx:id="buttonItemReplace3" layoutX="167.5" layoutY="63.5" mnemonicParsing="false" onAction="#selectButtonReplace3" prefHeight="45.0" prefWidth="45.0" />
+                  <Button fx:id="buttonItemReplace4" layoutX="217.5" layoutY="63.5" mnemonicParsing="false" onAction="#selectButtonReplace4" prefHeight="45.0" prefWidth="45.0" />
+                  <Button fx:id="buttonItemReplace5" layoutX="267.5" layoutY="63.5" mnemonicParsing="false" onAction="#selectButtonReplace5" prefHeight="45.0" prefWidth="45.0" />
+                  <Button fx:id="buttonItemReplace6" layoutX="317.5" layoutY="63.5" mnemonicParsing="false" onAction="#selectButtonReplace6" prefHeight="45.0" prefWidth="45.0" />
+                  <ImageView fx:id="imageItemNew" fitHeight="45.0" fitWidth="45.0" layoutX="360.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                </children>
-            </VBox>
-            <Label fx:id="Name_Hero" layoutX="260.0" layoutY="241.0" prefHeight="20.0" prefWidth="200.0" text="Label" />
+            </AnchorPane>
+            <Label fx:id="zoneLevel" layoutX="14.0" layoutY="23.0" text="Label" />
+            <AnchorPane fx:id="confirmUseItem" layoutX="60.0" layoutY="121.0" prefHeight="148.0" prefWidth="380.0" style="-fx-background-color: #fff0b3;" visible="false">
+
+               <children>
+
+                  <Label layoutX="47.0" layoutY="1.0" prefHeight="26.0" prefWidth="318.0" text="Choose use item or remove item">
+
+                     <font>
+
+                        <Font name="Comic Sans MS Bold Italic" size="18.0" />
+
+                     </font>
+
+                  </Label>
+
+                  <ImageView fx:id="imageItemToBeUsed" fitHeight="60.0" fitWidth="60.0" layoutX="162.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true" />
+
+                  <Label fx:id="useItemName" layoutX="178.0" layoutY="94.0" text="Label" />
+
+                  <HBox layoutX="77.0" layoutY="119.0" prefHeight="30.0" prefWidth="232.0" spacing="20.0">
+
+                     <children>
+
+                        <Button fx:id="confirmUseItemButton" mnemonicParsing="false" onAction="#confirmUseItem" prefHeight="26.0" prefWidth="60.0" text="Use" textAlignment="CENTER" />
+                        <Button fx:id="confirmRemoveItemButton" mnemonicParsing="false" onAction="#confirmRemoveItem" prefHeight="26.0" prefWidth="60.0" text="Remove" textAlignment="CENTER" />
+
+                              <Button fx:id="cancelUseItem" mnemonicParsing="false" onAction="#cancelUseItem" prefHeight="26.0" prefWidth="60.0" text="Cancel" textAlignment="CENTER" />
+
+                     </children>
+
+                  </HBox>
+
+               </children></AnchorPane>
+
+            <Label fx:id="errorMsg" layoutX="303.0" layoutY="370.0" />
+            <AnchorPane fx:id="BattlePage" prefHeight="490.0" prefWidth="500.0">
+               <children>
+                  <ImageView fx:id="BattlePageBackground" fitHeight="500.0" fitWidth="500.0" pickOnBounds="true" preserveRatio="true" />
+                  <HBox layoutX="35.0" layoutY="365.0" prefHeight="100.0" prefWidth="445.0">
+                     <children>
+                        <Label fx:id="Instruction" prefHeight="100.0" prefWidth="225.0" text="Label" />
+                        <VBox prefHeight="100.0" prefWidth="35.0" />
+                        <VBox prefHeight="100.0" prefWidth="100.0">
+                           <children>
+                              <Button fx:id="Attack" alignment="CENTER" mnemonicParsing="false" onAction="#Attack_Hero" prefHeight="25.0" prefWidth="100.0" text="Attack" />
+                              <Button fx:id="Inventory" alignment="CENTER" mnemonicParsing="false" onAction="#openInventory" prefHeight="25.0" prefWidth="100.0" text="Inventory" />
+                              <Button fx:id="Run" alignment="CENTER" mnemonicParsing="false" onAction="#Run" prefHeight="25.0" prefWidth="100.0" text="Run" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  <Button fx:id="logOutButton1" alignment="CENTER_RIGHT" contentDisplay="RIGHT" graphicTextGap="0.0" layoutX="474.0" layoutY="24.0" mnemonicParsing="false" onAction="#logOut" textAlignment="RIGHT">
+                     <padding>
+                        <Insets left="-10.0" right="-10.0" />
+                     </padding>
+                  </Button>
+                  <ImageView fx:id="Monster_PIC" fitHeight="129.0" fitWidth="184.0" layoutX="269.0" layoutY="52.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="Hero_PIC" fitHeight="150.0" fitWidth="200.0" layoutX="52.0" layoutY="196.0" pickOnBounds="true" preserveRatio="true" />
+                  <VBox layoutX="69.0" layoutY="67.0" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label fx:id="HP_Monster" prefHeight="20.0" prefWidth="200.0" text="Label" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font></Label>
+                        <Label fx:id="AP_Monster" prefHeight="20.0" prefWidth="200.0" text="Label" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font></Label>
+                        <Label fx:id="Speed_Monster" prefHeight="20.0" prefWidth="200.0" text="Label" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font></Label>
+                     </children>
+                  </VBox>
+                  <Label fx:id="Name_Monster" layoutX="69.0" layoutY="42.0" prefHeight="20.0" prefWidth="200.0" text="Label" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Label>
+                  <VBox layoutX="261.0" layoutY="261.0" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label fx:id="HP_Hero" prefHeight="20.0" prefWidth="200.0" text="Label" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font></Label>
+                        <Label fx:id="Role_Hero" prefHeight="20.0" prefWidth="200.0" text="Label" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font></Label>
+                        <Label fx:id="AP_Hero" prefHeight="20.0" prefWidth="200.0" text="Label" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font></Label>
+                        <Label fx:id="Speed_Hero" prefHeight="20.0" prefWidth="200.0" text="Label" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font></Label>
+                     </children>
+                  </VBox>
+                  <Label fx:id="Name_Hero" layoutX="260.0" layoutY="241.0" prefHeight="20.0" prefWidth="200.0" text="Label" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Label>
+                  <AnchorPane fx:id="itemUsed" layoutX="52.0" layoutY="132.0" prefHeight="148.0" prefWidth="398.0" style="-fx-background-color: #fff04d;" visible="false">
+                     <children>
+                        <ImageView fx:id="itemBarUsed" fitHeight="50.0" fitWidth="300.0" layoutX="65.0" layoutY="61.0" pickOnBounds="true" preserveRatio="true" />
+                        <HBox layoutX="148.0" layoutY="117.0" prefHeight="30.0" prefWidth="133.0" spacing="20.0">
+                           <children>
+                              <Button fx:id="buttonConfirmUsedItem" mnemonicParsing="false" onAction="#confirmUsedItem" text="Used" />
+                              <Button fx:id="closedButton" mnemonicParsing="false" onAction="#closeItemUsedBar" text="Closed" />
+                           </children>
+                        </HBox>
+                        <Label alignment="CENTER" layoutX="2.0" layoutY="1.0" prefHeight="26.0" prefWidth="392.0" text="Your inventory">
+                           <font>
+                              <Font name="Comic Sans MS Bold Italic" size="18.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="CENTER" layoutX="5.0" layoutY="18.0" prefHeight="24.0" prefWidth="392.0" text="Kindly select an item to be used">
+                           <font>
+                              <Font name="Comic Sans MS Bold Italic" size="17.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="buttonItemUsed1" layoutX="67.5" layoutY="63.5" mnemonicParsing="false" onAction="#selectButtonUsed1" prefHeight="45.0" prefWidth="45.0" />
+                        <Button fx:id="buttonItemUsed2" layoutX="117.5" layoutY="63.5" mnemonicParsing="false" onAction="#selectButtonUsed2" prefHeight="45.0" prefWidth="45.0" />
+                        <Button fx:id="buttonItemUsed3" layoutX="167.5" layoutY="63.5" mnemonicParsing="false" onAction="#selectButtonUsed3" prefHeight="45.0" prefWidth="45.0" />
+                        <Button fx:id="buttonItemUsed4" layoutX="217.5" layoutY="63.5" mnemonicParsing="false" onAction="#selectButtonUsed4" prefHeight="45.0" prefWidth="45.0" />
+                        <Button fx:id="buttonItemUsed5" layoutX="267.5" layoutY="63.5" mnemonicParsing="false" onAction="#selectButtonUsed5" prefHeight="45.0" prefWidth="45.0" />
+                        <Button fx:id="buttonItemUsed6" layoutX="317.5" layoutY="63.5" mnemonicParsing="false" onAction="#selectButtonUsed6" prefHeight="45.0" prefWidth="45.0" />
+                     </children>
+                  </AnchorPane>
+               </children>
+            </AnchorPane>
          </children>
       </AnchorPane>
-
+      <AnchorPane fx:id="result" layoutX="61.0" layoutY="145.0" prefHeight="170.0" prefWidth="380.0" style="-fx-background-color: black;">
+         <children>
+            <Button fx:id="continueButton" layoutX="135.0" layoutY="121.0" mnemonicParsing="false" onAction="#actionContinue" prefHeight="30.0" prefWidth="116.0" text="continue" />
+            <Label fx:id="message" alignment="CENTER" prefHeight="107.0" prefWidth="380.0" text="Label" textFill="WHITE">
+               <font>
+                  <Font name="System Italic" size="64.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

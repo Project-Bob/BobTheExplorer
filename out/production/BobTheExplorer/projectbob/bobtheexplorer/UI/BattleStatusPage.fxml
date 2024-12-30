@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="500.0" prefWidth="510.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projectbob.bobtheexplorer.UI.BattleStatusPageController">
+<AnchorPane fx:id="BattlePage" prefHeight="500.0" prefWidth="510.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projectbob.bobtheexplorer.UI.BattleStatusPageController">
    <children>
       <HBox layoutX="35.0" layoutY="365.0" prefHeight="100.0" prefWidth="445.0">
          <children>
@@ -16,9 +16,9 @@
             <VBox prefHeight="100.0" prefWidth="35.0" />
             <VBox prefHeight="100.0" prefWidth="100.0">
                <children>
-                  <Button fx:id="Attack" alignment="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Attack" />
+                  <Button fx:id="Attack" alignment="CENTER" mnemonicParsing="false" onAction="#Attack_Hero" prefHeight="25.0" prefWidth="100.0" text="Attack" />
                   <Button fx:id="Inventory" alignment="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Inventory" />
-                  <Button fx:id="Run" alignment="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Run" />
+                  <Button fx:id="Run" alignment="CENTER" mnemonicParsing="false" onAction="#Run" prefHeight="25.0" prefWidth="100.0" text="Run" />
                </children>
             </VBox>
          </children>
