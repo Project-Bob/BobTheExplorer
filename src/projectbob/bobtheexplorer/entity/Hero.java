@@ -1,53 +1,53 @@
     package projectbob.bobtheexplorer.entity;
 
+    import java.util.Random;
+
     public class Hero {
 
-        private String name;
+        private final String name;
         private int HP;
+        private final int maxHP;
         private int attackPower;
         private int speed;
-
-        public Hero() {
-        }
 
         public Hero(String name, int HP, int attackPower, int speed) {
             this.name = name;
             this.HP = HP;
+            this.maxHP = HP;
             this.attackPower = attackPower;
             this.speed = speed;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-        public String getName() {
-            return name;
         }
 
         public void setHP(int HP) {
             this.HP = HP;
         }
-        public int getHP() {
-            return HP;
-        }
 
         public void setAttackPower(int attackPower) {
             this.attackPower = attackPower;
-        }
-        public int getAttackPower() {
-            return attackPower;
         }
 
         public void setSpeed(int speed) {
             this.speed = speed;
         }
-        public int getSpeed() {
-            return speed;
+
+        public String getName() {
+            return name;
         }
 
-        public int attack(){
-            System.out.println(name + " attacks with power: " + attackPower);
+        public int getHP() {
+            return HP;
+        }
+
+        public int getMaxHP() {
+            return maxHP;
+        }
+
+        public int getAttackPower() {
             return attackPower;
+        }
+
+        public int getSpeed() {
+            return speed;
         }
 
         public void takeDamage(int damage) {
@@ -59,7 +59,37 @@
         }
 
         public String displayStatus() {
-            return "Hero=" + name + ", HP=" + HP + ", attackPower=" + attackPower + ", speed=" + speed + '}';
+            StringBuilder status = new StringBuilder();
+            System.out.println("\n=============== Hero Status ===============");
+            System.out.println(name.toUpperCase() + ": " );
+            System.out.println("\tHP: " + HP + "/" + getMaxHP());
+            System.out.println("\tAttack Power: " + attackPower + "/" + attackPower);
+            System.out.println("\tSpeed: " + speed + "/" + speed);
+            System.out.println("===========================================");
+            return status.toString();
         }
 
+        public void GameOver(int HP){
+            if(HP == 0){
+                System.out.println("Your HP becomes zero. Game Over!!!");
+            }
+        }
+
+        public boolean Dodge(int speed) {
+            Random random = new Random();
+            int runChance = random.nextInt(100);
+            int successThreshold = Math.min(speed / 100, 75);
+
+            if (runChance < successThreshold) {
+                System.out.println("Successfully escaped!");
+                return true;
+            } else {
+                System.out.println("Failed to escape. The monster catches up!");
+                return false;
+            }
+        }
+
+        public boolean Run(int HeroSpeed, int MonsterSpeed){
+            return HeroSpeed > MonsterSpeed;
+        }
     }

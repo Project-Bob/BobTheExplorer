@@ -3,6 +3,10 @@ package projectbob.bobtheexplorer.util;
 import java.sql.*;
 import java.io.*;
 import java.nio.file.*;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+
+import projectbob.bobtheexplorer.util.Properties;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
@@ -11,19 +15,25 @@ import org.apache.commons.codec.digest.DigestUtils;
  */
 public class DB {
     // SQL Command
-    public static final String SQL_CREATE_TABLE_HIGHSCORES =
+    private static final String SQL_CREATE_TABLE_HIGHSCORES =
             "CREATE TABLE IF NOT EXISTS HighScores ( " +
             "PlayerName VARCHAR(255) PRIMARY KEY NOT NULL," +
+            "Password VARCHAR(32) NOT NULL," +
             "Score INT NOT NULL )";
-    public static final String SQL_INSERT_INTO_HIGHSCORES =
-            "INSERT INTO HighScores (PlayerName, Score) VALUES (?, ?)";
-    public static final String SQL_UPDATE_HIGHSCORES =
+    private static final String SQL_INSERT_INTO_HIGHSCORES =
+            "INSERT INTO HighScores (PlayerName, Password, Score) VALUES (?, ?, ?)";
+    private static final String SQL_UPDATE_HIGHSCORES =
             "UPDATE HighScores SET Score = ? WHERE PlayerName = ?";
-    public static final String SQL_DELETE_FROM_HIGHSCORES =
+    private static final String SQL_DELETE_FROM_HIGHSCORES =
             "DELETE FROM HighScores WHERE PlayerName = ?";
+    private static final String SQL_SELECT_ALL_FROM_HIGHSCORES =
+            "SELECT * FROM HighScores WHERE PlayerName = ?";
+    private static final String SQL_SELECT_ALL_FROM_HIGHSCORES_ORDERED =
+            "SELECT * FROM HighScores ORDER BY Score DESC";
     
     private Connection conn;
     private String checksum;
+    private Properties props;
     
     /**
      * Initializes database.
@@ -32,7 +42,7 @@ public class DB {
      * @throws java.sql.SQLException
      * @throws java.lang.ClassNotFoundException
      */
-    public DB(String checksum) throws IllegalStateException,
+    public DB(String checksum, Properties props) throws IllegalStateException,
             SQLException, ClassNotFoundException {
         // Loads database
         Class.forName("org.sqlite.JDBC");
@@ -46,6 +56,7 @@ public class DB {
         
         // Generates MD5 checksum of the database file
         try {
+            this.props = props;
             this.checksum = generateChecksum();
         } catch (IOException e) {}
         
@@ -62,6 +73,7 @@ public class DB {
         InputStream is = Files.newInputStream(Paths.get("data.db"));
         final String ret = DigestUtils.md5Hex(is);
         is.close();
+        props.setDBChecksum(ret);
         return ret;
     }
     
@@ -94,11 +106,12 @@ public class DB {
      * @param playerName Player's name
      * @param score Score obtained
      */
-    public void addScoreRecord(String playerName, int score)
+    public void addScoreRecord(String playerName, String password, int score)
             throws SQLException {
         PreparedStatement stmt = this.conn.prepareStatement(SQL_INSERT_INTO_HIGHSCORES);
         stmt.setString(1, playerName);
-        stmt.setInt(2, score);
+        stmt.setString(2, DigestUtils.md5Hex(password));
+        stmt.setInt(3, score);
         stmt.executeUpdate();
         stmt.close();
         
@@ -142,5 +155,72 @@ public class DB {
         try {
             this.checksum = generateChecksum();
         } catch (IOException e) {}
+    }
+    
+    /**
+     * Searches for a player (credentials)
+     * @param playerName Player's name
+     * @return Map of player's name to hashed password
+     */
+    public HashMap<String, String> findPlayer(String playerName)
+            throws SQLException {
+        PreparedStatement stmt = this.conn.prepareStatement(SQL_SELECT_ALL_FROM_HIGHSCORES);
+        stmt.setString(1, playerName);
+        ResultSet rs = stmt.executeQuery();
+        
+        HashMap<String, String> ret = new HashMap<>();
+        
+        while (rs.next()) {
+            ret.put(rs.getString("PlayerName"), rs.getString("Password"));
+        }
+        
+        rs.close();
+        stmt.close();
+        
+        return ret;
+    }
+    
+    /**
+     * Searches for a player (score)
+     * @param playerName Player's name
+     * @return Map of player's name to score
+     */
+    public HashMap<String, Integer> findScore(String playerName)
+            throws SQLException {
+        PreparedStatement stmt = this.conn.prepareStatement(SQL_SELECT_ALL_FROM_HIGHSCORES);
+        stmt.setString(1, playerName);
+        ResultSet rs = stmt.executeQuery();
+        
+        HashMap<String, Integer> ret = new HashMap<>();
+        
+        while (rs.next()) {
+            ret.put(rs.getString("PlayerName"), rs.getInt("Score"));
+        }
+        
+        rs.close();
+        stmt.close();
+        
+        return ret;
+    }
+    
+    /**
+     * Searches for all scores
+     * @return Map of player's names to scores
+     */
+    public LinkedHashMap<String, Integer> findScore()
+            throws SQLException {
+        PreparedStatement stmt = this.conn.prepareStatement(SQL_SELECT_ALL_FROM_HIGHSCORES_ORDERED);
+        ResultSet rs = stmt.executeQuery();
+        
+        LinkedHashMap<String, Integer> ret = new LinkedHashMap<>();
+        
+        while (rs.next()) {
+            ret.put(rs.getString("PlayerName"), rs.getInt("Score"));
+        }
+        
+        rs.close();
+        stmt.close();
+        
+        return ret;
     }
 }

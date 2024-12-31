@@ -6,50 +6,98 @@ public class UserInput {
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
-        String character = "";
-        int HP = 0;
-        int AP = 0;
-        int S = 0;
-        int SumOfSP = 0;
+        String character;
+        int HP=0,AP=0,S=0,difficultyMonster;
 
-        while (SumOfSP != 30) {
-            System.out.print("Enter name of the hero(Fighter, Marksman, Tank) : ");
+        System.out.print("Enter name of the hero(Fighter, Marksman, Archer) : ");
+        character = scanner.nextLine();
+        while (!character.equalsIgnoreCase("Fighter")
+                && !character.equalsIgnoreCase("Marksman")
+                && !character.equalsIgnoreCase("Archer")) {
+            System.out.println("Invalid input");
+            System.out.print("Enter name of the hero(Fighter, Marksman, Archer) : ");
             character = scanner.nextLine();
-            while (!character.equalsIgnoreCase("Fighter") && !character.equalsIgnoreCase("Marksman") && !character.equalsIgnoreCase("Tank")) {
-                System.out.println("Invalid input");
-                System.out.print("Enter name of the hero(Fighter, Marksman, Tank) : ");
-                character = scanner.nextLine();
-            }
-            System.out.println("Enter initial ability of character. The initial total ability point should be 10.");
-            System.out.print("Enter initial Health Point(HP) : ");
-            HP = scanner.nextInt();
-            System.out.print("Enter initial Attack Power(AP) : ");
-            AP = scanner.nextInt();
-            System.out.print("Enter initial Speed of character(S) : ");
-            S = scanner.nextInt();
-            scanner.nextLine();
-
-            SumOfSP = HP + AP + S;
-            if (SumOfSP != 30) {
-                System.out.println("The initial total status point must be 10 points.");
-                System.out.println("Please enter the status of character again.");
-            }
         }
-        scanner.close();
 
-        switch (character.toLowerCase()) {
+        switch (character.trim().toLowerCase()) {
             case "fighter" -> {
+                do {
+                    System.out.print("Enter initial Health Point(HP)(100-150) : ");
+                    HP = scanner.nextInt();
+                }while(HP<100 || HP>150);
+
+                do {
+                    System.out.print("Enter initial Attack Power(AP)(0-20) : ");
+                    AP = scanner.nextInt();
+                }while(AP<0 || AP>20);
+
+                do {
+                    System.out.print("Enter initial Speed of character(S)(10-30) : ");
+                    S = scanner.nextInt();
+                }while(S<10 || S>30);
                 Fighter fighter = new Fighter(character, HP, AP, S);
                 System.out.println(fighter.displayStatusFighter());
             }
             case "marksman" -> {
+                do {
+                    System.out.print("Enter initial Health Point(HP)(100-150) : ");
+                    HP = scanner.nextInt();
+                }while(HP<100 || HP>150);
+
+                do {
+                    System.out.print("Enter initial Attack Power(AP)(10-30) : ");
+                    AP = scanner.nextInt();
+                }while(AP<10 || AP>30);
+
+                do {
+                    System.out.print("Enter initial Speed of character(S)(0-20) : ");
+                    S = scanner.nextInt();
+                }while(S<0 || S>20);
                 Marksman marksman = new Marksman(character, HP, AP, S);
                 System.out.println(marksman.displayStatusMarksman());
             }
-            case "tank" -> {
-                Tank tank = new Tank(character, HP, AP, S);
-                System.out.println(tank.displayStatusTank());
+            case "archer" -> {
+                do {
+                    System.out.print("Enter initial Health Point(HP)(90-140) : ");
+                    HP = scanner.nextInt();
+                }while(HP<90 || HP>140);
+
+                do {
+                    System.out.print("Enter initial Attack Power(AP)(10-30) : ");
+                    AP = scanner.nextInt();
+                }while(AP<10 || AP>30);
+
+                do {
+                    System.out.print("Enter initial Speed of character(S)(10-30) : ");
+                    S = scanner.nextInt();
+                }while(S<10 || S>30);
+                Archer archer = new Archer(character, HP, AP, S);
+                System.out.println(archer.displayStatusArcher());
             }
         }
+
+        do{
+            System.out.print("Enter difficulty (1,2,3) : ");
+            difficultyMonster = scanner.nextInt();
+        }while(difficultyMonster<1 || difficultyMonster>3);
+
+        int difficultyHero = (int)Math.round((HP/150*0.4)+(AP/30*0.4)+(S/30*0.2)*3);
+
+        Hero hero = new Hero(character, HP, AP, S);
+        Inventory inventory = new Inventory(hero);
+
+        Game game = new Game(hero, inventory, difficultyMonster,difficultyHero);
+        System.out.println("\nWelcome to Adventure Quest! Enter 'play' to start the game!");
+        scanner.nextLine(); // Clear the buffer
+        String start = scanner.nextLine();
+        if (start.equalsIgnoreCase("PLAY")) {
+            game.startGame();
+        } else {
+            System.out.println("Goodbye!");
+        }
+        scanner.close();
+
     }
 }
+
+
