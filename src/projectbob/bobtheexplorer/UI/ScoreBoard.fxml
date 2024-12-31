@@ -42,42 +42,42 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Label fx:id="player1" prefHeight="17.0" prefWidth="161.0" text="Name" textFill="WHITE">
+            <Label fx:id="player1" prefHeight="17.0" prefWidth="161.0" text="-" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label fx:id="player2" prefHeight="17.0" prefWidth="161.0" text="Name" textFill="WHITE">
+            <Label fx:id="player2" prefHeight="17.0" prefWidth="161.0" text="-" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label fx:id="player3" prefHeight="17.0" prefWidth="161.0" text="Name" textFill="WHITE">
+            <Label fx:id="player3" prefHeight="17.0" prefWidth="161.0" text="-" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label fx:id="player4" prefHeight="17.0" prefWidth="161.0" text="Name" textFill="WHITE">
+            <Label fx:id="player4" prefHeight="17.0" prefWidth="161.0" text="-" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label fx:id="player5" prefHeight="17.0" prefWidth="161.0" text="Name" textFill="WHITE">
+            <Label fx:id="player5" prefHeight="17.0" prefWidth="161.0" text="-" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label fx:id="player6" prefHeight="17.0" prefWidth="161.0" text="Name" textFill="WHITE">
+            <Label fx:id="player6" prefHeight="17.0" prefWidth="161.0" text="-" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label fx:id="player7" prefHeight="17.0" prefWidth="161.0" text="Name" textFill="WHITE">
+            <Label fx:id="player7" prefHeight="17.0" prefWidth="161.0" text="-" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label fx:id="player8" prefHeight="17.0" prefWidth="161.0" text="Name" textFill="WHITE">
+            <Label fx:id="player8" prefHeight="17.0" prefWidth="161.0" text="-" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
@@ -91,42 +91,42 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Label fx:id="score1" text="?" textFill="WHITE">
+            <Label fx:id="score1" text="-" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label fx:id="score2" text="Score" textFill="WHITE">
+            <Label fx:id="score2" text="-" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label fx:id="score3" text="Score" textFill="WHITE">
+            <Label fx:id="score3" text="-" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label fx:id="score4" text="Score" textFill="WHITE">
+            <Label fx:id="score4" text="-" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label fx:id="score5" text="Score" textFill="WHITE">
+            <Label fx:id="score5" text="-" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label fx:id="score6" text="Score" textFill="WHITE">
+            <Label fx:id="score6" text="-" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label fx:id="score7" text="Score" textFill="WHITE">
+            <Label fx:id="score7" text="-" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label fx:id="score8" text="Score" textFill="WHITE">
+            <Label fx:id="score8" text="-" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>

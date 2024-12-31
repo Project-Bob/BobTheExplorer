@@ -35,6 +35,9 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.event.EventHandler;
 
+import projectbob.bobtheexplorer.Main;
+import java.sql.SQLException;
+
 /**
  * FXML Controller class
  *
@@ -1365,10 +1368,18 @@ public class GamingDungeonController implements Initializable {
             multiplier += Math.min(0.1 * Math.exp(-0.05 * numOfAction), 0.1);
 
             int score = (int) (numMonstersDefeated * 10 * multiplier);
-                message.setText("Victory");
-                finalScore.setText("Score: " + score);
-                System.out.println("Score: " + score);
-                result.setVisible(true);
+            message.setText("Victory");
+            finalScore.setText("Score: " + score);
+            System.out.println("Score: " + score);
+            result.setVisible(true);
+                
+            // Add highscore to database
+            try {
+                if (Main.db.findScore(username).get(username) < score)
+                    Main.db.updateScoreRecord(username, score);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             }
         }
 
@@ -1410,7 +1421,6 @@ public class GamingDungeonController implements Initializable {
         Image map = createImageFromCanvas(canvas);
         imgTest.setImage(map);
         directionRight = true;
-
     }
 
     public void goToLeft() throws IOException {
@@ -1935,6 +1945,13 @@ public class GamingDungeonController implements Initializable {
             multiplier += Math.min(0.1 * Math.exp(-0.05 * numOfAction), 0.1);
 
             int score = (int) (numMonstersDefeated * 10 * multiplier);
+            // Add highscore to database
+            try {
+                if (Main.db.findScore(username).get(username) < score)
+                    Main.db.updateScoreRecord(username, score);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             pause1.setOnFinished(event -> {
                 Instruction.setText("GAME OVER!!!");
 

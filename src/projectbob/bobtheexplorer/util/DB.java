@@ -4,6 +4,8 @@ import java.sql.*;
 import java.io.*;
 import java.nio.file.*;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+
 import projectbob.bobtheexplorer.util.Properties;
 
 import org.apache.commons.codec.digest.DigestUtils;
@@ -26,6 +28,8 @@ public class DB {
             "DELETE FROM HighScores WHERE PlayerName = ?";
     private static final String SQL_SELECT_ALL_FROM_HIGHSCORES =
             "SELECT * FROM HighScores WHERE PlayerName = ?";
+    private static final String SQL_SELECT_ALL_FROM_HIGHSCORES_ORDERED =
+            "SELECT * FROM HighScores ORDER BY Score DESC";
     
     private Connection conn;
     private String checksum;
@@ -168,6 +172,50 @@ public class DB {
         
         while (rs.next()) {
             ret.put(rs.getString("PlayerName"), rs.getString("Password"));
+        }
+        
+        rs.close();
+        stmt.close();
+        
+        return ret;
+    }
+    
+    /**
+     * Searches for a player (score)
+     * @param playerName Player's name
+     * @return Map of player's name to score
+     */
+    public HashMap<String, Integer> findScore(String playerName)
+            throws SQLException {
+        PreparedStatement stmt = this.conn.prepareStatement(SQL_SELECT_ALL_FROM_HIGHSCORES);
+        stmt.setString(1, playerName);
+        ResultSet rs = stmt.executeQuery();
+        
+        HashMap<String, Integer> ret = new HashMap<>();
+        
+        while (rs.next()) {
+            ret.put(rs.getString("PlayerName"), rs.getInt("Score"));
+        }
+        
+        rs.close();
+        stmt.close();
+        
+        return ret;
+    }
+    
+    /**
+     * Searches for all scores
+     * @return Map of player's names to scores
+     */
+    public LinkedHashMap<String, Integer> findScore()
+            throws SQLException {
+        PreparedStatement stmt = this.conn.prepareStatement(SQL_SELECT_ALL_FROM_HIGHSCORES_ORDERED);
+        ResultSet rs = stmt.executeQuery();
+        
+        LinkedHashMap<String, Integer> ret = new LinkedHashMap<>();
+        
+        while (rs.next()) {
+            ret.put(rs.getString("PlayerName"), rs.getInt("Score"));
         }
         
         rs.close();
