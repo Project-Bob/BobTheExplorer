@@ -246,12 +246,17 @@
             </AnchorPane>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="result" layoutX="61.0" layoutY="145.0" prefHeight="170.0" prefWidth="380.0" style="-fx-background-color: black;">
+      <AnchorPane fx:id="result" layoutX="61.0" layoutY="145.0" prefHeight="270.0" prefWidth="380.0" style="-fx-background-color: black;">
          <children>
-            <Button fx:id="continueButton" layoutX="135.0" layoutY="121.0" mnemonicParsing="false" onAction="#actionContinue" prefHeight="30.0" prefWidth="116.0" text="continue" />
+            <Button fx:id="continueButton" layoutX="135.0" layoutY="221.0" mnemonicParsing="false" onAction="#actionContinue" prefHeight="30.0" prefWidth="116.0" text="continue" />
             <Label fx:id="message" alignment="CENTER" prefHeight="107.0" prefWidth="380.0" text="Label" textFill="WHITE">
                <font>
                   <Font name="System Italic" size="64.0" />
+               </font>
+            </Label>
+            <Label fx:id="finalScore" layoutY="121.0" alignment="CENTER" prefHeight="107.0" prefWidth="380.0" text="Score: " textFill="WHITE">
+               <font>
+                  <Font name="System Italic" size="48.0" />
                </font>
             </Label>
          </children>

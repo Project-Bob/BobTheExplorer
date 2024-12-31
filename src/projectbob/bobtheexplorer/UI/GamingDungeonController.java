@@ -179,7 +179,7 @@ public class GamingDungeonController implements Initializable {
         // Handler function for key press event
         EventHandler<KeyEvent> handleKeyPress = event -> {
             // Ignore key press if overlay is active
-            if (itemOverflow.isVisible() || confirmUseItem.isVisible()) return;
+            if (itemOverflow.isVisible() || confirmUseItem.isVisible() || BattlePage.isVisible() || result.isVisible()) return;
             // Handle each key press for movement
             if (event.getCode() == KeyCode.RIGHT || event.getCode() == KeyCode.D) {
                 isMovingLeft = false; // Stop the movement
@@ -279,7 +279,7 @@ public class GamingDungeonController implements Initializable {
         // Handler function for mouse press event
         EventHandler<MouseEvent> handleMousePress = event -> {
             // Ignore mouse press if overlay is active
-            if (itemOverflow.isVisible() || confirmUseItem.isVisible()) return;
+            if (itemOverflow.isVisible() || confirmUseItem.isVisible() || BattlePage.isVisible() || result.isVisible()) return;
 
             // Handle each mouse press for movement
             if (event.getSource().equals(rightButton)) {
@@ -606,7 +606,7 @@ public class GamingDungeonController implements Initializable {
         Speed_Monster.setText("Speed: " + monster.getSpeed());
 
         //Instruction Info
-        Instruction.setText("Please choose your next step!!!");
+        Instruction.setText("Please choose your next action.");
         Instruction.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 16));
         Instruction.setTextFill(Color.DARKBLUE);
         Instruction.setWrapText(true);
@@ -1344,20 +1344,39 @@ public class GamingDungeonController implements Initializable {
                 return;
             }
             else if(numMonster==0 && zoneLvl==5){
+                // Calculate score
+            /*
+            Formula:
+            Base score = 10 x number of monsters defeated
+            Time bonus multiplier: 1 + (0.1 * exp(-0.005 * time)), range +0% - +10%
+            Movement bonus multiplier: 1 + (0.05 * exp(-0.03 * movement)), range +0% - +5%
+            Action bonus multiplier: 1 + (0.1 * exp(-0.05 * action)), range +0% - +10%
+            * Multipliers are additive.
+            */
+            timeSpent = seconds;
+            double multiplier = 1 + Math.min(0.1 * Math.exp(-0.005 * timeSpent), 0.1);
+            multiplier += Math.min(0.05 * Math.exp(-0.03 * numOfMovement), 0.05);
+            multiplier += Math.min(0.1 * Math.exp(-0.05 * numOfAction), 0.1);
+
+            int score = (int) (numMonstersDefeated * 10 * multiplier);
                 message.setText("Victory");
+                finalScore.setText("Score: " + score);
+                System.out.println("Score: " + score);
                 result.setVisible(true);
             }
         }
 
         //detect the monster
         if (detectMonster(characterCurrentBlockPosition, "right")) {
-            Instruction.setText("Please choose your next step!!!");
+            Instruction.setText("Please choose your next action.");
             Name_Monster.setText(GamingDungeonController.monster_Detect);
             HP_Monster.setText("HP: " + monster.getHp());
             AP_Monster.setText("Attack Power: " + monster.getAp());
             Speed_Monster.setText("Speed: " + monster.getSpeed());
             BattlePage.setVisible(true);
-
+            Attack.setDisable(false); // Enable action buttons
+            Inventory.setDisable(false);
+            Run.setDisable(false);
         }
 
         int row = ((characterCurrentBlockPosition) / 12) + 1;
@@ -1398,7 +1417,7 @@ public class GamingDungeonController implements Initializable {
 
         //detect monster
         if (detectMonster(characterCurrentBlockPosition, "left") == true) {
-            Instruction.setText("Please choose your next step!!!");
+            Instruction.setText("Please choose your next action.");
             Name_Monster.setText(GamingDungeonController.monster_Detect);
             HP_Monster.setText("HP: " + monster.getHp());
             AP_Monster.setText("Attack Power: " + monster.getAp());
@@ -1458,7 +1477,7 @@ public class GamingDungeonController implements Initializable {
         }
         //detect monster
         if (detectMonster(characterCurrentBlockPosition, "up") == true) {
-            Instruction.setText("Please choose your next step!!!");
+            Instruction.setText("Please choose your next action.");
             Name_Monster.setText(GamingDungeonController.monster_Detect);
             HP_Monster.setText("HP: " + monster.getHp());
             AP_Monster.setText("Attack Power: " + monster.getAp());
@@ -1521,7 +1540,7 @@ public class GamingDungeonController implements Initializable {
         }
         //detect monster
         if (detectMonster(characterCurrentBlockPosition, "down") == true) {
-            Instruction.setText("Please choose your next step!!!");
+            Instruction.setText("Please choose your next action.");
             Name_Monster.setText(GamingDungeonController.monster_Detect);
             HP_Monster.setText("HP: " + monster.getHp());
             AP_Monster.setText("Attack Power: " + monster.getAp());
@@ -1748,6 +1767,9 @@ public class GamingDungeonController implements Initializable {
     public void Attack_Hero(ActionEvent actionEvent) throws IOException {
         numOfAction++;
         counterShieldUsed--;
+        Attack.setDisable(true); // Disable action buttons
+        Inventory.setDisable(true);
+        Run.setDisable(true);
         if (HeroSpeed >= monster.getSpeed()) {
             //animation things
             translate.setNode(Hero_PIC);
@@ -1761,29 +1783,34 @@ public class GamingDungeonController implements Initializable {
             translate.setOnFinished(event -> {
                 Hero_PIC.setTranslateX(0); // Reset X position
                 Hero_PIC.setTranslateY(0); // Reset Y position
+                
+                Attack.setDisable(false); // Re-enable the buttons
+                Inventory.setDisable(false);
+                Run.setDisable(false);
             });
 
             monster.takeDamage(hero.getAP_Hero());
-            Instruction.setText(GamingDungeonController.monster_Detect + " take " + hero.getAP_Hero() + " damage. ");
+            Instruction.setText(GamingDungeonController.monster_Detect + " takes " + hero.getAP_Hero() + " damage. ");
 
             if (monster.getHp() > 0 ) {
                 if(counterShieldUsed<0){
                     hero.takeDamage(monster.getAp());
-                    Instruction.setText(GamingDungeonController.monster_Detect + " take " + hero.getAP_Hero() + " damage. Hero takes " + monster.getAp() + " damage. ");
+                    Instruction.setText(GamingDungeonController.monster_Detect + " takes " + hero.getAP_Hero() + " damage. Hero takes " + monster.getAp() + " damage. ");
                 }
                 else{
                     if(monster_Detect.equalsIgnoreCase("Slime")){
                         counterShieldUsed = 0;
                         Instruction.setText("Your shield has been dissolved by the slime!!!");
-                        hero.takeDamage(monster.getAp());PauseTransition pause1 = new PauseTransition(Duration.seconds(1));
+                        hero.takeDamage(monster.getAp());
+                        PauseTransition pause1 = new PauseTransition(Duration.seconds(1));
                         PauseTransition pause3 = new PauseTransition(Duration.seconds(1.5));
                         pause3.setOnFinished(event -> {
-                            Instruction.setText(GamingDungeonController.monster_Detect + " take " + hero.getAP_Hero() + " damage. Hero takes " + monster.getAp() + " damage. ");
+                            Instruction.setText(GamingDungeonController.monster_Detect + " takes " + hero.getAP_Hero() + " damage. Hero takes " + monster.getAp() + " damage. ");
                         });
                         pause3.play();
                     }
                     else{
-                        Instruction.setText(GamingDungeonController.monster_Detect + " take " + hero.getAP_Hero() + " damage. Hero used shield to defend ");
+                        Instruction.setText(GamingDungeonController.monster_Detect + " takes " + hero.getAP_Hero() + " damage. Hero used shield to defend. ");
                     }
                 }
             }
@@ -1800,14 +1827,18 @@ public class GamingDungeonController implements Initializable {
             translate.setOnFinished(event -> {
                 Hero_PIC.setTranslateX(0); // Reset X position
                 Hero_PIC.setTranslateY(0); // Reset Y position
+                
+                Attack.setDisable(false); // Re-enable the buttons
+                Inventory.setDisable(false);
+                Run.setDisable(false);
             });
             if(counterShieldUsed<0) {
                 hero.takeDamage(monster.getAp());
-                Instruction.setText(characterName + " take " + monster.getAp() + " damage. ");
+                Instruction.setText(characterName + " takes " + monster.getAp() + " damage. ");
             }
             if (hero.getHP_Hero() > 0 ) {
                 if(counterShieldUsed<0){
-                    Instruction.setText(GamingDungeonController.monster_Detect + " take " + hero.getAP_Hero() + " damage. Hero takes " + monster.getAp() + " damage. ");
+                    Instruction.setText(GamingDungeonController.monster_Detect + " takes " + hero.getAP_Hero() + " damage. Hero takes " + monster.getAp() + " damage. ");
                 }
                 else{
                     if(monster_Detect.equalsIgnoreCase("Slime")){
@@ -1816,12 +1847,12 @@ public class GamingDungeonController implements Initializable {
                         hero.takeDamage(monster.getAp());PauseTransition pause1 = new PauseTransition(Duration.seconds(1));
                         PauseTransition pause3 = new PauseTransition(Duration.seconds(1.5));
                         pause3.setOnFinished(event -> {
-                            Instruction.setText(GamingDungeonController.monster_Detect + " take " + hero.getAP_Hero() + " damage. Hero takes " + monster.getAp() + " damage. ");
+                            Instruction.setText(GamingDungeonController.monster_Detect + " takes " + hero.getAP_Hero() + " damage. Hero takes " + monster.getAp() + " damage. ");
                         });
                         pause3.play();
                     }
                     else{
-                        Instruction.setText(GamingDungeonController.monster_Detect + " take " + hero.getAP_Hero() + " damage. Hero used shield to defend ");
+                        Instruction.setText(GamingDungeonController.monster_Detect + " takes " + hero.getAP_Hero() + " damage. Hero used shield to defend. ");
                     }
                 }
                 monster.takeDamage(hero.getAP_Hero());
@@ -1832,7 +1863,7 @@ public class GamingDungeonController implements Initializable {
             if(berserkActivated == false) {
                 PauseTransition pause4 = new PauseTransition(Duration.seconds(1));
                 pause4.setOnFinished(event -> {
-                    Instruction.setText("Goblin has entered berserk mode!!! Goblin attack rise 10 points.");
+                    Instruction.setText("Goblin has entered berserk mode!!! Goblin's Attack Power +10.");
                     monster.setAp(monster.getAp() + 10);
                     AP_Monster.setText("Attack Power: " + monster.getAp());
                 });
@@ -1844,7 +1875,7 @@ public class GamingDungeonController implements Initializable {
             if (monster_Detect.equalsIgnoreCase("Spider")) {
                 PauseTransition pause5 = new PauseTransition(Duration.seconds(1));
                 pause5.setOnFinished(event -> {
-                    Instruction.setText("You are poison by the Spider!!! HP -5 points");
+                    Instruction.setText("You are poisoned by Spider!!! HP -5.");
                     hero.setHP(hero.getHP_Hero() - 5);
                     HP_Hero.setText("HP: " + hero.getHP_Hero() + " / " + characterHealthShow);
                 });
@@ -1864,20 +1895,39 @@ public class GamingDungeonController implements Initializable {
         Speed_Monster.setText("Speed: " + monster.getSpeed());
 
         if (hero.getHP_Hero()  == 0) {
+            Attack.setDisable(true); // Disable action buttons
+            Inventory.setDisable(true);
+            Run.setDisable(true);
             timeStop();
             timeSpent = seconds;
             System.out.println("The total number of monster defeated is " + numMonstersDefeated);
-            System.out.println("The total time spend is " + timeSpent);
+            System.out.println("The total time spent is " + timeSpent + " seconds");
             System.out.println("The total number of movement is " + numOfMovement);
             System.out.println("The total number of action is " + numOfAction);
             PauseTransition pause1 = new PauseTransition(Duration.seconds(1));
             PauseTransition pause2 = new PauseTransition(Duration.seconds(2));
+            
+            // Calculate score
+            /*
+            Formula:
+            Base score = 10 x number of monsters defeated
+            Time bonus multiplier: 1 + (0.1 * exp(-0.005 * time)), range +0% - +10%
+            Movement bonus multiplier: 1 + (0.05 * exp(-0.03 * movement)), range +0% - +5%
+            Action bonus multiplier: 1 + (0.1 * exp(-0.05 * action)), range +0% - +10%
+            * Multipliers are additive.
+            */
+            double multiplier = 1 + Math.min(0.1 * Math.exp(-0.005 * timeSpent), 0.1);
+            multiplier += Math.min(0.05 * Math.exp(-0.03 * numOfMovement), 0.05);
+            multiplier += Math.min(0.1 * Math.exp(-0.05 * numOfAction), 0.1);
+
+            int score = (int) (numMonstersDefeated * 10 * multiplier);
             pause1.setOnFinished(event -> {
-                Instruction.setText("GAME OVER !!!");
+                Instruction.setText("GAME OVER!!!");
 
             });
             pause2.setOnFinished(event -> {
                 message.setText("Game Over");
+                finalScore.setText("Score: " + score);
                 result.setVisible(true);
             });
             pause1.play();
@@ -1885,14 +1935,20 @@ public class GamingDungeonController implements Initializable {
         }
 
         if (monster.getHp() <= 0) {
-            numMonstersDefeated ++;
+            Attack.setDisable(true); // Disable action buttons
+            Inventory.setDisable(true);
+            Run.setDisable(true);
+            numMonstersDefeated++;
             hero.setAP(HeroAP);
             characterAP.setText("Attack Power: " + hero.getAP_Hero());
             AP_Hero.setText("Attack Power: " + hero.getAP_Hero());
             PauseTransition pause1 = new PauseTransition(Duration.seconds(1));
             PauseTransition pause2 = new PauseTransition(Duration.seconds(2));
             pause1.setOnFinished(event -> {
-                Instruction.setText("You Defeat The Monster !");
+                Attack.setDisable(true); // Disable action buttons
+                Inventory.setDisable(true);
+                Run.setDisable(true);
+                Instruction.setText("You defeated the monster!");
             });
             pause2.setOnFinished(event -> {
                 BattlePage.setVisible(false);
@@ -1915,7 +1971,7 @@ public class GamingDungeonController implements Initializable {
         characterAP.setText("Attack Power: " + hero.getAP_Hero());
         AP_Hero.setText("Attack Power: " + hero.getAP_Hero());
         if (HeroSpeed > monster.getSpeed()) {
-            Instruction.setText("Run successfully !!! Loading ...");
+            Instruction.setText("Escape successful! Loading...");
             // Delay the scene change by 1 second
             PauseTransition pause = new PauseTransition(Duration.seconds(1));
             pause.setOnFinished(event -> {
@@ -1923,7 +1979,7 @@ public class GamingDungeonController implements Initializable {
             });
             pause.play();
         } else {
-            Instruction.setText("You are unable to run!!!");
+            Instruction.setText("You are unable to escape!");
         }
     }
 
@@ -1963,6 +2019,8 @@ public class GamingDungeonController implements Initializable {
     @FXML
     private Label message;
     @FXML
+    private Label finalScore;
+    @FXML
     private Button continueButton;
 
     public void actionContinue(ActionEvent actionEvent) throws IOException{
@@ -1977,7 +2035,7 @@ public class GamingDungeonController implements Initializable {
             counterShieldUsed = 0;
         }
         else if(name.equals("spider")){
-            Instruction.setText("Unable to attack! You are trap by web!");
+            Instruction.setText("Unable to attack! You are trapped by web!");
 
         }
         else if(name.equals("goblin")){
