@@ -720,6 +720,12 @@ public class GamingDungeonController implements Initializable {
                         monsterItemPosition[i][1] = "rock";
                     }
                 }
+                for (int j = 0; j < monsterArray.length; j++) {
+                    if (monsterItemPosition[i][1].equals(monsterArray[j])) {
+                        clearItem(characterCurrentBlockPosition);
+                        monsterItemPosition[i][1] = "rock";
+                    }
+                }
             }
         }
     }
@@ -1423,6 +1429,9 @@ public class GamingDungeonController implements Initializable {
             AP_Monster.setText("Attack Power: " + monster.getAp());
             Speed_Monster.setText("Speed: " + monster.getSpeed());
             BattlePage.setVisible(true);
+            Attack.setDisable(false); // Enable action buttons
+            Inventory.setDisable(false);
+            Run.setDisable(false);
         }
 
         int row = ((characterCurrentBlockPosition) / 12) + 1;
@@ -1483,6 +1492,9 @@ public class GamingDungeonController implements Initializable {
             AP_Monster.setText("Attack Power: " + monster.getAp());
             Speed_Monster.setText("Speed: " + monster.getSpeed());
             BattlePage.setVisible(true);
+            Attack.setDisable(false); // Enable action buttons
+            Inventory.setDisable(false);
+            Run.setDisable(false);
         }
 
         int row = ((characterCurrentBlockPosition) / 12) + 1;
@@ -1546,7 +1558,9 @@ public class GamingDungeonController implements Initializable {
             AP_Monster.setText("Attack Power: " + monster.getAp());
             Speed_Monster.setText("Speed: " + monster.getSpeed());
             BattlePage.setVisible(true);
-
+            Attack.setDisable(false); // Enable action buttons
+            Inventory.setDisable(false);
+            Run.setDisable(false);
         }
 
         int row = ((characterCurrentBlockPosition) / 12) + 1;
