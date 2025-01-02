@@ -19,12 +19,12 @@ public class Monster_Slime {
         else if(difficulty.equals("Level 2")){
             HP_Slime = r.nextInt(40,61);
             AP_Slime = r.nextInt(10,14);
-            Speed_Slime = r.nextInt(12,16);
+            Speed_Slime = r.nextInt(15,18);
         }
         else if(difficulty.equals("Level 3")){
             HP_Slime = r.nextInt(60,80);
             AP_Slime = r.nextInt(15, 25);
-            Speed_Slime = r.nextInt(16,22);
+            Speed_Slime = r.nextInt(18,25);
         }
         return new Monster_Slime(HP_Slime, AP_Slime, Speed_Slime);
     }
