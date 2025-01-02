@@ -1959,7 +1959,7 @@ public class GamingDungeonController implements Initializable {
                 PauseTransition pause5 = new PauseTransition(Duration.seconds(1));
                 pause5.setOnFinished(event -> {
                     Instruction.setText("You are poisoned by Spider!!! HP -5.");
-                    hero.setHP(hero.getHP_Hero() - 5);
+                    hero.takeDamage(5);
                     HP_Hero.setText("HP: " + hero.getHP_Hero() + " / " + characterHealthShow);
                 });
                 pause5.play();
