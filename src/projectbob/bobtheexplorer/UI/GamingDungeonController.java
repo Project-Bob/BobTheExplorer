@@ -698,9 +698,15 @@ public class GamingDungeonController implements Initializable {
 
 
     public void logOut() throws IOException {
-        timeStop();
-        zoneLvl=1;
         App m = new App();
+        zoneLvl = 1;
+        seconds = 0;
+        itemUser = new String[]{"blank", "blank", "blank", "blank", "blank", "blank"}; //Array for user item
+        timeSpent = 0;
+        numMonstersDefeated = 0;
+        numOfMovement = 0;
+        numOfAction = 0;
+        timeStop();
         m.changeScene("loginPage.fxml");
     }
 
@@ -1353,6 +1359,7 @@ public class GamingDungeonController implements Initializable {
                 return;
             }
             else if(numMonster==0 && zoneLvl==5){
+                timeStop();
                 // Calculate score
             /*
             Formula:
@@ -1490,8 +1497,34 @@ public class GamingDungeonController implements Initializable {
                 return;
             }
             else if(numMonster==0 && zoneLvl==5){
+                timeStop();
+                // Calculate score
+            /*
+            Formula:
+            Base score = 10 x number of monsters defeated
+            Time bonus multiplier: 1 + (0.1 * exp(-0.005 * time)), range +0% - +10%
+            Movement bonus multiplier: 1 + (0.05 * exp(-0.03 * movement)), range +0% - +5%
+            Action bonus multiplier: 1 + (0.1 * exp(-0.05 * action)), range +0% - +10%
+            * Multipliers are additive.
+            */
+                timeSpent = seconds;
+                double multiplier = 1 + Math.min(0.1 * Math.exp(-0.005 * timeSpent), 0.1);
+                multiplier += Math.min(0.05 * Math.exp(-0.03 * numOfMovement), 0.05);
+                multiplier += Math.min(0.1 * Math.exp(-0.05 * numOfAction), 0.1);
+
+                int score = (int) (numMonstersDefeated * 10 * multiplier);
                 message.setText("Victory");
+                finalScore.setText("Score: " + score);
+                System.out.println("Score: " + score);
                 result.setVisible(true);
+
+                // Add highscore to database
+                try {
+                    if (Main.db.findScore(username).get(username) < score)
+                        Main.db.updateScoreRecord(username, score);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
         }
         //detect monster
@@ -1556,8 +1589,34 @@ public class GamingDungeonController implements Initializable {
                 return;
             }
             else if(numMonster==0 && zoneLvl==5){
+                timeStop();
+                // Calculate score
+            /*
+            Formula:
+            Base score = 10 x number of monsters defeated
+            Time bonus multiplier: 1 + (0.1 * exp(-0.005 * time)), range +0% - +10%
+            Movement bonus multiplier: 1 + (0.05 * exp(-0.03 * movement)), range +0% - +5%
+            Action bonus multiplier: 1 + (0.1 * exp(-0.05 * action)), range +0% - +10%
+            * Multipliers are additive.
+            */
+                timeSpent = seconds;
+                double multiplier = 1 + Math.min(0.1 * Math.exp(-0.005 * timeSpent), 0.1);
+                multiplier += Math.min(0.05 * Math.exp(-0.03 * numOfMovement), 0.05);
+                multiplier += Math.min(0.1 * Math.exp(-0.05 * numOfAction), 0.1);
+
+                int score = (int) (numMonstersDefeated * 10 * multiplier);
                 message.setText("Victory");
+                finalScore.setText("Score: " + score);
+                System.out.println("Score: " + score);
                 result.setVisible(true);
+
+                // Add highscore to database
+                try {
+                    if (Main.db.findScore(username).get(username) < score)
+                        Main.db.updateScoreRecord(username, score);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
         }
         //detect monster
@@ -2057,6 +2116,12 @@ public class GamingDungeonController implements Initializable {
     public void actionContinue(ActionEvent actionEvent) throws IOException{
         App m = new App();
         zoneLvl = 1;
+        seconds = 0;
+        itemUser = new String[]{"blank", "blank", "blank", "blank", "blank", "blank"}; //Array for user item
+        timeSpent = 0;
+        numMonstersDefeated = 0;
+        numOfMovement = 0;
+        numOfAction = 0;
         timeStop();
         m.changeScene("ScoreBoard.fxml");
     }
