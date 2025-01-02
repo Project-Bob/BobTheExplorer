@@ -1235,14 +1235,17 @@ public class GamingDungeonController implements Initializable {
                 hero.setHP( Integer.parseInt(characterHealthShow));
             hpBar.setText("HP: "+hero.getHP_Hero()+" / "+characterHealthShow);
             HP_Hero.setText("HP: " + hero.getHP_Hero() + " / " + characterHealthShow);
+            Instruction.setText("Potion is used to heal HP by 20 points");
         }
         if (itemName.equals("sword")){
             hero.setAP(hero.getAP_Hero()+10);
             characterAP.setText("Attack Power: " + hero.getAP_Hero());
             AP_Hero.setText("Attack Power: " + hero.getAP_Hero());
+            Instruction.setText("Sword is used to increase attack power by 10 points");
         }
         if(itemName.equals("shield")){
             counterShieldUsed = 2;
+            Instruction.setText("Shield is used to block incoming damage from monsters for two rounds");
         }
         for (int i = 0; i < itemUser.length; i++) {
             if (!itemUser[i].equals("blank"))

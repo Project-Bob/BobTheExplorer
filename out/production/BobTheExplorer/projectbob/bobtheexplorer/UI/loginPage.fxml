@@ -7,6 +7,7 @@
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.effect.Glow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -14,6 +15,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projectbob.bobtheexplorer.UI.loginController">
    <children>
@@ -99,7 +101,7 @@
       </MenuButton>
       <AnchorPane fx:id="rules" layoutX="17.0" layoutY="83.0" prefHeight="391.0" prefWidth="466.0" style="-fx-background-color: #ffd68a;" visible="false">
          <children>
-            <Button fx:id="buttonBackToLoginPage" layoutX="205.0" layoutY="329.0" mnemonicParsing="false" onAction="#cancelRules" text="Done" />
+            <Button fx:id="buttonBackToLoginPage" layoutX="205.0" layoutY="356.0" mnemonicParsing="false" onAction="#cancelRules" prefHeight="23.0" prefWidth="54.0" text="Done" />
             <Label layoutX="73.0" text="Rules and Regulation" textFill="#2d3816" underline="true">
                <font>
                   <Font name="Bookman Old Style Bold Italic" size="30.0" />
@@ -109,6 +111,11 @@
                </effect>
             </Label>
             <HBox layoutX="-1.0" layoutY="45.0" prefHeight="275.0" prefWidth="463.0" />
+            <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" layoutX="3.0" layoutY="43.0" prefHeight="313.0" prefWidth="463.0">
+               <content>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Rules and Regulations for Bob The Explorer:&#10;Welcome to Bob The Explorer! We are thrilled to have you here. Before you embark on your adventure, please make sure to familiarize yourself with the following rules:&#10;Movement:&#10;•&#9;You can move using the on-screen buttons or the keyboard keys:&#10;•&#9;WASD for movement.&#10;•&#9;Arrow keys (↑↓←→) for movement as well.&#10;Dungeon and Rooms:&#10;•&#9;The dungeon consists of 5 rooms in total. Each room contains a door that leads to the next room.&#10;•&#9;Objective: You need to clear all 5 rooms to win the game.&#10;Monsters: There are three types of monsters that you'll encounter in the dungeon:&#10;Goblin:&#10;o&#9;Goblins become more dangerous when their HP drops below 25 points.&#10;o&#9;They enter berserk mode at this point, increasing their attack power by 10 points.&#10;Spider:&#10;o&#9;Spiders inflict poison on the hero.&#10;o&#9;The hero's HP will decrease by 5 points each round while poisoned.&#10;Slime:&#10;o&#9;Slimes have the ability to dissolve the hero's shield.&#10;o&#9;Be cautious when using shields while facing slimes.&#10;&#10;Items: There are three types of items available to help you in your quest:&#10;Sword:&#10;o&#9;Increases your attack power by 10 points for one monster.&#10;Shield:&#10;o&#9;Blocks all incoming damage from monsters for two rounds.&#10;Potion:&#10;o&#9;Heals your HP by 20 points.&#10;&#10;" wrappingWidth="451.58306711912155" />
+               </content>
+            </ScrollPane>
          </children>
       </AnchorPane>
    </children>
