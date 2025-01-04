@@ -21,7 +21,6 @@ import java.sql.SQLException;
 
 public class ScoreBoardController implements Initializable {
 
-    
     @FXML
     private Label player1;
     @FXML
@@ -86,6 +85,7 @@ public class ScoreBoardController implements Initializable {
     }
     
     private int i = 0;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //TODO
@@ -96,7 +96,12 @@ public class ScoreBoardController implements Initializable {
         imgLogoutView.setFitWidth(40);
         logOutButton.setGraphic(imgLogoutView);
         logOutButton.setFocusTraversable(false);
-        
+        if (MusicPlayerManager.getInstance().isPlaying()) {
+            MusicPlayerManager.getInstance().playMusic(); // Ensure music continues playing
+        } else {
+            MusicPlayerManager.getInstance().stopMusic(); // Ensure music stays stopped
+        }
+
         // Set scoreboard
         try {
             LinkedHashMap<String, Integer> scoreboard = Main.db.findScore();
@@ -121,6 +126,10 @@ public class ScoreBoardController implements Initializable {
     private javafx.scene.control.MenuItem buttonScoreBoard;
     @FXML
     private MenuItem buttonExit;
+    @FXML
+    private MenuItem buttonMusicOn;
+    @FXML
+    private MenuItem buttonMusicOff;
     @FXML
     private AnchorPane rules;
     @FXML
@@ -147,5 +156,11 @@ public class ScoreBoardController implements Initializable {
     public void cancelRules(ActionEvent actionEvent)throws IOException{
         rules.setVisible(false);
     }
+    public void actionMusicOn(ActionEvent actionEvent) {
+        MusicPlayerManager.getInstance().playMusic();
+    }
 
+    public void actionMusicOff(ActionEvent actionEvent) {
+        MusicPlayerManager.getInstance().stopMusic();
+    }
 }

@@ -33,6 +33,11 @@ public class RegisterPageController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        if (MusicPlayerManager.getInstance().isPlaying()) {
+            MusicPlayerManager.getInstance().playMusic(); // Ensure music continues playing
+        } else {
+            MusicPlayerManager.getInstance().stopMusic(); // Ensure music stays stopped
+        }
     }
     @FXML
     private Button returnButton;

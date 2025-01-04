@@ -93,6 +93,8 @@
         <items>
           <MenuItem fx:id="buttonRulesRegulation" mnemonicParsing="false" onAction="#actionRulesRegulation" text="Rules" />
           <MenuItem fx:id="buttonScoreBoard" mnemonicParsing="false" onAction="#actionScoreBoard" text="Score Board" />
+            <MenuItem fx:id="buttonMusicOn" mnemonicParsing="false" onAction="#actionMusicOn" text="Music on" />
+            <MenuItem fx:id="buttonMusicOff" mnemonicParsing="false" onAction="#actionMusicOff" text="Music Off" />
             <MenuItem fx:id="buttonExit" mnemonicParsing="false" onAction="#actionExit" text="Exit" />
         </items>
          <opaqueInsets>

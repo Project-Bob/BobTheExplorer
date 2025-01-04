@@ -135,16 +135,6 @@
             </Label>
          </children>
       </VBox>
-      <MenuButton layoutX="28.0" layoutY="20.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="74.0" text="Menu">
-         <items>
-            <MenuItem fx:id="buttonRulesRegulation" mnemonicParsing="false" onAction="#actionRulesRegulation" text="Rules" />
-            <MenuItem fx:id="buttonScoreBoard" mnemonicParsing="false" onAction="#actionScoreBoard" text="Score Board" />
-            <MenuItem fx:id="buttonExit" mnemonicParsing="false" onAction="#actionExit" text="Exit" />
-         </items>
-         <opaqueInsets>
-            <Insets bottom="10.0" left="20.0" right="10.0" top="10.0" />
-         </opaqueInsets>
-      </MenuButton>
       <Button fx:id="logOutButton" alignment="CENTER_RIGHT" contentDisplay="RIGHT" graphicTextGap="0.0" layoutX="462.0" layoutY="16.0" mnemonicParsing="false" onAction="#logOut" prefHeight="26.0" prefWidth="0.0" textAlignment="CENTER">
          <padding>
             <Insets left="-10.0" right="-10.0" />
@@ -169,5 +159,17 @@
             </ScrollPane>
          </children>
       </AnchorPane>
+      <MenuButton layoutX="28.0" layoutY="39.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="74.0" text="Menu">
+         <items>
+            <MenuItem fx:id="buttonRulesRegulation" mnemonicParsing="false" onAction="#actionRulesRegulation" text="Rules" />
+            <MenuItem fx:id="buttonScoreBoard" mnemonicParsing="false" onAction="#actionScoreBoard" text="Score Board" />
+            <MenuItem fx:id="buttonMusicOn" mnemonicParsing="false" onAction="#actionMusicOn" text="Music on" />
+            <MenuItem fx:id="buttonMusicOff" mnemonicParsing="false" onAction="#actionMusicOff" text="Music Off" />
+            <MenuItem fx:id="buttonExit" mnemonicParsing="false" onAction="#actionExit" text="Exit" />
+         </items>
+         <opaqueInsets>
+            <Insets bottom="10.0" left="20.0" right="10.0" top="10.0" />
+         </opaqueInsets>
+      </MenuButton>
    </children>
 </AnchorPane>

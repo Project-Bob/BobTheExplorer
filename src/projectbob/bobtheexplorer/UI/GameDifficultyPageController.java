@@ -84,7 +84,11 @@ public class GameDifficultyPageController implements Initializable {
         lv1DetailsButton.setFocusTraversable(false);
         lv2DetailsButton.setFocusTraversable(false);
         lv3DetailsButton.setFocusTraversable(false);
-
+        if (MusicPlayerManager.getInstance().isPlaying()) {
+            MusicPlayerManager.getInstance().playMusic(); // Ensure music continues playing
+        } else {
+            MusicPlayerManager.getInstance().stopMusic(); // Ensure music stays stopped
+        }
     }
     @FXML
     private Button logOutButton;

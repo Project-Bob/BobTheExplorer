@@ -102,8 +102,7 @@ public class GamingDungeonController implements Initializable {
                                     new Random().nextInt(1,4);
     String[] monsterArray = {"goblin", "spider", "slime"};
     String[] itemArray = {"potion", "shield", "sword"};
-    //int numItem=rd.nextInt(1,3);
-    int numItem = 8;
+    int numItem=rd.nextInt(2,4);
     int totalNumMonsterItem = numMonster + numItem;
     String[][] monsterItemPosition = new String[totalNumMonsterItem][2]; //0 is index, 1 is name
     Image imgPotionInList = new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/potion.png"));
@@ -176,6 +175,11 @@ public class GamingDungeonController implements Initializable {
         downButtonView.setFitWidth(40);
         downButton.setGraphic(downButtonView);
         usernameID.setText(username);
+        if (MusicPlayerManager.getInstance().isPlaying()) {
+            MusicPlayerManager.getInstance().playMusic(); // Ensure music continues playing
+        } else {
+            MusicPlayerManager.getInstance().stopMusic(); // Ensure music stays stopped
+        }
         int countMonster = 0;
         int countItem = 0;
         

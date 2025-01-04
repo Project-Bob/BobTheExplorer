@@ -30,7 +30,7 @@ import projectbob.bobtheexplorer.Main;
 import java.util.HashMap;
 import java.sql.SQLException;
 import org.apache.commons.codec.digest.DigestUtils;
-
+import projectbob.bobtheexplorer.UI.MusicPlayerManager;
 /**
  * FXML Controller class
  *
@@ -46,6 +46,7 @@ public class loginController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         rules.setVisible(false);
+        MusicPlayerManager.getInstance().playMusic();
     }
     @FXML
     private Button loginButton;
@@ -64,6 +65,10 @@ public class loginController implements Initializable {
     @FXML
     private MenuItem buttonScoreBoard;
     @FXML
+    private MenuItem buttonMusicOn;
+    @FXML
+    private MenuItem buttonMusicOff;
+    @FXML
     private MenuItem buttonExit;
     @FXML
     private AnchorPane rules;
@@ -75,7 +80,7 @@ public class loginController implements Initializable {
     }
     public void checkLogin() throws IOException, SQLException{
         HashMap q = Main.db.findPlayer(username.getText().toString());
-        
+
         if(username.getText().isEmpty()&& password.getText().isEmpty()){
             wrongID.setText("Please fill up all data");
         } else if (q.get(username.getText().toString()) == null) wrongID.setText("Wrong username or password !!!");
@@ -117,6 +122,14 @@ public class loginController implements Initializable {
 
     public void cancelRules(ActionEvent actionEvent)throws IOException{
         rules.setVisible(false);
+    }
+
+    public void actionMusicOn(ActionEvent actionEvent) {
+        MusicPlayerManager.getInstance().playMusic();
+    }
+
+    public void actionMusicOff(ActionEvent actionEvent) {
+        MusicPlayerManager.getInstance().stopMusic();
     }
 
 }

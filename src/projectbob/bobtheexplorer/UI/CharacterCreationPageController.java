@@ -54,6 +54,11 @@ public class CharacterCreationPageController implements Initializable {
         confirmCharacterButton.setDefaultButton(false);
         rulesButton.setFocusTraversable(false);
         logOutButton.setFocusTraversable(false);
+        if (MusicPlayerManager.getInstance().isPlaying()) {
+            MusicPlayerManager.getInstance().playMusic(); // Ensure music continues playing
+        } else {
+            MusicPlayerManager.getInstance().stopMusic(); // Ensure music stays stopped
+        }
     }
     @FXML
     private Button confirmButton;
@@ -115,6 +120,10 @@ public class CharacterCreationPageController implements Initializable {
     private Label difficultyShow;
     @FXML
     private AnchorPane characterCreation;
+    @FXML
+    private Button buttonMusicOn;
+    @FXML
+    private Button ButtonMusicOff;
 
     public void createHero(ActionEvent event) throws IOException{
         createHero();
@@ -348,5 +357,12 @@ public class CharacterCreationPageController implements Initializable {
             rules.managedProperty().bind(rules.visibleProperty());
             warriorPicture.setVisible(true);
         }
+    }
+    public void actionMusicOn(ActionEvent actionEvent) {
+        MusicPlayerManager.getInstance().playMusic();
+    }
+
+    public void actionMusicOff(ActionEvent actionEvent) {
+        MusicPlayerManager.getInstance().stopMusic();
     }
 }
