@@ -1,4 +1,7 @@
 # BobTheExplorer
+--module-path
+// "file directory for javafx library"
+--add-modules
 javafx.controls,javafx.fxml,javafx.media
 --add-exports=javafx.base/com.sun.javafx=ALL-UNNAMED
 --add-exports=javafx.media/com.sun.media.jfxmedia=ALL-UNNAMED
