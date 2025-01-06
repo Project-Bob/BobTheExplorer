@@ -90,21 +90,26 @@ public class GamingDungeonController implements Initializable {
     Image shield = new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/shield.png"));
     Image sword = new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/sword.png"));
     Image door = new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/door.jpg"));
-    Image profilePicImg = new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/warriorToRight.png"));
+    Image profilePicImg = "WARRIOR".equalsIgnoreCase(characterRoleShow) ?
+            new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/warriorToRight.png")) :
+            ("ASSASSIN".equalsIgnoreCase(characterRoleShow) ?
+                    new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/Bob_Assasin_Right.png")) :
+                    ("ARCHER".equalsIgnoreCase(characterRoleShow) ?
+                            new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/Bob_Maskman_Right.png")) : null));
     ImageView imgProfilePic = new ImageView(profilePicImg);
 
     Image characterToLeft = "WARRIOR".equalsIgnoreCase(characterRoleShow) ?
             new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/warriorToLeft.png")) :
             ("ASSASSIN".equalsIgnoreCase(characterRoleShow) ?
             new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/Bob_Assasin.png")) :
-            ("MARKSMAN".equalsIgnoreCase(characterRoleShow) ?
+            ("ARCHER".equalsIgnoreCase(characterRoleShow) ?
             new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/Bob_Maskman.png")) : null));
 
     Image characterToRight = "WARRIOR".equalsIgnoreCase(characterRoleShow) ?
             new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/warriorToRight.png")) :
             ("ASSASSIN".equalsIgnoreCase(characterRoleShow) ?
             new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/Bob_Assasin_Right.png")) :
-            ("MARKSMAN".equalsIgnoreCase(characterRoleShow) ?
+            ("ARCHER".equalsIgnoreCase(characterRoleShow) ?
             new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/Bob_Maskman_Right.png")) : null));
 //    Image characterToLeft = new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/warriorToLeft.png"));
 //    Image characterToRight = new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/warriorToRight.png"));
@@ -139,14 +144,14 @@ public class GamingDungeonController implements Initializable {
 //                new Image(getClass().getClassLoader().getResourceAsStream("/projectbob/bobtheexplorer/test/warriorToLeft.png")) :
 //                (characterRoleShow.equalsIgnoreCase("ASSASSIN") ?
 //                        new Image(getClass().getClassLoader().getResourceAsStream("/projectbob/bobtheexplorer/test/Bob_Assasin.png")) :
-//                        (characterRoleShow.equalsIgnoreCase("MARKSMAN") ?
+//                        (characterRoleShow.equalsIgnoreCase("ARCHER") ?
 //                                new Image(getClass().getClassLoader().getResourceAsStream("/projectbob/bobtheexplorer/test/Bob_Maskman.png")) : null));
 //
 //        characterToRight = characterRoleShow.equalsIgnoreCase("WARRIOR") ?
 //                new Image(getClass().getClassLoader().getResourceAsStream("/projectbob/bobtheexplorer/test/warriorToRight.png")) :
 //                (characterRoleShow.equalsIgnoreCase("ASSASSIN") ?
 //                        new Image(getClass().getClassLoader().getResourceAsStream("/projectbob/bobtheexplorer/test/Bob_Assasin_Right.png")) :
-//                        (characterRoleShow.equalsIgnoreCase("MARKSMAN") ?
+//                        (characterRoleShow.equalsIgnoreCase("ARCHER") ?
 //                                new Image(getClass().getClassLoader().getResourceAsStream("/projectbob/bobtheexplorer/test/Bob_Maskman_Right.png")) : null));
 
         // TODO
@@ -624,7 +629,15 @@ public class GamingDungeonController implements Initializable {
         BattlePage.setVisible(false);
 
         //Hero Info
-        Image Picture_Hero = new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/warriorToRight.png"));
+        Image Picture_Hero = "WARRIOR".equalsIgnoreCase(characterRoleShow) ?
+                new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/warriorToRight.png")) :
+                ("ASSASSIN".equalsIgnoreCase(characterRoleShow) ?
+                        new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/Bob_Assasin_Right.png")) :
+                        ("ARCHER".equalsIgnoreCase(characterRoleShow) ?
+                                new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/Bob_Maskman_Right.png")) : null));
+
+
+//        Image Picture_Hero = new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/warriorToRight.png"));
         Hero_PIC.setImage(Picture_Hero);
         Name_Hero.setText(characterName);
         HP_Hero.setText("HP: " + hero.getHP_Hero() + " / " + characterHealthShow);

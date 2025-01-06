@@ -177,7 +177,7 @@ public class CharacterCreationPageController implements Initializable {
         characterHP.setText(Integer.toString(health));
         characterAP.setText(Integer.toString(attack));
         characterSpeed.setText(Integer.toString(speed));
-        if(characterName.getText().isEmpty()||characterName.getText().toString().equals("Bob The Marksman")||characterName.getText().toString().equals("Bob The Assassin"))
+        if(characterName.getText().isEmpty()||characterName.getText().toString().equals("Bob The Archer")||characterName.getText().toString().equals("Bob The Assassin"))
             characterName.setText("Bob The Warrior");
         toWarrior();
 
@@ -194,7 +194,7 @@ public class CharacterCreationPageController implements Initializable {
         characterHP.setText(Integer.toString(health));
         characterAP.setText(Integer.toString(attack));
         characterSpeed.setText(Integer.toString(speed));
-        if(characterName.getText().isEmpty()||characterName.getText().toString().equals("Bob The Warrior")||characterName.getText().toString().equals("Bob The Marksman"))
+        if(characterName.getText().isEmpty()||characterName.getText().toString().equals("Bob The Warrior")||characterName.getText().toString().equals("Bob The Archer"))
             characterName.setText("Bob The Assassin");
         toAssassin();
     }
@@ -212,7 +212,7 @@ public class CharacterCreationPageController implements Initializable {
         characterAP.setText(Integer.toString(attack));
         characterSpeed.setText(Integer.toString(speed));
         if(characterName.getText().isEmpty()||characterName.getText().toString().equals("Bob The Warrior")||characterName.getText().toString().equals("Bob The Assassin"))
-            characterName.setText("Bob The Marksman");
+            characterName.setText("Bob The Archer");
         toMarksman();
     }
     public void create() throws IOException{
@@ -279,7 +279,7 @@ public class CharacterCreationPageController implements Initializable {
                 i++;
                 break;
             }
-            if (role.getText().toString().equals("MARKSMAN")){
+            if (role.getText().toString().equals("ARCHER")){
                 toWarrior();
                 i++;
                 break;
@@ -294,7 +294,7 @@ public class CharacterCreationPageController implements Initializable {
                 i++;
                 break;
             }
-            if (role.getText().toString().equals("MARKSMAN")){
+            if (role.getText().toString().equals("ARCHER")){
                 toAssassin();
                 i++;
                 break;
@@ -309,20 +309,20 @@ public class CharacterCreationPageController implements Initializable {
     public void toWarrior() throws IOException{
         role.setText("WARRIOR");
         warriorPicture.setImage(warriorPic);
-        if(characterName.getText().isEmpty()||characterName.getText().toString().equals("Bob The Marksman")||characterName.getText().toString().equals("Bob The Assassin"))
+        if(characterName.getText().isEmpty()||characterName.getText().toString().equals("Bob The Archer")||characterName.getText().toString().equals("Bob The Assassin"))
             characterName.setText("Bob The Warrior");
     }
     public void toAssassin() throws IOException{
         role.setText("ASSASSIN");
         warriorPicture.setImage(assassinPic);
-        if(characterName.getText().isEmpty()||characterName.getText().toString().equals("Bob The Warrior")||characterName.getText().toString().equals("Bob The Marksman"))
+        if(characterName.getText().isEmpty()||characterName.getText().toString().equals("Bob The Warrior")||characterName.getText().toString().equals("Bob The Archer"))
             characterName.setText("Bob The Assassin");
     }
     public void toMarksman() throws IOException{
-        role.setText("MARKSMAN");
+        role.setText("ARCHER");
         warriorPicture.setImage(marksmanPic);
         if(characterName.getText().isEmpty()||characterName.getText().toString().equals("Bob The Warrior")||characterName.getText().toString().equals("Bob The Assassin"))
-            characterName.setText("Bob The Marksman");
+            characterName.setText("Bob The Archer");
     }
     public void logOut() throws IOException{
         App m=new App();

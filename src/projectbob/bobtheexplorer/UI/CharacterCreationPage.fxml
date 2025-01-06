@@ -103,7 +103,7 @@
                      <items>
                         <MenuItem fx:id="warrior" mnemonicParsing="false" onAction="#generateWarrior" text="Warrior" />
                         <MenuItem fx:id="assasin" mnemonicParsing="false" onAction="#generateAssassin" text="Assassin" />
-                        <MenuItem fx:id="marksman" mnemonicParsing="false" onAction="#generateMarksman" text="Marksman" />
+                        <MenuItem fx:id="marksman" mnemonicParsing="false" onAction="#generateMarksman" text="Archer" />
                      </items>
                      <font>
                         <Font name="System Bold Italic" size="12.0" />
