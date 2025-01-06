@@ -264,9 +264,9 @@ public class CharacterCreationPageController implements Initializable {
         confirmCharacterButton.setDefaultButton(false);
         confirmButton.setDefaultButton(true);
     }
-    Image warriorPic=new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/Mark 9.jpg"));
-    Image assassinPic=new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/Laser Boost.jpg"));
-    Image marksmanPic=new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/Boost Striker.jpg"));
+    Image warriorPic=new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/Bob_Warrior.png"));
+    Image assassinPic=new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/Bob_Assasin.png"));
+    Image marksmanPic=new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/Bob_Maskman.png"));
     public void nextButton(ActionEvent event) throws IOException{
         for(int i=0;i<2;i++){
             if (role.getText().toString().equals("WARRIOR")){

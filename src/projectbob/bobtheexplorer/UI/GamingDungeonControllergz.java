@@ -85,8 +85,10 @@ public class GamingDungeonControllergz implements Initializable {
     Image door = new Image(getClass().getClassLoader().getResourceAsStream("megatron.gif"));
     Image profilePicImg = new Image(getClass().getClassLoader().getResourceAsStream("pic.png"));
     ImageView imgProfilePic = new ImageView(profilePicImg);
-    Image characterToLeft = new Image(getClass().getClassLoader().getResourceAsStream("warriorToLeft.png"));
-    Image characterToRight = new Image(getClass().getClassLoader().getResourceAsStream("warriorToRight.png"));
+    private Image characterToLeft;
+    private Image characterToRight;
+//    private Image characterToLeft = new Image(getClass().getClassLoader().getResourceAsStream("warriorToLeft.png"));
+//    private Image characterToRight = new Image(getClass().getClassLoader().getResourceAsStream("warriorToRight.png"));
     boolean rightLeg=true;
     boolean directionRight=true;
     private int numMonster=rd.nextInt(1,4);
@@ -109,6 +111,20 @@ public class GamingDungeonControllergz implements Initializable {
     private int indexItemSelectedToUse=7;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
+        if (characterRoleShow.equalsIgnoreCase("WARRIOR")){
+            characterToLeft = new Image(getClass().getClassLoader().getResourceAsStream("warriorToLeft.png"));
+            characterToRight = new Image(getClass().getClassLoader().getResourceAsStream("warriorToRight.png"));
+        }
+        if (characterRoleShow.equalsIgnoreCase("ASSASSIN")){
+            characterToLeft = new Image(getClass().getClassLoader().getResourceAsStream("Bob_Assasin.png"));
+            characterToRight = new Image(getClass().getClassLoader().getResourceAsStream("Bob_Assasin_Right.png"));
+        }
+        if (characterRoleShow.equalsIgnoreCase("MARKSMAN")){
+            characterToLeft = new Image(getClass().getClassLoader().getResourceAsStream("Bob_Maskman.png"));
+            characterToRight = new Image(getClass().getClassLoader().getResourceAsStream("Bob_Maskman_Right.png"));
+        }
+
         // TODO
         zoneLevel.setText("Zone "+zoneLvl);
         for(int i=0;i<itemUser.length;i++){

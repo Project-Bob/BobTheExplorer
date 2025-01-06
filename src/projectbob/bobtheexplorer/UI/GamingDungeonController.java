@@ -92,8 +92,22 @@ public class GamingDungeonController implements Initializable {
     Image door = new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/door.jpg"));
     Image profilePicImg = new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/warriorToRight.png"));
     ImageView imgProfilePic = new ImageView(profilePicImg);
-    Image characterToLeft = new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/warriorToLeft.png"));
-    Image characterToRight = new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/warriorToRight.png"));
+
+    Image characterToLeft = "WARRIOR".equalsIgnoreCase(characterRoleShow) ?
+            new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/warriorToLeft.png")) :
+            ("ASSASSIN".equalsIgnoreCase(characterRoleShow) ?
+            new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/Bob_Assasin.png")) :
+            ("MARKSMAN".equalsIgnoreCase(characterRoleShow) ?
+            new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/Bob_Maskman.png")) : null));
+
+    Image characterToRight = "WARRIOR".equalsIgnoreCase(characterRoleShow) ?
+            new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/warriorToRight.png")) :
+            ("ASSASSIN".equalsIgnoreCase(characterRoleShow) ?
+            new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/Bob_Assasin_Right.png")) :
+            ("MARKSMAN".equalsIgnoreCase(characterRoleShow) ?
+            new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/Bob_Maskman_Right.png")) : null));
+//    Image characterToLeft = new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/warriorToLeft.png"));
+//    Image characterToRight = new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/warriorToRight.png"));
     boolean directionRight = true;
     private int numMonster =
             "Level 1".equals(difficultyLevel) ? new Random().nextInt(1, 4) :
@@ -120,6 +134,21 @@ public class GamingDungeonController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
+//        characterToLeft = characterRoleShow.equalsIgnoreCase("WARRIOR") ?
+//                new Image(getClass().getClassLoader().getResourceAsStream("/projectbob/bobtheexplorer/test/warriorToLeft.png")) :
+//                (characterRoleShow.equalsIgnoreCase("ASSASSIN") ?
+//                        new Image(getClass().getClassLoader().getResourceAsStream("/projectbob/bobtheexplorer/test/Bob_Assasin.png")) :
+//                        (characterRoleShow.equalsIgnoreCase("MARKSMAN") ?
+//                                new Image(getClass().getClassLoader().getResourceAsStream("/projectbob/bobtheexplorer/test/Bob_Maskman.png")) : null));
+//
+//        characterToRight = characterRoleShow.equalsIgnoreCase("WARRIOR") ?
+//                new Image(getClass().getClassLoader().getResourceAsStream("/projectbob/bobtheexplorer/test/warriorToRight.png")) :
+//                (characterRoleShow.equalsIgnoreCase("ASSASSIN") ?
+//                        new Image(getClass().getClassLoader().getResourceAsStream("/projectbob/bobtheexplorer/test/Bob_Assasin_Right.png")) :
+//                        (characterRoleShow.equalsIgnoreCase("MARKSMAN") ?
+//                                new Image(getClass().getClassLoader().getResourceAsStream("/projectbob/bobtheexplorer/test/Bob_Maskman_Right.png")) : null));
+
         // TODO
         timeStart();//timer start
         itemOverflow.setVisible(false);
