@@ -2010,6 +2010,53 @@ public class GamingDungeonController implements Initializable {
                     Instruction.setText("You are poisoned by Spider!!! HP -5.");
                     hero.takeDamage(5);
                     HP_Hero.setText("HP: " + hero.getHP_Hero() + " / " + characterHealthShow);
+                    if (hero.getHP_Hero()  == 0) {
+                        System.out.println("the hp of hero 3 " + hero.getHP_Hero());
+                        Attack.setDisable(true); // Disable action buttons
+                        Inventory.setDisable(true);
+                        Run.setDisable(true);
+                        timeStop();
+                        timeSpent = seconds;
+                        System.out.println("The total number of monster defeated is " + numMonstersDefeated);
+                        System.out.println("The total time spent is " + timeSpent + " seconds");
+                        System.out.println("The total number of movement is " + numOfMovement);
+                        System.out.println("The total number of action is " + numOfAction);
+                        PauseTransition pause1 = new PauseTransition(Duration.seconds(1));
+                        PauseTransition pause2 = new PauseTransition(Duration.seconds(2));
+
+                        // Calculate score
+                        /*
+                        Formula:
+                        Base score = 10 x number of monsters defeated
+                        Time bonus multiplier: 1 + (0.1 * exp(-0.005 * time)), range +0% - +10%
+                        Movement bonus multiplier: 1 + (0.05 * exp(-0.03 * movement)), range +0% - +5%
+                        Action bonus multiplier: 1 + (0.1 * exp(-0.05 * action)), range +0% - +10%
+                        * Multipliers are additive.
+                        */
+                        double multiplier = 1 + Math.min(0.1 * Math.exp(-0.005 * timeSpent), 0.1);
+                        multiplier += Math.min(0.05 * Math.exp(-0.03 * numOfMovement), 0.05);
+                        multiplier += Math.min(0.1 * Math.exp(-0.05 * numOfAction), 0.1);
+
+                        int score = (int) (numMonstersDefeated * 10 * multiplier);
+                        // Add highscore to database
+                        try {
+                            if (Main.db.findScore(username).get(username) < score)
+                                Main.db.updateScoreRecord(username, score);
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                        pause1.setOnFinished(_event -> {
+                            Instruction.setText("GAME OVER!!!");
+
+                        });
+                        pause2.setOnFinished(_event -> {
+                            message.setText("Game Over");
+                            finalScore.setText("Score: " + score);
+                            result.setVisible(true);
+                        });
+                        pause1.play();
+                        pause2.play();
+                    }
                 });
                 pause5.play();
             }

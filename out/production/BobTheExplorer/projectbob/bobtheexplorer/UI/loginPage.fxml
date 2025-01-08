@@ -23,7 +23,12 @@
          <image>
             <Image url="@../test/loginPage.jpg" />
          </image></ImageView>
-      <VBox layoutY="140.0" prefHeight="200.0" prefWidth="500.0" spacing="15.0">
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="175.0" layoutY="124.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../test/Bob_Login.gif" />
+         </image>
+      </ImageView>
+      <VBox layoutY="280.0" prefHeight="150.0" prefWidth="500.0" spacing="15.0">
          <children>
             <HBox alignment="CENTER" prefHeight="27.0" prefWidth="307.0">
                <children>
@@ -84,9 +89,9 @@
             <Glow level="0.42" />
          </effect>
       </Label>
-      <HBox alignment="CENTER" layoutX="160.0" layoutY="108.0" prefHeight="31.0" prefWidth="180.0">
+      <HBox alignment="CENTER" layoutX="160.0" layoutY="104.0" prefHeight="15.0" prefWidth="170.0">
          <children>
-            <Label fx:id="wrongID" alignment="CENTER" prefHeight="18.0" prefWidth="176.0" textAlignment="CENTER" textFill="RED" />
+            <Label fx:id="wrongID" alignment="CENTER" prefHeight="18.0" prefWidth="185.0" textAlignment="CENTER" textFill="RED" />
          </children>
       </HBox>
       <MenuButton layoutX="399.0" layoutY="26.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="74.0" text="Menu">
