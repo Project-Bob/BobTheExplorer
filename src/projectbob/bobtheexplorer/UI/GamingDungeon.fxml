@@ -11,7 +11,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="MainPage" prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projectbob.bobtheexplorer.UI.GamingDungeonController">
+<AnchorPane id="AnchorPane" fx:id="MainPage" prefHeight="500.0" prefWidth="500.0" style="-fx-background-color: #fad27a;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projectbob.bobtheexplorer.UI.GamingDungeonController">
    <children>
       <Label fx:id="timerlabel" alignment="CENTER" layoutX="369.0" layoutY="11.0" prefHeight="24.0" prefWidth="82.0" style="-fx-border-color: black;" text="Time: ">
          <font>
@@ -254,7 +254,7 @@
                   <Font name="System Italic" size="64.0" />
                </font>
             </Label>
-            <Label fx:id="finalScore" layoutY="121.0" alignment="CENTER" prefHeight="107.0" prefWidth="380.0" text="Score: " textFill="WHITE">
+            <Label fx:id="finalScore" alignment="CENTER" layoutY="121.0" prefHeight="107.0" prefWidth="380.0" text="Score: " textFill="WHITE">
                <font>
                   <Font name="System Italic" size="48.0" />
                </font>

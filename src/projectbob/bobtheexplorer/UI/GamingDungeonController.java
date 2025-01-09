@@ -89,7 +89,7 @@ public class GamingDungeonController implements Initializable {
     Image potion = new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/potion.png"));
     Image shield = new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/shield.png"));
     Image sword = new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/sword.png"));
-    Image door = new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/door.jpg"));
+    Image door = new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/door.png"));
     Image profilePicImg = "WARRIOR".equalsIgnoreCase(characterRoleShow) ?
             new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/warriorToRight.png")) :
             ("ASSASSIN".equalsIgnoreCase(characterRoleShow) ?
@@ -121,7 +121,11 @@ public class GamingDungeonController implements Initializable {
                                     new Random().nextInt(1,4);
     String[] monsterArray = {"goblin", "spider", "slime"};
     String[] itemArray = {"potion", "shield", "sword"};
-    int numItem=rd.nextInt(2,4);
+    int numItem =
+            "Level 1".equals(difficultyLevel) ? new Random().nextInt(2, 3) :
+                    "Level 2".equals(difficultyLevel) ? new Random().nextInt(3, 5) :
+                            "Level 3".equals(difficultyLevel) ? new Random().nextInt(4, 6):
+                                    new Random().nextInt(10,11);
     int totalNumMonsterItem = numMonster + numItem;
     String[][] monsterItemPosition = new String[totalNumMonsterItem][2]; //0 is index, 1 is name
     Image imgPotionInList = new Image(getClass().getResourceAsStream("/projectbob/bobtheexplorer/test/potion.png"));
@@ -1281,17 +1285,17 @@ public class GamingDungeonController implements Initializable {
                 hero.setHP( Integer.parseInt(characterHealthShow));
             hpBar.setText("HP: "+hero.getHP_Hero()+" / "+characterHealthShow);
             HP_Hero.setText("HP: " + hero.getHP_Hero() + " / " + characterHealthShow);
-            Instruction.setText("Potion is used to heal HP by 20 points");
+            Instruction.setText("Potion is use to heal HP by 20 points");
         }
         if (itemName.equals("sword")){
             hero.setAP(hero.getAP_Hero()+10);
             characterAP.setText("Attack Power: " + hero.getAP_Hero());
             AP_Hero.setText("Attack Power: " + hero.getAP_Hero());
-            Instruction.setText("Sword is used to increase attack power by 10 points");
+            Instruction.setText("Sword is use to increase attack power by 10 points");
         }
         if(itemName.equals("shield")){
             counterShieldUsed = 2;
-            Instruction.setText("Shield is used to block incoming damage from monsters for two rounds");
+            Instruction.setText("Shield is use to block incoming damage from monsters for two rounds");
         }
         for (int i = 0; i < itemUser.length; i++) {
             if (!itemUser[i].equals("blank"))
@@ -1932,17 +1936,17 @@ public class GamingDungeonController implements Initializable {
                 else{
                     if(monster_Detect.equalsIgnoreCase("Slime")){
                         counterShieldUsed = 0;
-                        Instruction.setText("Your shield has been dissolved by the slime!!!");
+                        Instruction.setText("Your shield has been dissolve by the slime!!!");
                         hero.takeDamage(monster.getAp());
-                        PauseTransition pause1 = new PauseTransition(Duration.seconds(1));
-                        PauseTransition pause3 = new PauseTransition(Duration.seconds(1.5));
+                        PauseTransition pause1 = new PauseTransition(Duration.seconds(1.5));
+                        PauseTransition pause3 = new PauseTransition(Duration.seconds(2.5));
                         pause3.setOnFinished(event -> {
                             Instruction.setText(GamingDungeonController.monster_Detect + " takes " + hero.getAP_Hero() + " damage. Hero takes " + monster.getAp() + " damage. ");
                         });
                         pause3.play();
                     }
                     else{
-                        Instruction.setText(GamingDungeonController.monster_Detect + " takes " + hero.getAP_Hero() + " damage. Hero used shield to defend. ");
+                        Instruction.setText(GamingDungeonController.monster_Detect + " takes " + hero.getAP_Hero() + " damage. Hero use shield to defend. ");
                     }
                 }
             }
@@ -1975,7 +1979,7 @@ public class GamingDungeonController implements Initializable {
                 else{
                     if(monster_Detect.equalsIgnoreCase("Slime")){
                         counterShieldUsed = 0;
-                        Instruction.setText("Your shield has been dissolved by the slime!!!");
+                        Instruction.setText("Your shield has been dissolve by the slime!!!");
                         hero.takeDamage(monster.getAp());PauseTransition pause1 = new PauseTransition(Duration.seconds(1));
                         PauseTransition pause3 = new PauseTransition(Duration.seconds(1.5));
                         pause3.setOnFinished(event -> {
@@ -1984,7 +1988,7 @@ public class GamingDungeonController implements Initializable {
                         pause3.play();
                     }
                     else{
-                        Instruction.setText(GamingDungeonController.monster_Detect + " takes " + hero.getAP_Hero() + " damage. Hero used shield to defend. ");
+                        Instruction.setText(GamingDungeonController.monster_Detect + " takes " + hero.getAP_Hero() + " damage. Hero use shield to defend. ");
                     }
                 }
                 monster.takeDamage(hero.getAP_Hero());
@@ -2007,7 +2011,7 @@ public class GamingDungeonController implements Initializable {
             if (monster_Detect.equalsIgnoreCase("Spider")) {
                 PauseTransition pause5 = new PauseTransition(Duration.seconds(1));
                 pause5.setOnFinished(event -> {
-                    Instruction.setText("You are poisoned by Spider!!! HP -5.");
+                    Instruction.setText("You are poison by Spider!!! HP -5.");
                     hero.takeDamage(5);
                     HP_Hero.setText("HP: " + hero.getHP_Hero() + " / " + characterHealthShow);
                     if (hero.getHP_Hero()  == 0) {
