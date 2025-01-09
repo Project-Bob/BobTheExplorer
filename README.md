@@ -6,13 +6,7 @@ A turn-based RPG that takes players on a dungeon-exploring adventure. Developed 
 
 Clone this repository and add this to Java VM options:
 ```
---module-path
-// "file directory for javafx library"
---add-modules
-javafx.controls,javafx.fxml,javafx.media
---add-exports=javafx.base/com.sun.javafx=ALL-UNNAMED
---add-exports=javafx.media/com.sun.media.jfxmedia=ALL-UNNAMED
---add-exports=javafx.media/com.sun.media.jfxmedia.locator=ALL-UNNAMED
+--module-path "lib/javafx-sdk-21.0.5/lib" --add-modules javafx.controls,javafx.fxml,javafx.media --add-exports=javafx.base/com.sun.javafx=ALL-UNNAMED --add-exports=javafx.media/com.sun.media.jfxmedia=ALL-UNNAMED --add-exports=javafx.media/com.sun.media.jfxmedia.locator=ALL-UNNAMED
 ```
 
 ## Team Members
