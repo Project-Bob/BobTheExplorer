@@ -220,8 +220,8 @@
                         <ImageView fx:id="itemBarUsed" fitHeight="50.0" fitWidth="300.0" layoutX="65.0" layoutY="61.0" pickOnBounds="true" preserveRatio="true" />
                         <HBox layoutX="148.0" layoutY="117.0" prefHeight="30.0" prefWidth="133.0" spacing="20.0">
                            <children>
-                              <Button fx:id="buttonConfirmUsedItem" mnemonicParsing="false" onAction="#confirmUsedItem" text="Used" />
-                              <Button fx:id="closedButton" mnemonicParsing="false" onAction="#closeItemUsedBar" text="Closed" />
+                              <Button fx:id="buttonConfirmUsedItem" mnemonicParsing="false" onAction="#confirmUsedItem" text="Use" />
+                              <Button fx:id="closedButton" mnemonicParsing="false" onAction="#closeItemUsedBar" text="Close" />
                            </children>
                         </HBox>
                         <Label alignment="CENTER" layoutX="2.0" layoutY="1.0" prefHeight="26.0" prefWidth="392.0" text="Your inventory">
