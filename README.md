@@ -4,7 +4,7 @@ A turn-based RPG that takes players on a dungeon-exploring adventure. Developed 
 
 ## Installation
 
-Download the [latest release](https://github.com/BluEyeSkeleton/XPlusC/releases/latest/download/BobTheExplorer.zip) and extract it. Run `BobTheExplorer.exe` and ignore the unrecognized program warning, or run `Game.jar` with Java runtime.
+Download the [latest release](https://github.com/Project-Bob/BobTheExplorer/releases/latest/download/BobTheExplorer.zip) and extract it. Run `BobTheExplorer.exe` and ignore the unrecognized program warning, or run `Game.jar` with Java runtime.
 
 Other than that, you may choose to clone this repository and build the program yourself too.
 
