@@ -11,14 +11,14 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="MainPage" prefHeight="500.0" prefWidth="500.0" style="-fx-background-color: #fad27a;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projectbob.bobtheexplorer.UI.GamingDungeonController">
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="500.0" style="-fx-background-color: #fad27a;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projectbob.bobtheexplorer.UI.GamingDungeonController">
    <children>
       <Label fx:id="timerlabel" alignment="CENTER" layoutX="369.0" layoutY="11.0" prefHeight="24.0" prefWidth="82.0" style="-fx-border-color: black;" text="Time: ">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <AnchorPane id="AnchorPane" fx:id="DungeonPage" prefHeight="500.0" prefWidth="500.0">
+      <AnchorPane prefHeight="500.0" prefWidth="500.0">
          <children>
             <Label layoutX="194.0" layoutY="3.0" text="Dungeon" textFill="#727731">
                <font>

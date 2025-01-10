@@ -1869,8 +1869,6 @@ public class GamingDungeonController implements Initializable {
     @FXML
     private AnchorPane BattlePage;
     @FXML
-    private AnchorPane DungeonPage;
-    @FXML
     private AnchorPane itemUsed;
     @FXML
     private ImageView itemBarUsed;
@@ -2177,8 +2175,6 @@ public class GamingDungeonController implements Initializable {
     /////////////////////////////////////////////////////////////////////////////////////////////////
     @FXML
     private Label timerlabel;
-    @FXML
-    private AnchorPane MainPage;
 
     public static int seconds;
     private Timeline timeline;
