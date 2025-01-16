@@ -34,6 +34,7 @@ public class DB {
     private Connection conn;
     private String checksum;
     private Properties props;
+    private boolean loading;
     
     /**
      * Initializes database.
@@ -44,6 +45,9 @@ public class DB {
      */
     public DB(String checksum, Properties props) throws IllegalStateException,
             SQLException, ClassNotFoundException {
+        this.loading = true;
+        boolean fileExists = new File("data.db").isFile();
+        
         // Loads database
         Class.forName("org.sqlite.JDBC");
         this.conn = DriverManager.getConnection("jdbc:sqlite:data.db");
@@ -60,6 +64,13 @@ public class DB {
             this.checksum = generateChecksum();
         } catch (IOException e) {}
         
+        // Resets properties if file does not exist
+        if (!fileExists) {
+            props.setDBChecksum(this.checksum);
+            System.out.println("Database file created");
+            return;
+        }
+        
         // Checksum verification
         if (!this.checksum.equals(checksum) && checksum != null)
             throw new IllegalStateException("Database file corrupted");
@@ -73,7 +84,13 @@ public class DB {
         InputStream is = Files.newInputStream(Paths.get("data.db"));
         final String ret = DigestUtils.md5Hex(is);
         is.close();
-        props.setDBChecksum(ret);
+        if (!this.loading) {
+            props.setDBChecksum(ret);
+            
+        } else {
+            this.loading = false;
+        }
+        
         return ret;
     }
     
